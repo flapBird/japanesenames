@@ -97,8 +97,8 @@ export function NameGenerator() {
 
   return (
     <section className="scroll-mt-4" id="generator" aria-labelledby="generator-title">
-      <div className="surface overflow-hidden shadow-[var(--shadow)]">
-        <div className="border-b border-[#d9ddd8] bg-[#eef2ee] px-4 py-2.5 sm:px-5 sm:py-3">
+      <div className="surface overflow-hidden border-[#e4d6d8] shadow-[var(--shadow)]">
+        <div className="border-b border-[#ead6da] bg-[#f7ecee] px-4 py-2.5 sm:px-5 sm:py-3">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <h2 className="sr-only" id="generator-title">
               Build an authentic full name

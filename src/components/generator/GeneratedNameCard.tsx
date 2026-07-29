@@ -11,6 +11,13 @@ const naturalnessLabel = {
   needs_review: "Needs review",
 };
 
+const naturalnessTone = {
+  high: "bg-[#e6efe9] text-[#315c4b]",
+  medium: "bg-[#f7eddc] text-[#795a24]",
+  fiction_friendly: "bg-[#f7e8eb] text-[#9f4f60]",
+  needs_review: "bg-[#efeeea] text-[#68726b]",
+};
+
 export function GeneratedNameCard({
   item,
   order,
@@ -40,7 +47,7 @@ export function GeneratedNameCard({
       : `${item.firstName.hiragana} ${item.surname.hiragana}`;
 
   return (
-    <article className="surface flex h-full flex-col p-5">
+    <article className="surface name-result-card flex h-full flex-col p-5">
       <div className="mb-4 flex items-start justify-between gap-3">
         <div>
           <p className="japanese-display text-[2rem] font-medium leading-tight">{japanese}</p>
@@ -60,11 +67,17 @@ export function GeneratedNameCard({
       <dl className="mb-5 grid gap-2 border-t border-[#e3e2dc] pt-4 text-sm">
         <div className="flex justify-between gap-4">
           <dt className="text-[#707970]">Naturalness</dt>
-          <dd className="font-semibold">{naturalnessLabel[item.naturalness]}</dd>
+          <dd
+            className={`rounded-full px-2 py-0.5 text-xs font-bold ${naturalnessTone[item.naturalness]}`}
+          >
+            {naturalnessLabel[item.naturalness]}
+          </dd>
         </div>
         <div className="flex justify-between gap-4">
           <dt className="text-[#707970]">Style</dt>
-          <dd className="font-semibold capitalize">{item.firstName.styles[0]}</dd>
+          <dd className="font-semibold capitalize text-[#9f4f60]">
+            {item.firstName.styles[0]}
+          </dd>
         </div>
         <div className="flex justify-between gap-4">
           <dt className="text-[#707970]">Meaning</dt>
@@ -74,7 +87,9 @@ export function GeneratedNameCard({
         </div>
         <div className="flex justify-between gap-4">
           <dt className="text-[#707970]">Surname origin</dt>
-          <dd className="font-semibold capitalize">{item.surname.originTypes[0]}</dd>
+          <dd className="font-semibold capitalize text-[#315c4b]">
+            {item.surname.originTypes[0]}
+          </dd>
         </div>
       </dl>
       <div className="mt-auto grid grid-cols-[minmax(0,1fr)_minmax(0,1fr)_auto] items-center gap-1 border-t border-[#e3e2dc] pt-3">

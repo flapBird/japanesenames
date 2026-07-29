@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Suspense } from "react";
 import { NameGenerator } from "@/components/generator/NameGenerator";
 import { ArrowIcon } from "@/components/icons";
+import { SakuraMotif } from "@/components/SakuraMotif";
 import { JsonLd } from "@/components/shared/JsonLd";
 import { getIndexableSurnames } from "@/lib/names";
 import { siteUrl } from "@/lib/seo";
@@ -82,8 +83,9 @@ export default function HomePage() {
           ],
         }}
       />
-      <section className="container-page pb-8 pt-7 sm:pt-9">
-        <div className="mb-5 max-w-3xl">
+      <section className="container-page relative pb-8 pt-7 sm:pt-9">
+        <SakuraMotif className="pointer-events-none absolute right-1 top-1 hidden w-44 opacity-70 sm:block lg:right-6 lg:w-52" />
+        <div className="relative z-[1] mb-5 max-w-3xl">
           <h1 className="section-title !text-[clamp(2.2rem,6vw,3.8rem)]">
             Japanese Name Generator
           </h1>
@@ -147,22 +149,43 @@ export default function HomePage() {
               title: "Japanese Girl Names",
               text: "Browse readings, kanji, meanings, and style labels.",
               mark: "女",
+              accent: "#d59aa5",
+              soft: "#f8e9ec",
             },
             {
               href: "/japanese-boy-names",
               title: "Japanese Boy Names",
               text: "Compare modern, traditional, and timeless choices.",
               mark: "男",
+              accent: "#718793",
+              soft: "#eaf0f2",
             },
             {
               href: "/japanese-last-names",
               title: "Japanese Last Names",
               text: "Explore family-name meanings and evidence-aware origins.",
               mark: "姓",
+              accent: "#6f927f",
+              soft: "#e8f0eb",
             },
           ].map((item) => (
-            <Link className="surface group p-6 transition-transform hover:-translate-y-0.5" href={item.href} key={item.href}>
-              <span className="seal mb-10" aria-hidden="true">{item.mark}</span>
+            <Link
+              className="surface group border-t-[3px] p-6 transition-transform hover:-translate-y-0.5"
+              href={item.href}
+              key={item.href}
+              style={{ borderTopColor: item.accent }}
+            >
+              <span
+                className="seal mb-10"
+                aria-hidden="true"
+                style={{
+                  background: item.soft,
+                  borderColor: item.accent,
+                  color: item.accent,
+                }}
+              >
+                {item.mark}
+              </span>
               <h2 className="text-xl font-semibold">{item.title}</h2>
               <p className="mt-2 text-sm leading-6 text-[#647068]">{item.text}</p>
               <span className="mt-5 inline-flex items-center gap-2 text-sm font-bold text-[#315c4b]">
@@ -204,7 +227,11 @@ export default function HomePage() {
           <h2 className="section-title mt-2">Read beyond the literal translation</h2>
           <div className="mt-8 grid gap-4 md:grid-cols-3">
             {featured.map((surname) => (
-              <Link className="surface p-6" href={`/surname/${surname.slug}`} key={surname.id}>
+              <Link
+                className="surface border-l-[3px] border-l-[#d59aa5] p-6"
+                href={`/surname/${surname.slug}`}
+                key={surname.id}
+              >
                 <p className="japanese-display text-4xl">{surname.kanji}</p>
                 <h3 className="mt-3 text-lg font-semibold">{surname.romaji}</h3>
                 <p className="mt-1 text-sm font-medium text-[#a34837]">{surname.literalMeaning}</p>

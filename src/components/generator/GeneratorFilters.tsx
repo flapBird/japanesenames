@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import type { GeneratorFilters as Filters } from "@/types/names";
 
 const meaningOptions = [
@@ -55,35 +56,19 @@ const fields: Array<{
       })),
     ],
   },
-  {
-    key: "kanjiLength",
-    label: "First-name length",
-    options: [
-      { value: "any", label: "Any" },
-      { value: "1", label: "1 Kanji" },
-      { value: "2", label: "2 Kanji" },
-      { value: "3", label: "3 Kanji" },
-    ],
-  },
-  {
-    key: "surnamePopularity",
-    label: "Surname popularity",
-    options: ["Common", "Uncommon", "Rare", "Any"].map((label) => ({
-      label,
-      value: label.toLowerCase(),
-    })),
-  },
 ];
 
 export function GeneratorFilters({
   value,
   onChange,
+  action,
 }: {
   value: Filters;
   onChange: (value: Filters) => void;
+  action: ReactNode;
 }) {
   return (
-    <div className="grid grid-cols-2 gap-2.5 lg:grid-cols-3 xl:grid-cols-6">
+    <div className="grid grid-cols-2 gap-2.5 lg:grid-cols-[repeat(4,minmax(0,1fr))_auto] lg:items-end">
       {fields.map((field) => (
         <label className="grid content-start gap-1.5 text-[0.7rem] font-bold text-[#465149]" key={field.key}>
           {field.label}
@@ -93,10 +78,7 @@ export function GeneratorFilters({
               const raw = event.target.value;
               onChange({
                 ...value,
-                [field.key]:
-                  field.key === "kanjiLength" && raw !== "any"
-                    ? Number(raw)
-                    : raw,
+                [field.key]: raw,
               } as Filters);
             }}
             value={String(value[field.key])}
@@ -109,6 +91,9 @@ export function GeneratorFilters({
           </select>
         </label>
       ))}
+      <div className="col-span-2 flex items-end lg:col-span-1">
+        {action}
+      </div>
     </div>
   );
 }

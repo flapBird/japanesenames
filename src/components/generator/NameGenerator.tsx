@@ -34,6 +34,8 @@ export function NameGenerator() {
   const [excludedSurnameIds, setExcludedSurnameIds] = useState<string[]>([]);
   const [excludedFirstNameIds, setExcludedFirstNameIds] = useState<string[]>([]);
   const [order, setOrder] = useState<NameOrder>("japanese");
+  const hasPendingFilters =
+    JSON.stringify(draftFilters) !== JSON.stringify(filters);
 
   const results = useMemo(
     () =>
@@ -70,22 +72,20 @@ export function NameGenerator() {
     ]);
   }
 
-  function applyFilters() {
+  function generate() {
+    if (lockedSurnameId && lockedFirstNameId) return;
     rememberCurrentResults();
     setFilters(draftFilters);
     setSeed((value) => value + 1);
-    trackEvent("generate_names", { ...draftFilters });
-    trackEvent("filter_generator", { ...draftFilters });
-  }
-
-  function regenerate() {
-    if (lockedSurnameId && lockedFirstNameId) return;
-    rememberCurrentResults();
-    setSeed((value) => value + 1);
-    trackEvent("regenerate_names", {
-      lockedSurnameId,
-      lockedFirstNameId,
-    });
+    if (hasPendingFilters) {
+      trackEvent("generate_names", { ...draftFilters });
+      trackEvent("filter_generator", { ...draftFilters });
+    } else {
+      trackEvent("regenerate_names", {
+        lockedSurnameId,
+        lockedFirstNameId,
+      });
+    }
   }
 
   function resetFilters() {
@@ -110,30 +110,30 @@ export function NameGenerator() {
           </div>
         </div>
         <div className="p-4 sm:p-5">
-          <GeneratorFilters onChange={setDraftFilters} value={draftFilters} />
-          <div className="mt-4 grid grid-cols-2 items-center gap-2 sm:flex sm:flex-wrap sm:gap-3">
-            <button
-              aria-label="Generate 6 names"
-              className="button-primary !px-3.5 !text-[0.82rem] sm:!px-4 sm:!text-sm"
-              onClick={applyFilters}
-              type="button"
-            >
-              Generate names
-            </button>
-            <button
-              className="button-secondary !px-3.5 !text-[0.82rem] sm:!px-4 sm:!text-sm"
-              disabled={Boolean(lockedSurnameId && lockedFirstNameId)}
-              onClick={regenerate}
-              type="button"
-            >
-              Generate again
-            </button>
-            {lockedSurnameId && lockedFirstNameId && (
-              <span className="col-span-2 text-xs text-[#68726b]">
-                Unlock either part to generate alternatives.
-              </span>
-            )}
-          </div>
+          <GeneratorFilters
+            action={
+              <button
+                aria-label={
+                  hasPendingFilters
+                    ? "Apply filters and generate 6 names"
+                    : "Generate 6 new names"
+                }
+                className="button-primary w-full !min-h-[2.55rem] !px-4 !text-[0.82rem] lg:w-auto sm:!text-sm"
+                disabled={Boolean(lockedSurnameId && lockedFirstNameId)}
+                onClick={generate}
+                type="button"
+              >
+                Generate
+              </button>
+            }
+            onChange={setDraftFilters}
+            value={draftFilters}
+          />
+          {lockedSurnameId && lockedFirstNameId && (
+            <p className="mt-2 text-xs text-[#68726b]">
+              Unlock either part to generate alternatives.
+            </p>
+          )}
         </div>
       </div>
 

@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
-import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { FirstNameExplorer } from "@/components/names/FirstNameExplorer";
 import { JsonLd } from "@/components/shared/JsonLd";
 import { firstNames } from "@/data";
-import { breadcrumbJsonLd, siteUrl } from "@/lib/seo";
+import { siteUrl } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Japanese Girl Names with Meanings and Kanji",
@@ -30,7 +29,6 @@ export default function GirlNamesPage() {
   );
   return (
     <div className="container-page themed-page theme-sakura">
-      <JsonLd data={breadcrumbJsonLd([{ name: "Home", path: "/" }, { name: "Japanese Girl Names", path: "/japanese-girl-names" }])} />
       <JsonLd
         data={{
           "@context": "https://schema.org",
@@ -45,8 +43,7 @@ export default function GirlNamesPage() {
           })),
         }}
       />
-      <Breadcrumbs items={[{ label: "Japanese Girl Names" }]} />
-      <header className="page-intro my-5 max-w-3xl">
+      <header className="page-intro my-6">
         <h1 className="section-title">Japanese Girl Names with Meanings and Kanji</h1>
         <p className="mt-3 text-base leading-7 text-[#59645d]">
           Browse Japanese girl names by meaning, style, commonness, and written

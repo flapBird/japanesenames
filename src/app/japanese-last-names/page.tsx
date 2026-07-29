@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
-import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { JsonLd } from "@/components/shared/JsonLd";
 import { SurnameExplorer } from "@/components/surnames/SurnameExplorer";
 import { getIndexableSurnames } from "@/lib/names";
-import { breadcrumbJsonLd, siteUrl } from "@/lib/seo";
+import { siteUrl } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Japanese Last Names and Surnames: Meanings and Origins",
@@ -26,7 +25,6 @@ export default function LastNamesPage() {
   const surnames = getIndexableSurnames();
   return (
     <div className="container-page themed-page theme-moss">
-      <JsonLd data={breadcrumbJsonLd([{ name: "Home", path: "/" }, { name: "Japanese Last Names", path: "/japanese-last-names" }])} />
       <JsonLd
         data={{
           "@context": "https://schema.org",
@@ -41,8 +39,7 @@ export default function LastNamesPage() {
           })),
         }}
       />
-      <Breadcrumbs items={[{ label: "Japanese Last Names" }]} />
-      <header className="page-intro my-6 max-w-4xl">
+      <header className="page-intro my-6">
         <p className="eyebrow">Family-name guide</p>
         <h1 className="section-title mt-2">Japanese Last Names &amp; Surnames</h1>
         <p className="mt-4 max-w-3xl text-base leading-7 text-[#59645d]">

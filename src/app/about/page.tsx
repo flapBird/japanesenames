@@ -1,9 +1,6 @@
 import type { Metadata } from "next";
-import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
-import { JsonLd } from "@/components/shared/JsonLd";
 import { SourceList } from "@/components/shared/SourceList";
 import { sources } from "@/data";
-import { breadcrumbJsonLd } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "About the Japanese Names Data",
@@ -25,9 +22,7 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   return (
     <div className="container-page themed-page theme-gold">
-      <JsonLd data={breadcrumbJsonLd([{ name: "Home", path: "/" }, { name: "About", path: "/about" }])} />
-      <Breadcrumbs items={[{ label: "About" }]} />
-      <header className="page-intro my-6 max-w-4xl">
+      <header className="page-intro my-6">
         <p className="eyebrow">Method and limits</p>
         <h1 className="section-title mt-2">Names deserve better than plausible-sounding guesses</h1>
         <p className="mt-5 max-w-3xl text-lg leading-8 text-[#59645d]">

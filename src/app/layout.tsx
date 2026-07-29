@@ -13,6 +13,29 @@ export const metadata: Metadata = {
   description:
     "Generate authentic Japanese names with kanji, meanings, pronunciation, and surname origins. Explore Japanese girl names, boy names, and family names.",
   applicationName: siteName,
+  manifest: "/manifest.webmanifest",
+  icons: {
+    icon: [
+      { url: "/japanese-names-icon.svg", type: "image/svg+xml" },
+      {
+        url: "/japanese-names-icon-192.png",
+        sizes: "192x192",
+        type: "image/png",
+      },
+      {
+        url: "/japanese-names-icon-512.png",
+        sizes: "512x512",
+        type: "image/png",
+      },
+    ],
+    apple: [
+      {
+        url: "/apple-touch-icon.png",
+        sizes: "180x180",
+        type: "image/png",
+      },
+    ],
+  },
   alternates: { canonical: "/" },
   openGraph: {
     type: "website",

@@ -82,13 +82,12 @@ export default function HomePage() {
           ],
         }}
       />
-      <section className="container-page pb-10 pt-10 sm:pt-14">
-        <div className="mb-8 max-w-3xl">
-          <p className="eyebrow">Names with context, not guesswork</p>
-          <h1 className="section-title mt-3 !text-[clamp(2.5rem,8vw,4.8rem)]">
+      <section className="container-page pb-8 pt-7 sm:pt-9">
+        <div className="mb-5 max-w-3xl">
+          <h1 className="section-title !text-[clamp(2.2rem,6vw,3.8rem)]">
             Japanese Name Generator
           </h1>
-          <p className="mt-4 max-w-2xl text-base leading-7 text-[#59645d] sm:text-lg">
+          <p className="mt-3 max-w-2xl text-base leading-6 text-[#59645d] sm:leading-7">
             Generate authentic Japanese names and discover the meanings, kanji,
             and stories behind their surnames.
           </p>
@@ -96,6 +95,48 @@ export default function HomePage() {
         <Suspense fallback={<div className="surface min-h-96 p-8">Loading the structured generator…</div>}>
           <NameGenerator />
         </Suspense>
+        <section
+          aria-labelledby="generator-help-title"
+          className="mt-8 grid gap-5 border-y border-[#deddd5] py-6 lg:grid-cols-[0.65fr_1.35fr] lg:items-start"
+        >
+          <div>
+            <h2 className="text-xl font-semibold" id="generator-help-title">
+              How to use the generator
+            </h2>
+            <p className="mt-2 max-w-md text-sm leading-6 text-[#647068]">
+              Start broad, then keep the part you like while exploring alternatives.
+            </p>
+          </div>
+          <ol className="grid gap-4 sm:grid-cols-3">
+            {[
+              [
+                "Choose and generate",
+                "Set only the filters that matter to you, then generate six structured matches.",
+              ],
+              [
+                "Lock one part",
+                "Lock surname keeps the family name. Lock first name keeps the given name.",
+              ],
+              [
+                "Copy or explore",
+                "Copy the complete name, or open either detail page for meanings and context.",
+              ],
+            ].map(([title, text], index) => (
+              <li className="flex gap-3" key={title}>
+                <span
+                  aria-hidden="true"
+                  className="grid size-7 shrink-0 place-items-center rounded-full bg-[#315c4b] text-xs font-bold text-white"
+                >
+                  {index + 1}
+                </span>
+                <div>
+                  <h3 className="text-sm font-semibold">{title}</h3>
+                  <p className="mt-1 text-xs leading-5 text-[#647068]">{text}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
+        </section>
       </section>
 
       <section className="container-page py-14">
@@ -129,6 +170,31 @@ export default function HomePage() {
               </span>
             </Link>
           ))}
+        </div>
+      </section>
+
+      <section className="container-page pb-14">
+        <div className="grid gap-5 border-t border-[#deddd5] pt-8 lg:grid-cols-[0.7fr_1.3fr]">
+          <div>
+            <p className="eyebrow">About the tool</p>
+            <h2 className="section-title mt-2 !text-[clamp(1.8rem,4vw,2.6rem)]">
+              What is the Japanese Name Generator?
+            </h2>
+          </div>
+          <div className="max-w-3xl space-y-3 text-sm leading-6 text-[#59645d] sm:text-base sm:leading-7">
+            <p>
+              Japanese Names is a reference-first generator for exploring natural
+              Japanese full names. It combines reviewed surname records, established
+              first-name readings, and documented kanji variations instead of
+              inventing characters or pronunciations.
+            </p>
+            <p>
+              Each result shows the name in kanji, hiragana, and romaji, together
+              with its meaning, style, and surname context. You can lock either part
+              to compare alternatives, then open the name or surname page for more
+              detail.
+            </p>
+          </div>
         </div>
       </section>
 

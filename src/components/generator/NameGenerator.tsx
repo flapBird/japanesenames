@@ -30,6 +30,9 @@ export function NameGenerator() {
   const [lockedSurnameId, setLockedSurnameId] = useState(validSurnameId);
   const [lockedFirstNameId, setLockedFirstNameId] = useState(validFirstNameId);
   const [seed, setSeed] = useState(20260729);
+  const [excludedKeys, setExcludedKeys] = useState<string[]>([]);
+  const [excludedSurnameIds, setExcludedSurnameIds] = useState<string[]>([]);
+  const [excludedFirstNameIds, setExcludedFirstNameIds] = useState<string[]>([]);
   const [order, setOrder] = useState<NameOrder>("japanese");
 
   const results = useMemo(
@@ -38,12 +41,37 @@ export function NameGenerator() {
         filters,
         lockedSurnameId,
         lockedFirstNameId,
+        excludeKeys: excludedKeys,
+        excludeSurnameIds: excludedSurnameIds,
+        excludeFirstNameIds: excludedFirstNameIds,
         seed,
       }),
-    [filters, lockedFirstNameId, lockedSurnameId, seed],
+    [
+      excludedFirstNameIds,
+      excludedKeys,
+      excludedSurnameIds,
+      filters,
+      lockedFirstNameId,
+      lockedSurnameId,
+      seed,
+    ],
   );
 
+  function rememberCurrentResults() {
+    if (results.length === 0) return;
+    setExcludedKeys((current) => [
+      ...new Set([...current, ...results.map((item) => item.key)]),
+    ]);
+    setExcludedSurnameIds((current) => [
+      ...new Set([...current, ...results.map((item) => item.surname.id)]),
+    ]);
+    setExcludedFirstNameIds((current) => [
+      ...new Set([...current, ...results.map((item) => item.firstName.id)]),
+    ]);
+  }
+
   function applyFilters() {
+    rememberCurrentResults();
     setFilters(draftFilters);
     setSeed((value) => value + 1);
     trackEvent("generate_names", { ...draftFilters });
@@ -52,6 +80,7 @@ export function NameGenerator() {
 
   function regenerate() {
     if (lockedSurnameId && lockedFirstNameId) return;
+    rememberCurrentResults();
     setSeed((value) => value + 1);
     trackEvent("regenerate_names", {
       lockedSurnameId,
@@ -60,6 +89,7 @@ export function NameGenerator() {
   }
 
   function resetFilters() {
+    rememberCurrentResults();
     setDraftFilters(defaultFilters);
     setFilters(defaultFilters);
     setSeed((value) => value + 1);
@@ -68,47 +98,30 @@ export function NameGenerator() {
   return (
     <section className="scroll-mt-4" id="generator" aria-labelledby="generator-title">
       <div className="surface overflow-hidden shadow-[var(--shadow)]">
-        <div className="border-b border-[#d9ddd8] bg-[#eef2ee] px-5 py-4 sm:px-7">
+        <div className="border-b border-[#d9ddd8] bg-[#eef2ee] px-4 py-2.5 sm:px-5 sm:py-3">
           <div className="flex flex-wrap items-center justify-between gap-3">
-            <div>
-              <p className="eyebrow">Structured data · no AI assembly</p>
-              <h2 className="mt-1 text-xl font-semibold" id="generator-title">
-                Build an authentic full name
-              </h2>
-            </div>
+            <h2 className="sr-only" id="generator-title">
+              Build an authentic full name
+            </h2>
+            <span aria-hidden="true" className="hidden text-lg font-semibold sm:block">
+              Build an authentic full name
+            </span>
             <NameOrderToggle onChange={setOrder} value={order} />
           </div>
         </div>
-        <div className="p-5 sm:p-7">
+        <div className="p-4 sm:p-5">
           <GeneratorFilters onChange={setDraftFilters} value={draftFilters} />
-          {(lockedSurnameId || lockedFirstNameId) && (
-            <div className="mt-4 flex flex-wrap gap-2" aria-label="Locked values">
-              {lockedSurnameId && (
-                <button
-                  className="chip !border-[#aac0b1] !bg-[#e7eee9]"
-                  onClick={() => setLockedSurnameId(undefined)}
-                  type="button"
-                >
-                  Surname: {surnameById.get(lockedSurnameId)?.romaji} · Unlock ×
-                </button>
-              )}
-              {lockedFirstNameId && (
-                <button
-                  className="chip !border-[#aac0b1] !bg-[#e7eee9]"
-                  onClick={() => setLockedFirstNameId(undefined)}
-                  type="button"
-                >
-                  First name: {firstNameById.get(lockedFirstNameId)?.romaji} · Unlock ×
-                </button>
-              )}
-            </div>
-          )}
-          <div className="mt-5 flex flex-wrap items-center gap-3">
-            <button className="button-primary" onClick={applyFilters} type="button">
-              Generate 6 names
+          <div className="mt-4 grid grid-cols-2 items-center gap-2 sm:flex sm:flex-wrap sm:gap-3">
+            <button
+              aria-label="Generate 6 names"
+              className="button-primary !px-3.5 !text-[0.82rem] sm:!px-4 sm:!text-sm"
+              onClick={applyFilters}
+              type="button"
+            >
+              Generate names
             </button>
             <button
-              className="button-secondary"
+              className="button-secondary !px-3.5 !text-[0.82rem] sm:!px-4 sm:!text-sm"
               disabled={Boolean(lockedSurnameId && lockedFirstNameId)}
               onClick={regenerate}
               type="button"
@@ -116,7 +129,7 @@ export function NameGenerator() {
               Generate again
             </button>
             {lockedSurnameId && lockedFirstNameId && (
-              <span className="text-xs text-[#68726b]">
+              <span className="col-span-2 text-xs text-[#68726b]">
                 Unlock either part to generate alternatives.
               </span>
             )}
@@ -124,13 +137,50 @@ export function NameGenerator() {
         </div>
       </div>
 
-      <div className="mt-6" aria-live="polite">
+      <div className="mt-5" aria-live="polite">
         {results.length > 0 ? (
           <>
-            <div className="mb-3 flex items-center justify-between">
-              <p className="text-sm text-[#647068]">
-                {results.length} structured matches · surname shown first by default
-              </p>
+            <div className="mb-3 flex flex-wrap items-center justify-between gap-3">
+              <div>
+                <p className="text-sm text-[#647068]">
+                  {results.length} structured matches · surname shown first by default
+                </p>
+                {!lockedSurnameId && !lockedFirstNameId && (
+                  <p className="mt-1 text-xs text-[#7a827d]">
+                    New batches avoid names already shown in this session. Keep either part to vary the other.
+                  </p>
+                )}
+              </div>
+              {(lockedSurnameId || lockedFirstNameId) && (
+                <div className="flex flex-wrap gap-2" aria-label="Kept name parts">
+                  {lockedSurnameId && (
+                    <button
+                      className="chip !border-[#aac0b1] !bg-[#e7eee9]"
+                      onClick={() => {
+                        rememberCurrentResults();
+                        setLockedSurnameId(undefined);
+                        setSeed((value) => value + 1);
+                      }}
+                      type="button"
+                    >
+                      Keeping surname: {surnameById.get(lockedSurnameId)?.romaji} · Remove ×
+                    </button>
+                  )}
+                  {lockedFirstNameId && (
+                    <button
+                      className="chip !border-[#aac0b1] !bg-[#e7eee9]"
+                      onClick={() => {
+                        rememberCurrentResults();
+                        setLockedFirstNameId(undefined);
+                        setSeed((value) => value + 1);
+                      }}
+                      type="button"
+                    >
+                      Keeping first name: {firstNameById.get(lockedFirstNameId)?.romaji} · Remove ×
+                    </button>
+                  )}
+                </div>
+              )}
             </div>
             <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
               {results.map((item) => (
@@ -139,15 +189,15 @@ export function NameGenerator() {
                   item={item}
                   key={item.key}
                   onLockFirstName={() => {
-                    setLockedFirstNameId((current) =>
-                      current === item.firstName.id ? undefined : item.firstName.id,
-                    );
+                    rememberCurrentResults();
+                    setLockedFirstNameId(item.firstName.id);
+                    setSeed((value) => value + 1);
                     trackEvent("lock_first_name", { id: item.firstName.id });
                   }}
                   onLockSurname={() => {
-                    setLockedSurnameId((current) =>
-                      current === item.surname.id ? undefined : item.surname.id,
-                    );
+                    rememberCurrentResults();
+                    setLockedSurnameId(item.surname.id);
+                    setSeed((value) => value + 1);
                     trackEvent("lock_surname", { id: item.surname.id });
                   }}
                   order={order}

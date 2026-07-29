@@ -46,10 +46,9 @@ export default function GirlNamesPage() {
         }}
       />
       <Breadcrumbs items={[{ label: "Japanese Girl Names" }]} />
-      <header className="max-w-3xl py-8">
-        <p className="eyebrow">Given-name guide</p>
-        <h1 className="section-title mt-2">Japanese Girl Names with Meanings and Kanji</h1>
-        <p className="mt-4 text-base leading-7 text-[#59645d]">
+      <header className="max-w-3xl py-5">
+        <h1 className="section-title">Japanese Girl Names with Meanings and Kanji</h1>
+        <p className="mt-3 text-base leading-7 text-[#59645d]">
           Search Japanese girl names by reading, kanji, meaning, style, and
           commonness. Each card shows one recommended spelling; detail pages
           keep additional variations separate.

@@ -8,10 +8,12 @@ export function CopyButton({
   text,
   eventName = "copy_full_name",
   label = "Copy",
+  className = "",
 }: {
   text: string;
   eventName?: EventName;
   label?: string;
+  className?: string;
 }) {
   const [copied, setCopied] = useState(false);
 
@@ -29,7 +31,7 @@ export function CopyButton({
   return (
     <button
       aria-label={`${label}: ${text}`}
-      className="button-quiet !min-h-9 !px-2.5"
+      className={`button-quiet !min-h-9 !px-2.5 ${className}`}
       onClick={copy}
       type="button"
     >

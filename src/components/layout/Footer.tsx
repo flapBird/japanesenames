@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { BrandMark } from "@/components/BrandMark";
 
 export function Footer() {
   return (
@@ -6,7 +7,7 @@ export function Footer() {
       <div className="container-page grid gap-10 py-12 md:grid-cols-[1.3fr_1fr_1fr]">
         <div className="max-w-md">
           <div className="mb-4 flex items-center gap-3 font-semibold">
-            <span className="seal" aria-hidden="true">名</span>
+            <BrandMark className="size-8" />
             Japanese Names
           </div>
           <p className="text-sm leading-6 text-[#647068]">

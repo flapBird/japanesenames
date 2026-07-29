@@ -46,10 +46,9 @@ export default function BoyNamesPage() {
         }}
       />
       <Breadcrumbs items={[{ label: "Japanese Boy Names" }]} />
-      <header className="max-w-3xl py-8">
-        <p className="eyebrow">Given-name guide</p>
-        <h1 className="section-title mt-2">Japanese Boy Names with Meanings and Kanji</h1>
-        <p className="mt-4 text-base leading-7 text-[#59645d]">
+      <header className="max-w-3xl py-5">
+        <h1 className="section-title">Japanese Boy Names with Meanings and Kanji</h1>
+        <p className="mt-3 text-base leading-7 text-[#59645d]">
           Browse Japanese boy names with recommended kanji, hiragana, meaning
           tags, era labels, and transparent naturalness notes.
         </p>

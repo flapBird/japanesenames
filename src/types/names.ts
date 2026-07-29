@@ -147,6 +147,9 @@ export interface GeneratorRequest {
   filters: GeneratorFilters;
   lockedSurnameId?: string;
   lockedFirstNameId?: string;
+  excludeKeys?: string[];
+  excludeSurnameIds?: string[];
+  excludeFirstNameIds?: string[];
   count?: number;
   seed?: number;
 }

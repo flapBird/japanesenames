@@ -13,12 +13,11 @@ export default function FavoritesPage() {
   return (
     <div className="container-page">
       <Breadcrumbs items={[{ label: "Favorites" }]} />
-      <header className="max-w-3xl py-8">
-        <p className="eyebrow">Browser-only collection</p>
-        <h1 className="section-title mt-2">Your saved names</h1>
-        <p className="mt-4 leading-7 text-[#59645d]">
-          Favorites are stored only in localStorage on this device. If storage
-          is unavailable or cleared, the list will safely appear empty.
+      <header className="max-w-3xl py-6">
+        <h1 className="section-title">Your saved names</h1>
+        <p className="mt-3 leading-7 text-[#59645d]">
+          A personal collection of full names, first names, and surnames saved
+          on this device. No account is required.
         </p>
       </header>
       <FavoritesList />

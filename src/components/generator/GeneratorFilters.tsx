@@ -83,9 +83,9 @@ export function GeneratorFilters({
   onChange: (value: Filters) => void;
 }) {
   return (
-    <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+    <div className="grid grid-cols-2 gap-2.5 lg:grid-cols-3 xl:grid-cols-6">
       {fields.map((field) => (
-        <label className="grid gap-1.5 text-xs font-bold text-[#465149]" key={field.key}>
+        <label className="grid content-start gap-1.5 text-[0.7rem] font-bold text-[#465149]" key={field.key}>
           {field.label}
           <select
             className="field"

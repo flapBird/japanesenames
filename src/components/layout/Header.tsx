@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { BrandMark } from "@/components/BrandMark";
 
 const navigation = [
   { href: "/#generator", label: "Generator" },
@@ -16,7 +17,7 @@ export function Header() {
           className="flex items-center gap-3 font-semibold tracking-[-0.02em]"
           href="/"
         >
-          <span className="seal" aria-hidden="true">名</span>
+          <BrandMark className="size-8" />
           <span>Japanese Names</span>
         </Link>
         <nav aria-label="Main navigation" className="hidden items-center gap-6 md:flex">

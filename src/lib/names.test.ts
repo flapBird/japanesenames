@@ -69,6 +69,46 @@ describe("structured name generation", () => {
     expect(new Set(results.map((result) => result.key)).size).toBe(results.length);
   });
 
+  it("maximizes surname and first-name variety within a batch", () => {
+    const results = generateNames({ filters, count: 6, seed: 9 });
+
+    expect(new Set(results.map((result) => result.surname.id)).size).toBe(6);
+    expect(new Set(results.map((result) => result.firstName.id)).size).toBe(6);
+  });
+
+  it("avoids names already shown in the session", () => {
+    const firstBatch = generateNames({ filters, count: 6, seed: 10 });
+    const secondBatch = generateNames({
+      filters,
+      count: 6,
+      seed: 11,
+      excludeKeys: firstBatch.map((result) => result.key),
+    });
+
+    expect(
+      secondBatch.every(
+        (result) => !firstBatch.some((previous) => previous.key === result.key),
+      ),
+    ).toBe(true);
+  });
+
+  it("reuses prior names only after the matching pool is exhausted", () => {
+    const completePool = generateNames({ filters, count: 1_000, seed: 12 });
+    const fallbackBatch = generateNames({
+      filters,
+      count: 6,
+      seed: 13,
+      excludeKeys: completePool.map((result) => result.key),
+    });
+
+    expect(fallbackBatch).toHaveLength(6);
+    expect(
+      fallbackBatch.every((result) =>
+        completePool.some((previous) => previous.key === result.key),
+      ),
+    ).toBe(true);
+  });
+
   it("does not generate from records marked needs_review", () => {
     const results = generateNames({
       filters: { ...filters, mode: "any" },

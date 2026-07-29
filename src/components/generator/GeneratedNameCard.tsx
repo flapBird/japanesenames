@@ -47,7 +47,15 @@ export function GeneratedNameCard({
           <p className="mt-1 font-semibold">{romaji}</p>
           <p className="japanese-display mt-0.5 text-sm text-[#6a746d]">{hiragana}</p>
         </div>
-        <span className="seal" aria-hidden="true">名</span>
+        <FavoriteButton
+          compact
+          item={{
+            id: `full:${item.key}`,
+            kind: "full_name",
+            label: japanese,
+            sublabel: romaji,
+          }}
+        />
       </div>
       <dl className="mb-5 grid gap-2 border-t border-[#e3e2dc] pt-4 text-sm">
         <div className="flex justify-between gap-4">
@@ -69,34 +77,38 @@ export function GeneratedNameCard({
           <dd className="font-semibold capitalize">{item.surname.originTypes[0]}</dd>
         </div>
       </dl>
-      <div className="mt-auto flex flex-wrap items-center gap-1 border-t border-[#e3e2dc] pt-3">
+      <div className="mt-auto grid grid-cols-[minmax(0,1fr)_minmax(0,1fr)_auto] items-center gap-1 border-t border-[#e3e2dc] pt-3">
         <button
+          aria-label={`Lock surname ${item.surname.romaji} and generate different first names`}
           aria-pressed={surnameLocked}
-          className={`button-quiet !min-h-9 !px-2.5 ${surnameLocked ? "!bg-[#e7eee9] !text-[#244638]" : ""}`}
+          className={`button-quiet !min-h-9 min-w-0 justify-center !px-1.5 !text-[0.68rem] whitespace-nowrap sm:!px-2 sm:!text-xs [&_svg]:hidden sm:[&_svg]:block ${
+            surnameLocked ? "!bg-[#e7eee9] !text-[#315c4b]" : ""
+          }`}
+          disabled={surnameLocked}
           onClick={onLockSurname}
+          title={`Lock ${item.surname.romaji} and generate different first names`}
           type="button"
         >
           <LockIcon />
-          Surname
+          {surnameLocked ? "Surname locked" : "Lock surname"}
         </button>
         <button
+          aria-label={`Lock first name ${item.firstName.romaji} and generate different surnames`}
           aria-pressed={firstNameLocked}
-          className={`button-quiet !min-h-9 !px-2.5 ${firstNameLocked ? "!bg-[#e7eee9] !text-[#244638]" : ""}`}
+          className={`button-quiet !min-h-9 min-w-0 justify-center !px-1.5 !text-[0.68rem] whitespace-nowrap sm:!px-2 sm:!text-xs [&_svg]:hidden sm:[&_svg]:block ${
+            firstNameLocked ? "!bg-[#e7eee9] !text-[#315c4b]" : ""
+          }`}
+          disabled={firstNameLocked}
           onClick={onLockFirstName}
+          title={`Lock ${item.firstName.romaji} and generate different surnames`}
           type="button"
         >
           <LockIcon />
-          First
+          {firstNameLocked ? "First name locked" : "Lock first name"}
         </button>
-        <CopyButton text={`${japanese} — ${romaji} — ${hiragana}`} />
-        <FavoriteButton
-          compact
-          item={{
-            id: `full:${item.key}`,
-            kind: "full_name",
-            label: japanese,
-            sublabel: romaji,
-          }}
+        <CopyButton
+          className="justify-center !px-1.5 !text-[0.68rem] sm:!px-2 sm:!text-xs [&_svg]:hidden sm:[&_svg]:block"
+          text={`${japanese} — ${romaji} — ${hiragana}`}
         />
       </div>
       <div className="mt-3 flex gap-4 text-xs font-bold text-[#315c4b]">

@@ -137,6 +137,66 @@ function combinationNaturalness(
   return variationNaturalness;
 }
 
+function takeDiverseNames(
+  candidates: GeneratedName[],
+  count: number,
+  request: GeneratorRequest,
+  selected: GeneratedName[] = [],
+) {
+  const remaining = [...candidates];
+  const usedSurnameIds = new Set(selected.map((item) => item.surname.id));
+  const usedFirstNameIds = new Set(selected.map((item) => item.firstName.id));
+  const previousSurnameIds = new Set(request.excludeSurnameIds ?? []);
+  const previousFirstNameIds = new Set(request.excludeFirstNameIds ?? []);
+
+  while (remaining.length > 0 && selected.length < count) {
+    let bestIndex = 0;
+    let bestScore = Number.NEGATIVE_INFINITY;
+
+    for (let index = 0; index < remaining.length; index += 1) {
+      const candidate = remaining[index];
+      let score = 0;
+
+      if (
+        request.lockedSurnameId ||
+        !usedSurnameIds.has(candidate.surname.id)
+      ) {
+        score += 8;
+      }
+      if (
+        request.lockedFirstNameId ||
+        !usedFirstNameIds.has(candidate.firstName.id)
+      ) {
+        score += 8;
+      }
+      if (
+        request.lockedSurnameId ||
+        !previousSurnameIds.has(candidate.surname.id)
+      ) {
+        score += 2;
+      }
+      if (
+        request.lockedFirstNameId ||
+        !previousFirstNameIds.has(candidate.firstName.id)
+      ) {
+        score += 2;
+      }
+
+      if (score > bestScore) {
+        bestIndex = index;
+        bestScore = score;
+      }
+    }
+
+    const [picked] = remaining.splice(bestIndex, 1);
+    selected.push(picked);
+    usedSurnameIds.add(picked.surname.id);
+    usedFirstNameIds.add(picked.firstName.id);
+  }
+
+  return selected;
+}
+
 export function generateNames(request: GeneratorRequest): GeneratedName[] {
   const count = request.count ?? 6;
   const names = firstNameCandidates(request);
@@ -179,5 +239,22 @@ export function generateNames(request: GeneratorRequest): GeneratedName[] {
     }
   }
 
-  return seededShuffle(combinations, request.seed ?? 1).slice(0, count);
+  const shuffled = seededShuffle(combinations, request.seed ?? 1);
+  const excludedKeys = new Set(request.excludeKeys ?? []);
+
+  if (excludedKeys.size === 0) {
+    return takeDiverseNames(shuffled, count, request);
+  }
+
+  const unseen = shuffled.filter((item) => !excludedKeys.has(item.key));
+  if (unseen.length >= count) {
+    return takeDiverseNames(unseen, count, request);
+  }
+
+  // A narrow filter or two locked parts can exhaust the unseen pool.
+  // Fill the remainder only then, so the generator stays useful rather
+  // than returning fewer cards without explanation.
+  const previouslySeen = shuffled.filter((item) => excludedKeys.has(item.key));
+  const selected = takeDiverseNames(unseen, count, request);
+  return takeDiverseNames(previouslySeen, count, request, selected);
 }

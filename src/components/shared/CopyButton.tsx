@@ -1,0 +1,40 @@
+"use client";
+
+import { useState } from "react";
+import { CopyIcon } from "@/components/icons";
+import { trackEvent, type EventName } from "@/lib/analytics";
+
+export function CopyButton({
+  text,
+  eventName = "copy_full_name",
+  label = "Copy",
+}: {
+  text: string;
+  eventName?: EventName;
+  label?: string;
+}) {
+  const [copied, setCopied] = useState(false);
+
+  async function copy() {
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopied(true);
+      trackEvent(eventName, { text });
+      window.setTimeout(() => setCopied(false), 1600);
+    } catch {
+      setCopied(false);
+    }
+  }
+
+  return (
+    <button
+      aria-label={`${label}: ${text}`}
+      className="button-quiet !min-h-9 !px-2.5"
+      onClick={copy}
+      type="button"
+    >
+      <CopyIcon />
+      {copied ? "Copied" : label}
+    </button>
+  );
+}

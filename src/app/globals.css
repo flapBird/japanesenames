@@ -1,0 +1,247 @@
+@import "tailwindcss";
+
+:root {
+  --ink: #19241f;
+  --muted: #647068;
+  --paper: #f7f5ef;
+  --surface: #fffefb;
+  --line: #deddd5;
+  --moss: #315c4b;
+  --moss-dark: #244638;
+  --moss-soft: #e7eee9;
+  --clay: #a34837;
+  --clay-soft: #f4e9e5;
+  --gold: #9b7936;
+  --shadow: 0 18px 50px rgb(25 36 31 / 0.08);
+  --motion-fast: 250ms;
+  --motion-ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background:
+    linear-gradient(rgb(49 92 75 / 0.025) 1px, transparent 1px),
+    var(--paper);
+  background-size: 100% 32px;
+  color: var(--ink);
+  font-family:
+    Inter,
+    "Noto Sans JP",
+    "Hiragino Kaku Gothic ProN",
+    "Yu Gothic",
+    sans-serif;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: #cadbcf;
+}
+
+a,
+button,
+input,
+select,
+summary {
+  outline-offset: 3px;
+}
+
+button,
+select {
+  cursor: pointer;
+}
+
+.container-page {
+  width: min(1180px, calc(100% - 2rem));
+  margin-inline: auto;
+}
+
+.surface {
+  border: 1px solid var(--line);
+  border-radius: 1rem;
+  background: color-mix(in srgb, var(--surface) 96%, transparent);
+  box-shadow: 0 1px 0 rgb(255 255 255 / 0.8) inset;
+}
+
+.eyebrow {
+  color: var(--clay);
+  font-size: 0.72rem;
+  font-weight: 750;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.section-title {
+  font-family: Georgia, "Yu Mincho", serif;
+  font-size: clamp(1.85rem, 5vw, 2.8rem);
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  line-height: 1.12;
+}
+
+.button-primary,
+.button-secondary,
+.button-quiet {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 999px;
+  padding: 0.65rem 1rem;
+  font-size: 0.88rem;
+  font-weight: 700;
+  transition:
+    transform var(--motion-fast) var(--motion-ease),
+    background-color 150ms ease,
+    border-color 150ms ease;
+}
+
+.button-primary {
+  border: 1px solid var(--moss);
+  background: var(--moss);
+  color: white;
+}
+
+.button-primary:hover {
+  background: var(--moss-dark);
+  transform: translateY(-1px);
+}
+
+.button-secondary {
+  border: 1px solid #b8c2bb;
+  background: var(--surface);
+  color: var(--moss-dark);
+}
+
+.button-secondary:hover {
+  border-color: var(--moss);
+  background: var(--moss-soft);
+}
+
+.button-quiet {
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--muted);
+}
+
+.button-quiet:hover {
+  background: #eeeee8;
+  color: var(--ink);
+}
+
+.button-primary:disabled,
+.button-secondary:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+  transform: none;
+}
+
+.field {
+  min-height: 2.8rem;
+  width: 100%;
+  border: 1px solid #cfd1ca;
+  border-radius: 0.75rem;
+  background: var(--surface);
+  padding: 0.65rem 0.8rem;
+  color: var(--ink);
+  font-size: 0.9rem;
+}
+
+.field:focus {
+  border-color: var(--moss);
+  box-shadow: 0 0 0 3px rgb(49 92 75 / 0.12);
+  outline: none;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.32rem;
+  border: 1px solid #d7d7d0;
+  border-radius: 999px;
+  background: #f7f7f3;
+  padding: 0.28rem 0.55rem;
+  color: #465149;
+  font-size: 0.72rem;
+  font-weight: 650;
+}
+
+.seal {
+  display: grid;
+  width: 2rem;
+  height: 2rem;
+  place-items: center;
+  border: 1px solid var(--clay);
+  border-radius: 0.25rem;
+  color: var(--clay);
+  font-family: "Yu Mincho", serif;
+  font-size: 0.72rem;
+  line-height: 1;
+  transform: rotate(-3deg);
+}
+
+.japanese-display {
+  font-family: "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
+  font-feature-settings: "palt";
+}
+
+.kanji-breakdown .kanji-piece {
+  transition:
+    transform var(--motion-fast) var(--motion-ease),
+    opacity var(--motion-fast) ease-in-out;
+}
+
+.kanji-breakdown:hover .kanji-piece:nth-child(odd),
+.kanji-breakdown[data-expanded="true"] .kanji-piece:nth-child(odd) {
+  transform: translateX(-0.35rem);
+}
+
+.kanji-breakdown:hover .kanji-piece:nth-child(even),
+.kanji-breakdown[data-expanded="true"] .kanji-piece:nth-child(even) {
+  transform: translateX(0.35rem);
+}
+
+.kanji-explanation {
+  opacity: 0.35;
+  transform: translateY(4px);
+  transition:
+    opacity var(--motion-fast) ease-in-out,
+    transform var(--motion-fast) var(--motion-ease);
+}
+
+.kanji-breakdown:hover .kanji-explanation,
+.kanji-breakdown[data-expanded="true"] .kanji-explanation {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+details > summary {
+  list-style: none;
+}
+
+details > summary::-webkit-details-marker {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}

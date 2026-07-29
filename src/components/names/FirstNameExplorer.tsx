@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { FavoriteButton } from "@/components/shared/FavoriteButton";
+import { PronunciationButton } from "@/components/shared/PronunciationButton";
 import { trackEvent } from "@/lib/analytics";
 import type { FirstNameRecord, Gender } from "@/types/names";
 
@@ -206,17 +207,24 @@ export function FirstNameExplorer({
                       <p className="mt-1 font-semibold">{name.romaji}</p>
                       <p className="japanese-display text-sm text-[#647068]">{name.hiragana}</p>
                     </div>
-                    <FavoriteButton
-                      compact
-                      eventName="favorite_full_name"
-                      item={{
-                        id: `first:${name.id}`,
-                        kind: "first_name",
-                        label: `${variation.kanji} · ${name.romaji}`,
-                        sublabel: name.hiragana,
-                        href: `/name/${name.slug}`,
-                      }}
-                    />
+                    <div className="flex shrink-0 items-center gap-2">
+                      <PronunciationButton
+                        label={name.romaji}
+                        text={name.hiragana}
+                      />
+                      <FavoriteButton
+                        compact
+                        eventName="favorite_full_name"
+                        item={{
+                          id: `first:${name.id}`,
+                          kind: "first_name",
+                          label: `${variation.kanji} · ${name.romaji}`,
+                          sublabel: name.hiragana,
+                          pronunciation: name.hiragana,
+                          href: `/name/${name.slug}`,
+                        }}
+                      />
+                    </div>
                   </div>
                   <p className="mt-4 text-sm leading-6 text-[#536058]">
                     {variation.meanings.join("; ")}

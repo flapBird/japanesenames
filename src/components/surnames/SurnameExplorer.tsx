@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { FavoriteButton } from "@/components/shared/FavoriteButton";
+import { PronunciationButton } from "@/components/shared/PronunciationButton";
 import { trackEvent } from "@/lib/analytics";
 import type { SurnameRecord } from "@/types/names";
 
@@ -149,16 +150,23 @@ export function SurnameExplorer({ surnames }: { surnames: SurnameRecord[] }) {
                     <p className="mt-1 font-semibold">{surname.romaji}</p>
                     <p className="japanese-display text-sm text-[#647068]">{surname.hiragana}</p>
                   </div>
-                  <FavoriteButton
-                    compact
-                    item={{
-                      id: `surname:${surname.id}`,
-                      kind: "surname",
-                      label: `${surname.kanji} · ${surname.romaji}`,
-                      sublabel: surname.literalMeaning,
-                      href: `/surname/${surname.slug}`,
-                    }}
-                  />
+                  <div className="flex shrink-0 items-center gap-2">
+                    <PronunciationButton
+                      label={surname.romaji}
+                      text={surname.hiragana}
+                    />
+                    <FavoriteButton
+                      compact
+                      item={{
+                        id: `surname:${surname.id}`,
+                        kind: "surname",
+                        label: `${surname.kanji} · ${surname.romaji}`,
+                        sublabel: surname.literalMeaning,
+                        pronunciation: surname.hiragana,
+                        href: `/surname/${surname.slug}`,
+                      }}
+                    />
+                  </div>
                 </div>
                 <p className="mt-4 text-sm leading-6 text-[#536058]">{surname.literalMeaning}</p>
                 <div className="mt-4 flex flex-wrap gap-1.5">

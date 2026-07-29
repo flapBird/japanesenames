@@ -70,3 +70,19 @@ export function VolumeIcon(props: SVGProps<SVGSVGElement>) {
     </IconBase>
   );
 }
+
+export function StopIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <IconBase {...props}>
+      <rect
+        height="10"
+        rx="1.5"
+        stroke="currentColor"
+        strokeWidth="1.6"
+        width="10"
+        x="7"
+        y="7"
+      />
+    </IconBase>
+  );
+}

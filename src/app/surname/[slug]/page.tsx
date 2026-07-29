@@ -11,8 +11,8 @@ import { SurnameTimeline } from "@/components/surnames/SurnameTimeline";
 import { CopyButton } from "@/components/shared/CopyButton";
 import { FavoriteButton } from "@/components/shared/FavoriteButton";
 import { JsonLd } from "@/components/shared/JsonLd";
+import { PronunciationButton } from "@/components/shared/PronunciationButton";
 import { SourceList } from "@/components/shared/SourceList";
-import { VolumeIcon } from "@/components/icons";
 import { firstNameById, sourceById, surnames } from "@/data";
 import { breadcrumbJsonLd } from "@/lib/seo";
 import { getSurnameBySlug } from "@/lib/names";
@@ -92,14 +92,6 @@ export default async function SurnamePage({
             {surname.hiragana} · {surname.katakana}
           </p>
           <div className="mt-5 flex flex-wrap gap-2">
-            <button
-              className="button-secondary"
-              disabled
-              title="Audio will be added after pronunciation review"
-              type="button"
-            >
-              <VolumeIcon /> Pronunciation soon
-            </button>
             <CopyButton
               label="Copy"
               text={`${surname.kanji} · ${surname.romaji} · ${surname.hiragana}`}
@@ -110,8 +102,13 @@ export default async function SurnamePage({
                 kind: "surname",
                 label: `${surname.kanji} · ${surname.romaji}`,
                 sublabel: surname.literalMeaning,
+                pronunciation: surname.hiragana,
                 href: `/surname/${surname.slug}`,
               }}
+            />
+            <PronunciationButton
+              label={surname.romaji}
+              text={surname.hiragana}
             />
             <Link className="button-primary" href={`/?surname=${surname.id}#generator`}>
               Generate with this surname

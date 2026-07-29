@@ -5,6 +5,7 @@ export interface FavoriteItem {
   kind: FavoriteKind;
   label: string;
   sublabel: string;
+  pronunciation?: string;
   href?: string;
   savedAt: string;
 }

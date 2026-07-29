@@ -10,6 +10,7 @@ export type EventName =
   | "filter_generator"
   | "search_first_names"
   | "search_surnames"
+  | "play_pronunciation"
   | "use_name_in_generator";
 
 declare global {

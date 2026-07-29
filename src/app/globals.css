@@ -229,7 +229,8 @@ select {
 }
 
 .button-primary:disabled,
-.button-secondary:disabled {
+.button-secondary:disabled,
+.button-quiet:disabled {
   cursor: not-allowed;
   opacity: 0.5;
   transform: none;

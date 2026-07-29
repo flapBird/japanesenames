@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useMemo, useSyncExternalStore } from "react";
 import { CopyButton } from "@/components/shared/CopyButton";
 import { FavoriteButton } from "@/components/shared/FavoriteButton";
+import { PronunciationButton } from "@/components/shared/PronunciationButton";
 import {
   favoriteSnapshot,
   subscribeFavorites,
@@ -155,16 +156,25 @@ export function FavoritesList() {
                           <p className="mt-1 font-semibold">{display.romaji}</p>
                           <p className="mt-1 text-sm text-[#647068]">{display.detail}</p>
                         </div>
-                        <FavoriteButton
-                          compact
-                          item={{
-                            id: item.id,
-                            kind: item.kind,
-                            label: item.label,
-                            sublabel: item.sublabel,
-                            href: item.href,
-                          }}
-                        />
+                        <div className="flex shrink-0 items-center gap-2">
+                          {item.pronunciation && (
+                            <PronunciationButton
+                              label={display.romaji}
+                              text={item.pronunciation}
+                            />
+                          )}
+                          <FavoriteButton
+                            compact
+                            item={{
+                              id: item.id,
+                              kind: item.kind,
+                              label: item.label,
+                              sublabel: item.sublabel,
+                              pronunciation: item.pronunciation,
+                              href: item.href,
+                            }}
+                          />
+                        </div>
                       </div>
 
                       <p className="mt-5 text-xs text-[#7a827d]">

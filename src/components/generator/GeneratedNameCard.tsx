@@ -2,6 +2,7 @@ import Link from "next/link";
 import { LockIcon } from "@/components/icons";
 import { CopyButton } from "@/components/shared/CopyButton";
 import { FavoriteButton } from "@/components/shared/FavoriteButton";
+import { PronunciationButton } from "@/components/shared/PronunciationButton";
 import type { GeneratedName, NameOrder } from "@/types/names";
 
 const naturalnessLabel = {
@@ -54,15 +55,19 @@ export function GeneratedNameCard({
           <p className="mt-1 font-semibold">{romaji}</p>
           <p className="japanese-display mt-0.5 text-sm text-[#6a746d]">{hiragana}</p>
         </div>
-        <FavoriteButton
-          compact
-          item={{
-            id: `full:${item.key}`,
-            kind: "full_name",
-            label: japanese,
-            sublabel: romaji,
-          }}
-        />
+        <div className="flex shrink-0 items-center gap-2">
+          <PronunciationButton label={romaji} text={hiragana} />
+          <FavoriteButton
+            compact
+            item={{
+              id: `full:${item.key}`,
+              kind: "full_name",
+              label: japanese,
+              sublabel: romaji,
+              pronunciation: hiragana,
+            }}
+          />
+        </div>
       </div>
       <dl className="mb-5 grid gap-2 border-t border-[#e3e2dc] pt-4 text-sm">
         <div className="flex justify-between gap-4">

@@ -5,6 +5,7 @@ import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { CopyButton } from "@/components/shared/CopyButton";
 import { FavoriteButton } from "@/components/shared/FavoriteButton";
 import { JsonLd } from "@/components/shared/JsonLd";
+import { PronunciationButton } from "@/components/shared/PronunciationButton";
 import { SourceList } from "@/components/shared/SourceList";
 import { firstNames, sourceById, surnameById } from "@/data";
 import { getFirstNameBySlug } from "@/lib/names";
@@ -101,9 +102,11 @@ export default async function FirstNamePage({
                 kind: "first_name",
                 label: `${preferred.kanji} · ${name.romaji}`,
                 sublabel: name.hiragana,
+                pronunciation: name.hiragana,
                 href: `/name/${name.slug}`,
               }}
             />
+            <PronunciationButton label={name.romaji} text={name.hiragana} />
             <Link className="button-primary" href={`/?firstName=${name.id}#generator`}>
               Generate a full name
             </Link>

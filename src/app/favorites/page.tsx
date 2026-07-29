@@ -11,9 +11,9 @@ export const metadata: Metadata = {
 
 export default function FavoritesPage() {
   return (
-    <div className="container-page">
+    <div className="container-page themed-page theme-clay">
       <Breadcrumbs items={[{ label: "Favorites" }]} />
-      <header className="max-w-3xl py-6">
+      <header className="page-intro my-5 max-w-3xl">
         <h1 className="section-title">Your saved names</h1>
         <p className="mt-3 leading-7 text-[#59645d]">
           A personal collection of full names, first names, and surnames saved

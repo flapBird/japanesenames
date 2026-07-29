@@ -29,7 +29,7 @@ export default function BoyNamesPage() {
       name.verificationStatus !== "needs_review",
   );
   return (
-    <div className="container-page">
+    <div className="container-page themed-page theme-indigo">
       <JsonLd data={breadcrumbJsonLd([{ name: "Home", path: "/" }, { name: "Japanese Boy Names", path: "/japanese-boy-names" }])} />
       <JsonLd
         data={{
@@ -46,7 +46,7 @@ export default function BoyNamesPage() {
         }}
       />
       <Breadcrumbs items={[{ label: "Japanese Boy Names" }]} />
-      <header className="max-w-3xl py-5">
+      <header className="page-intro my-5 max-w-3xl">
         <h1 className="section-title">Japanese Boy Names with Meanings and Kanji</h1>
         <p className="mt-3 text-base leading-7 text-[#59645d]">
           Browse Japanese boy names with recommended kanji, hiragana, meaning

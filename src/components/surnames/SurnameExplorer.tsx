@@ -18,6 +18,9 @@ export function SurnameExplorer({ surnames }: { surnames: SurnameRecord[] }) {
   const [randomId, setRandomId] = useState<string>();
 
   const origins = [...new Set(surnames.flatMap((surname) => surname.originTypes))].sort();
+  const availableLetters = [
+    ...new Set(surnames.map((surname) => surname.romaji.charAt(0).toUpperCase())),
+  ].sort();
   const filtered = useMemo(() => {
     const normalized = query.trim().toLowerCase();
     return surnames
@@ -111,7 +114,7 @@ export function SurnameExplorer({ surnames }: { surnames: SurnameRecord[] }) {
           )}
         </div>
         <div className="mt-5 flex flex-wrap gap-1.5" aria-label="Browse by first letter">
-          {["All", ..."ABCDEFGHIJKLMNOPQRSTUVWXYZ"].map((item) => (
+          {["All", ...availableLetters].map((item) => (
             <button
               aria-pressed={letter === item}
               className={`grid size-8 place-items-center rounded-full text-xs font-bold ${
@@ -124,7 +127,7 @@ export function SurnameExplorer({ surnames }: { surnames: SurnameRecord[] }) {
               }}
               type="button"
             >
-              {item === "All" ? "•" : item}
+              {item}
             </button>
           ))}
         </div>

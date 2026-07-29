@@ -15,7 +15,6 @@ export function FirstNameExplorer({
   names: FirstNameRecord[];
   gender: Extract<Gender, "girl" | "boy">;
 }) {
-  const [query, setQuery] = useState("");
   const [letter, setLetter] = useState("All");
   const [meaning, setMeaning] = useState("any");
   const [style, setStyle] = useState("any");
@@ -23,7 +22,6 @@ export function FirstNameExplorer({
   const [length, setLength] = useState("any");
   const [sort, setSort] = useState("alphabetical");
   const [visible, setVisible] = useState(PAGE_SIZE);
-  const [filtersOpen, setFiltersOpen] = useState(false);
 
   const meaningOptions = useMemo(
     () => [...new Set(names.flatMap((name) => name.meaningTags))].sort(),
@@ -42,17 +40,7 @@ export function FirstNameExplorer({
   ].filter((value) => value !== "any").length;
 
   const filtered = useMemo(() => {
-    const normalized = query.trim().toLowerCase();
     const result = names.filter((name) => {
-      const variationText = name.variations.map((item) => item.kanji).join(" ");
-      if (
-        normalized &&
-        !`${name.romaji} ${name.hiragana} ${variationText}`
-          .toLowerCase()
-          .includes(normalized)
-      ) {
-        return false;
-      }
       if (letter !== "All" && !name.romaji.toUpperCase().startsWith(letter)) return false;
       if (meaning !== "any" && !name.meaningTags.includes(meaning)) return false;
       if (style !== "any" && !name.styles.includes(style as "modern" | "traditional" | "timeless")) return false;
@@ -70,10 +58,9 @@ export function FirstNameExplorer({
       }
       return a.romaji.localeCompare(b.romaji);
     });
-  }, [length, letter, meaning, names, popularity, query, sort, style]);
+  }, [length, letter, meaning, names, popularity, sort, style]);
 
   function clearFilters() {
-    setQuery("");
     setLetter("All");
     setMeaning("any");
     setStyle("any");
@@ -86,145 +73,87 @@ export function FirstNameExplorer({
   return (
     <section aria-labelledby="browse-heading">
       <div className="surface p-3 sm:p-4">
-        <div className="grid gap-2 sm:grid-cols-[minmax(0,1fr)_auto]">
-          <label>
-            <span className="sr-only">Search {gender} names</span>
-            <input
+        <div className="grid gap-2.5 sm:grid-cols-2 lg:grid-cols-5">
+          <label className="grid gap-1.5 text-[0.7rem] font-bold">
+            Meaning theme
+            <select
+              className="field capitalize"
+              onChange={(event) => {
+                setMeaning(event.target.value);
+                setVisible(PAGE_SIZE);
+              }}
+              value={meaning}
+            >
+              <option value="any">Any meaning</option>
+              {meaningOptions.map((option) => (
+                <option key={option} value={option}>{option}</option>
+              ))}
+            </select>
+          </label>
+          <label className="grid gap-1.5 text-[0.7rem] font-bold">
+            Era and style
+            <select
               className="field"
               onChange={(event) => {
-                setQuery(event.target.value);
+                setStyle(event.target.value);
                 setVisible(PAGE_SIZE);
-                trackEvent("search_first_names", { gender, query: event.target.value });
               }}
-              placeholder="Search Romaji, Hiragana, or Kanji"
-              type="search"
-              value={query}
-            />
+              value={style}
+            >
+              <option value="any">Any style</option>
+              <option value="modern">Modern</option>
+              <option value="traditional">Traditional</option>
+              <option value="timeless">Timeless</option>
+            </select>
           </label>
-          <button
-            aria-expanded={filtersOpen}
-            className="t-acc-head button-secondary !min-h-[2.55rem] !rounded-xl"
-            onClick={() => setFiltersOpen((open) => !open)}
-            type="button"
-          >
-            Filters
-            {activeFilterCount > 0 && (
-              <span className="grid size-5 place-items-center rounded-full bg-[#315c4b] text-[0.65rem] text-white">
-                {activeFilterCount}
-              </span>
-            )}
-            <span className="t-acc-chevron" aria-hidden="true">
-              <svg fill="none" height="16" viewBox="0 0 16 16" width="16">
-                <path
-                  d="M4 6.5L8 10.5L12 6.5"
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="1.5"
-                />
-              </svg>
-            </span>
-          </button>
+          <label className="grid gap-1.5 text-[0.7rem] font-bold">
+            Commonness
+            <select
+              className="field"
+              onChange={(event) => {
+                setPopularity(event.target.value);
+                setVisible(PAGE_SIZE);
+              }}
+              value={popularity}
+            >
+              <option value="any">Any commonness</option>
+              <option value="very_common">Popular</option>
+              <option value="common">Common</option>
+              <option value="uncommon">Uncommon</option>
+              <option value="rare">Rare</option>
+            </select>
+          </label>
+          <label className="grid gap-1.5 text-[0.7rem] font-bold">
+            Written length
+            <select
+              className="field"
+              onChange={(event) => {
+                setLength(event.target.value);
+                setVisible(PAGE_SIZE);
+              }}
+              value={length}
+            >
+              <option value="any">Any length</option>
+              <option value="1">1 Kanji</option>
+              <option value="2">2 Kanji</option>
+              <option value="3">3 Kanji</option>
+            </select>
+          </label>
+          <label className="col-span-2 grid gap-1.5 text-[0.7rem] font-bold lg:col-span-1">
+            Sort results
+            <select
+              className="field"
+              onChange={(event) => setSort(event.target.value)}
+              value={sort}
+            >
+              <option value="alphabetical">Alphabetical</option>
+              <option value="popularity">Most common first</option>
+              <option value="kanji_length">Shortest Kanji first</option>
+            </select>
+          </label>
         </div>
 
-        <div className="t-acc" data-open={filtersOpen}>
-          <div
-            aria-hidden={!filtersOpen}
-            className="t-acc-panel"
-            inert={!filtersOpen}
-          >
-            <div className="t-acc-panel-inner pt-3">
-              <div className="grid gap-2.5 border-t border-[#e3e2dc] pt-3 sm:grid-cols-2 lg:grid-cols-5">
-                <label className="grid gap-1.5 text-[0.7rem] font-bold">
-                  Meaning theme
-                  <select
-                    className="field capitalize"
-                    onChange={(event) => {
-                      setMeaning(event.target.value);
-                      setVisible(PAGE_SIZE);
-                    }}
-                    value={meaning}
-                  >
-                    <option value="any">Any meaning</option>
-                    {meaningOptions.map((option) => (
-                      <option key={option} value={option}>{option}</option>
-                    ))}
-                  </select>
-                </label>
-                <label className="grid gap-1.5 text-[0.7rem] font-bold">
-                  Era and style
-                  <select
-                    className="field"
-                    onChange={(event) => {
-                      setStyle(event.target.value);
-                      setVisible(PAGE_SIZE);
-                    }}
-                    value={style}
-                  >
-                    <option value="any">Any style</option>
-                    <option value="modern">Modern</option>
-                    <option value="traditional">Traditional</option>
-                    <option value="timeless">Timeless</option>
-                  </select>
-                </label>
-                <label className="grid gap-1.5 text-[0.7rem] font-bold">
-                  Commonness
-                  <select
-                    className="field"
-                    onChange={(event) => {
-                      setPopularity(event.target.value);
-                      setVisible(PAGE_SIZE);
-                    }}
-                    value={popularity}
-                  >
-                    <option value="any">Any commonness</option>
-                    <option value="very_common">Popular</option>
-                    <option value="common">Common</option>
-                    <option value="uncommon">Uncommon</option>
-                    <option value="rare">Rare</option>
-                  </select>
-                </label>
-                <label className="grid gap-1.5 text-[0.7rem] font-bold">
-                  Written length
-                  <select
-                    className="field"
-                    onChange={(event) => {
-                      setLength(event.target.value);
-                      setVisible(PAGE_SIZE);
-                    }}
-                    value={length}
-                  >
-                    <option value="any">Any Kanji length</option>
-                    <option value="1">1 Kanji</option>
-                    <option value="2">2 Kanji</option>
-                    <option value="3">3 Kanji</option>
-                  </select>
-                </label>
-                <label className="grid gap-1.5 text-[0.7rem] font-bold">
-                  Sort results
-                  <select
-                    className="field"
-                    onChange={(event) => setSort(event.target.value)}
-                    value={sort}
-                  >
-                    <option value="alphabetical">Alphabetical</option>
-                    <option value="popularity">Most common first</option>
-                    <option value="kanji_length">Shortest Kanji first</option>
-                  </select>
-                </label>
-              </div>
-              {activeFilterCount > 0 && (
-                <div className="mt-3 flex justify-end">
-                  <button className="button-quiet !min-h-8 !px-2 text-xs" onClick={clearFilters} type="button">
-                    Clear filters
-                  </button>
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-
-        <div className="mt-3 flex items-center gap-2 overflow-x-auto pb-1" aria-label="Browse by first letter">
+        <div className="mt-3 flex items-center gap-2 overflow-x-auto border-t border-[#e3e2dc] pt-3 pb-1" aria-label="Browse by first letter">
           <span className="shrink-0 text-[0.68rem] font-bold uppercase tracking-[0.08em] text-[#747d77]">
             Initial
           </span>
@@ -244,6 +173,15 @@ export function FirstNameExplorer({
               {item}
             </button>
           ))}
+          {activeFilterCount > 0 && (
+            <button
+              className="button-quiet ml-auto !min-h-8 shrink-0 !px-2 text-xs"
+              onClick={clearFilters}
+              type="button"
+            >
+              Clear filters
+            </button>
+          )}
         </div>
       </div>
 

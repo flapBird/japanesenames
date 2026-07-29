@@ -19,10 +19,6 @@
   --shadow: 0 18px 50px rgb(25 36 31 / 0.08);
   --motion-fast: 250ms;
   --motion-ease: cubic-bezier(0.22, 1, 0.36, 1);
-  --acc-expand: 250ms;
-  --acc-collapse: 250ms;
-  --acc-chevron: 250ms;
-  --acc-ease: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 * {
@@ -91,6 +87,78 @@ select {
   border-top-color: #ad5e6d;
   box-shadow: 0 13px 30px rgb(78 52 54 / 0.08);
   transform: translateY(-2px);
+}
+
+.themed-page {
+  --page-accent: var(--moss);
+  --page-accent-ink: var(--moss-dark);
+  --page-soft: var(--moss-soft);
+}
+
+.theme-sakura {
+  --page-accent: #c27684;
+  --page-accent-ink: #914b59;
+  --page-soft: #f7e8eb;
+}
+
+.theme-indigo {
+  --page-accent: #718793;
+  --page-accent-ink: #4b626e;
+  --page-soft: #eaf0f2;
+}
+
+.theme-moss {
+  --page-accent: #6f927f;
+  --page-accent-ink: #315c4b;
+  --page-soft: #e8f0eb;
+}
+
+.theme-clay {
+  --page-accent: #b66b5b;
+  --page-accent-ink: #8d493c;
+  --page-soft: #f5e8e4;
+}
+
+.theme-gold {
+  --page-accent: #b18c47;
+  --page-accent-ink: #7d612c;
+  --page-soft: #f5efdf;
+}
+
+.theme-plum {
+  --page-accent: #8b718d;
+  --page-accent-ink: #675169;
+  --page-soft: #f0eaf1;
+}
+
+.page-intro {
+  border-left: 4px solid var(--page-accent);
+  border-radius: 0 1rem 1rem 0;
+  background: color-mix(in srgb, var(--page-soft) 78%, transparent);
+  padding: 1.5rem;
+}
+
+.themed-page .surface {
+  border-color: color-mix(in srgb, var(--page-accent) 25%, var(--line));
+}
+
+.themed-page article.surface {
+  border-top: 3px solid var(--page-accent);
+  box-shadow: 0 8px 24px rgb(43 49 45 / 0.045);
+}
+
+.themed-page .eyebrow {
+  color: var(--page-accent-ink);
+}
+
+.themed-page .chip {
+  border-color: color-mix(in srgb, var(--page-accent) 28%, #d7d7d0);
+  background: color-mix(in srgb, var(--page-soft) 64%, #fffefb);
+}
+
+.themed-page .field:focus {
+  border-color: var(--page-accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--page-accent) 18%, transparent);
 }
 
 .eyebrow {
@@ -246,50 +314,6 @@ select {
   transform: translateY(0);
 }
 
-/* grid-template-rows 0fr → 1fr gives a clean height animation
-   with no JS measurement; the inner element clips overflow. */
-.t-acc-panel {
-  display: grid;
-  grid-template-rows: 0fr;
-  transition: grid-template-rows var(--acc-collapse) var(--acc-ease);
-}
-.t-acc[data-open="true"] .t-acc-panel {
-  grid-template-rows: 1fr;
-  transition: grid-template-rows var(--acc-expand) var(--acc-ease);
-}
-.t-acc-panel-inner {
-  overflow: hidden;
-  opacity: 0;
-  filter: blur(2px);
-  transition:
-    opacity var(--acc-collapse) var(--acc-ease),
-    filter var(--acc-collapse) var(--acc-ease);
-}
-.t-acc[data-open="true"] .t-acc-panel-inner {
-  opacity: 1;
-  filter: blur(0);
-  transition:
-    opacity var(--acc-expand) var(--acc-ease),
-    filter var(--acc-expand) var(--acc-ease);
-}
-/* Flip the chevron vertically to turn the "v" into a "^".
-   scaleY(-1) about the centre passes through a flat line at
-   the midpoint (same look as a `d:` path morph) but animates
-   in every browser, unlike CSS `d:` morphing (Chromium only).
-   The chevron path is symmetric about the 16x16 viewBox
-   centre, so the flip lands exactly on the "^"; non-scaling
-   -stroke keeps the stroke width constant through the flip. */
-.t-acc-chevron {
-  display: inline-flex;
-  transform: scaleY(1);
-  transform-origin: center;
-  transition: transform var(--acc-chevron) var(--acc-ease);
-}
-.t-acc-chevron path { vector-effect: non-scaling-stroke; }
-.t-acc[data-open="true"] .t-acc-chevron {
-  transform: scaleY(-1);
-}
-
 details > summary {
   list-style: none;
 }
@@ -299,10 +323,6 @@ details > summary::-webkit-details-marker {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .t-acc-panel, .t-acc-panel-inner, .t-acc-chevron {
-    transition: none !important;
-  }
-
   html {
     scroll-behavior: auto;
   }

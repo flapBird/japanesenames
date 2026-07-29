@@ -25,7 +25,7 @@ export const metadata: Metadata = {
 export default function LastNamesPage() {
   const surnames = getIndexableSurnames();
   return (
-    <div className="container-page">
+    <div className="container-page themed-page theme-moss">
       <JsonLd data={breadcrumbJsonLd([{ name: "Home", path: "/" }, { name: "Japanese Last Names", path: "/japanese-last-names" }])} />
       <JsonLd
         data={{
@@ -42,7 +42,7 @@ export default function LastNamesPage() {
         }}
       />
       <Breadcrumbs items={[{ label: "Japanese Last Names" }]} />
-      <header className="max-w-4xl py-8">
+      <header className="page-intro my-6 max-w-4xl">
         <p className="eyebrow">Family-name guide</p>
         <h1 className="section-title mt-2">Japanese Last Names &amp; Surnames</h1>
         <p className="mt-4 max-w-3xl text-base leading-7 text-[#59645d]">

@@ -59,7 +59,7 @@ export default async function SurnamePage({
     .filter((item) => item !== undefined);
 
   return (
-    <div className="container-page">
+    <div className="container-page themed-page theme-moss">
       <JsonLd
         data={breadcrumbJsonLd([
           { name: "Home", path: "/" },
@@ -73,7 +73,7 @@ export default async function SurnamePage({
           { label: surname.romaji },
         ]}
       />
-      <header className="grid gap-8 py-8 lg:grid-cols-[1fr_0.8fr] lg:items-end">
+      <header className="page-intro my-6 grid gap-8 lg:grid-cols-[1fr_0.8fr] lg:items-end">
         <div>
           {surname.verificationStatus === "needs_review" && (
             <p className="mb-4 inline-flex rounded-full bg-[#f4e9e5] px-3 py-1 text-xs font-bold text-[#843c2f]">

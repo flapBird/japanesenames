@@ -24,10 +24,10 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   return (
-    <div className="container-page">
+    <div className="container-page themed-page theme-gold">
       <JsonLd data={breadcrumbJsonLd([{ name: "Home", path: "/" }, { name: "About", path: "/about" }])} />
       <Breadcrumbs items={[{ label: "About" }]} />
-      <header className="max-w-4xl py-10">
+      <header className="page-intro my-6 max-w-4xl">
         <p className="eyebrow">Method and limits</p>
         <h1 className="section-title mt-2">Names deserve better than plausible-sounding guesses</h1>
         <p className="mt-5 max-w-3xl text-lg leading-8 text-[#59645d]">

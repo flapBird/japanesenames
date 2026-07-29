@@ -52,9 +52,15 @@ export default async function FirstNamePage({
     .map((id) => sourceById.get(id))
     .filter((item) => item !== undefined);
   const preferred = name.variations[0];
+  const themeClass =
+    name.genders.length > 1
+      ? "theme-plum"
+      : name.genders.includes("girl")
+        ? "theme-sakura"
+        : "theme-indigo";
 
   return (
-    <div className="container-page">
+    <div className={`container-page themed-page ${themeClass}`}>
       <JsonLd
         data={breadcrumbJsonLd([
           { name: "Home", path: "/" },
@@ -71,7 +77,7 @@ export default async function FirstNamePage({
           { label: name.romaji },
         ]}
       />
-      <header className="grid gap-8 py-8 lg:grid-cols-[1fr_0.8fr] lg:items-end">
+      <header className="page-intro my-6 grid gap-8 lg:grid-cols-[1fr_0.8fr] lg:items-end">
         <div>
           {name.verificationStatus === "needs_review" && (
             <p className="mb-4 inline-flex rounded-full bg-[#f4e9e5] px-3 py-1 text-xs font-bold text-[#843c2f]">

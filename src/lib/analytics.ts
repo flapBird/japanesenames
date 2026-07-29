@@ -12,6 +12,13 @@ export type EventName =
   | "search_surnames"
   | "use_name_in_generator";
 
+declare global {
+  interface Window {
+    dataLayer?: unknown[];
+    gtag?: (...args: unknown[]) => void;
+  }
+}
+
 export function trackEvent(
   name: EventName,
   properties: Record<string, unknown> = {},
@@ -21,5 +28,6 @@ export function trackEvent(
   if (process.env.NODE_ENV === "development") {
     console.info("[analytics]", event);
   }
+  window.gtag?.("event", name, properties);
   window.dispatchEvent(new CustomEvent("japanese-names:analytics", { detail: event }));
 }

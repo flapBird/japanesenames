@@ -29,7 +29,7 @@ export default function GirlNamesPage() {
       name.verificationStatus !== "needs_review",
   );
   return (
-    <div className="container-page">
+    <div className="container-page themed-page theme-sakura">
       <JsonLd data={breadcrumbJsonLd([{ name: "Home", path: "/" }, { name: "Japanese Girl Names", path: "/japanese-girl-names" }])} />
       <JsonLd
         data={{
@@ -46,12 +46,12 @@ export default function GirlNamesPage() {
         }}
       />
       <Breadcrumbs items={[{ label: "Japanese Girl Names" }]} />
-      <header className="max-w-3xl py-5">
+      <header className="page-intro my-5 max-w-3xl">
         <h1 className="section-title">Japanese Girl Names with Meanings and Kanji</h1>
         <p className="mt-3 text-base leading-7 text-[#59645d]">
-          Search Japanese girl names by reading, kanji, meaning, style, and
-          commonness. Each card shows one recommended spelling; detail pages
-          keep additional variations separate.
+          Browse Japanese girl names by meaning, style, commonness, and written
+          length. Each card shows one recommended spelling; detail pages keep
+          additional variations separate.
         </p>
       </header>
       <FirstNameExplorer gender="girl" names={names} />

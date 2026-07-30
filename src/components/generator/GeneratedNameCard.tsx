@@ -2,6 +2,7 @@ import Link from "next/link";
 import { LockIcon } from "@/components/icons";
 import { CopyButton } from "@/components/shared/CopyButton";
 import { FavoriteButton } from "@/components/shared/FavoriteButton";
+import { HighlightedKanji } from "@/components/shared/HighlightedKanji";
 import { PronunciationButton } from "@/components/shared/PronunciationButton";
 import type { GeneratedName, NameOrder } from "@/types/names";
 
@@ -22,6 +23,7 @@ const naturalnessTone = {
 export function GeneratedNameCard({
   item,
   order,
+  highlightKanji,
   surnameLocked,
   firstNameLocked,
   onLockSurname,
@@ -29,6 +31,7 @@ export function GeneratedNameCard({
 }: {
   item: GeneratedName;
   order: NameOrder;
+  highlightKanji?: string;
   surnameLocked: boolean;
   firstNameLocked: boolean;
   onLockSurname: () => void;
@@ -51,7 +54,9 @@ export function GeneratedNameCard({
     <article className="surface name-result-card flex h-full flex-col p-5">
       <div className="mb-4 flex items-start justify-between gap-3">
         <div>
-          <p className="japanese-display text-[2rem] font-medium leading-tight">{japanese}</p>
+          <p className="japanese-display text-[2rem] font-medium leading-tight">
+            <HighlightedKanji kanji={highlightKanji} value={japanese} />
+          </p>
           <p className="mt-1 font-semibold">{romaji}</p>
           <p className="japanese-display mt-0.5 text-sm text-[#6a746d]">{hiragana}</p>
         </div>
@@ -76,6 +81,12 @@ export function GeneratedNameCard({
             className={`rounded-full px-2 py-0.5 text-xs font-bold ${naturalnessTone[item.naturalness]}`}
           >
             {naturalnessLabel[item.naturalness]}
+          </dd>
+        </div>
+        <div className="flex justify-between gap-4">
+          <dt className="text-[#707970]">Gender</dt>
+          <dd className="font-semibold capitalize">
+            {item.firstName.genders.join(" / ")}
           </dd>
         </div>
         <div className="flex justify-between gap-4">

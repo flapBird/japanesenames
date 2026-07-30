@@ -125,6 +125,12 @@ export interface FirstNameRecord {
 
 export type NameMode = "realistic" | "fiction_friendly" | "any";
 export type NameOrder = "japanese" | "western";
+export type KanjiTarget = "given-name" | "surname" | "either";
+
+export interface KanjiFilter {
+  kanji?: string;
+  target?: KanjiTarget;
+}
 
 export interface GeneratorFilters {
   gender: Gender | "any";
@@ -145,6 +151,7 @@ export interface GeneratedName {
 
 export interface GeneratorRequest {
   filters: GeneratorFilters;
+  kanjiFilter?: KanjiFilter;
   lockedSurnameId?: string;
   lockedFirstNameId?: string;
   excludeKeys?: string[];
@@ -152,4 +159,11 @@ export interface GeneratorRequest {
   excludeFirstNameIds?: string[];
   count?: number;
   seed?: number;
+}
+
+export interface GeneratedNameBatch {
+  results: GeneratedName[];
+  exactCount: number;
+  relaxedFilters: Array<keyof GeneratorFilters>;
+  reusedCount: number;
 }

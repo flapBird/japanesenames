@@ -4,11 +4,22 @@ import { useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { GeneratorFilters } from "@/components/generator/GeneratorFilters";
 import { GeneratedNameCard } from "@/components/generator/GeneratedNameCard";
+import { KanjiFilterControls } from "@/components/generator/KanjiFilterControls";
 import { NameOrderToggle } from "@/components/generator/NameOrderToggle";
 import { firstNameById, surnameById } from "@/data";
 import { trackEvent } from "@/lib/analytics";
-import { generateNames } from "@/lib/names";
-import type { GeneratorFilters as FilterState, NameOrder } from "@/types/names";
+import {
+  isSingleKanji,
+  kanjiFilterCopy,
+  normalizeKanjiInput,
+} from "@/lib/kanji";
+import { generateNameBatch } from "@/lib/names";
+import type {
+  GeneratorFilters as FilterState,
+  KanjiFilter,
+  KanjiTarget,
+  NameOrder,
+} from "@/types/names";
 
 const defaultFilters: FilterState = {
   gender: "any",
@@ -19,6 +30,21 @@ const defaultFilters: FilterState = {
   surnamePopularity: "any",
 };
 
+const filterLabels: Record<keyof FilterState, string> = {
+  gender: "gender",
+  style: "style",
+  mode: "name mode",
+  meaning: "meaning",
+  kanjiLength: "written length",
+  surnamePopularity: "surname commonness",
+};
+
+function kanjiResultTitle(kanji: string, target: KanjiTarget) {
+  if (target === "given-name") return "Japanese given names with";
+  if (target === "surname") return "Japanese surnames with";
+  return "Names containing";
+}
+
 export function NameGenerator() {
   const searchParams = useSearchParams();
   const initialSurnameId = searchParams.get("surname") ?? undefined;
@@ -27,6 +53,13 @@ export function NameGenerator() {
   const validFirstNameId = initialFirstNameId && firstNameById.has(initialFirstNameId) ? initialFirstNameId : undefined;
   const [draftFilters, setDraftFilters] = useState(defaultFilters);
   const [filters, setFilters] = useState(defaultFilters);
+  const [draftKanji, setDraftKanji] = useState("");
+  const [draftKanjiTarget, setDraftKanjiTarget] =
+    useState<KanjiTarget>("given-name");
+  const [kanjiFilter, setKanjiFilter] = useState<KanjiFilter>({
+    target: "given-name",
+  });
+  const [kanjiError, setKanjiError] = useState<string>();
   const [lockedSurnameId, setLockedSurnameId] = useState(validSurnameId);
   const [lockedFirstNameId, setLockedFirstNameId] = useState(validFirstNameId);
   const [seed, setSeed] = useState(20260729);
@@ -34,13 +67,18 @@ export function NameGenerator() {
   const [excludedSurnameIds, setExcludedSurnameIds] = useState<string[]>([]);
   const [excludedFirstNameIds, setExcludedFirstNameIds] = useState<string[]>([]);
   const [order, setOrder] = useState<NameOrder>("japanese");
+  const normalizedDraftKanji = normalizeKanjiInput(draftKanji);
   const hasPendingFilters =
-    JSON.stringify(draftFilters) !== JSON.stringify(filters);
+    JSON.stringify(draftFilters) !== JSON.stringify(filters) ||
+    normalizedDraftKanji !== (kanjiFilter.kanji ?? "") ||
+    (Boolean(normalizedDraftKanji) &&
+      draftKanjiTarget !== (kanjiFilter.target ?? "given-name"));
 
-  const results = useMemo(
+  const batch = useMemo(
     () =>
-      generateNames({
+      generateNameBatch({
         filters,
+        kanjiFilter,
         lockedSurnameId,
         lockedFirstNameId,
         excludeKeys: excludedKeys,
@@ -53,11 +91,13 @@ export function NameGenerator() {
       excludedKeys,
       excludedSurnameIds,
       filters,
+      kanjiFilter,
       lockedFirstNameId,
       lockedSurnameId,
       seed,
     ],
   );
+  const results = batch.results;
 
   function rememberCurrentResults() {
     if (results.length === 0) return;
@@ -74,12 +114,27 @@ export function NameGenerator() {
 
   function generate() {
     if (lockedSurnameId && lockedFirstNameId) return;
+    if (normalizedDraftKanji && !isSingleKanji(normalizedDraftKanji)) {
+      setKanjiError(kanjiFilterCopy.invalidKanji);
+      return;
+    }
+
+    setKanjiError(undefined);
     rememberCurrentResults();
     setFilters(draftFilters);
+    setKanjiFilter({
+      kanji: normalizedDraftKanji || undefined,
+      target: draftKanjiTarget,
+    });
     setSeed((value) => value + 1);
     if (hasPendingFilters) {
-      trackEvent("generate_names", { ...draftFilters });
-      trackEvent("filter_generator", { ...draftFilters });
+      const properties = {
+        ...draftFilters,
+        kanji: normalizedDraftKanji || undefined,
+        kanjiTarget: draftKanjiTarget,
+      };
+      trackEvent("generate_names", properties);
+      trackEvent("filter_generator", properties);
     } else {
       trackEvent("regenerate_names", {
         lockedSurnameId,
@@ -92,6 +147,19 @@ export function NameGenerator() {
     rememberCurrentResults();
     setDraftFilters(defaultFilters);
     setFilters(defaultFilters);
+    setDraftKanji("");
+    setDraftKanjiTarget("given-name");
+    setKanjiFilter({ target: "given-name" });
+    setKanjiError(undefined);
+    setSeed((value) => value + 1);
+  }
+
+  function clearKanjiFilter() {
+    rememberCurrentResults();
+    setDraftKanji("");
+    setDraftKanjiTarget("given-name");
+    setKanjiFilter({ target: "given-name" });
+    setKanjiError(undefined);
     setSeed((value) => value + 1);
   }
 
@@ -129,6 +197,21 @@ export function NameGenerator() {
             onChange={setDraftFilters}
             value={draftFilters}
           />
+          <KanjiFilterControls
+            error={kanjiError}
+            kanji={draftKanji}
+            onChange={(value) => {
+              setDraftKanji(value.kanji);
+              setDraftKanjiTarget(value.target);
+              setKanjiError(
+                value.kanji && !isSingleKanji(value.kanji)
+                  ? kanjiFilterCopy.invalidKanji
+                  : undefined,
+              );
+            }}
+            onSubmit={generate}
+            target={draftKanjiTarget}
+          />
           {lockedSurnameId && lockedFirstNameId && (
             <p className="mt-2 text-xs text-[#68726b]">
               Unlock either part to generate alternatives.
@@ -142,12 +225,28 @@ export function NameGenerator() {
           <>
             <div className="mb-3 flex flex-wrap items-center justify-between gap-3">
               <div>
+                {kanjiFilter.kanji && (
+                  <h2 className="mb-1 text-lg font-semibold">
+                    {kanjiResultTitle(
+                      kanjiFilter.kanji,
+                      kanjiFilter.target ?? "given-name",
+                    )}{" "}
+                    <span className="japanese-display rounded bg-[#f1dfe3] px-1.5">
+                      {kanjiFilter.kanji}
+                    </span>
+                  </h2>
+                )}
                 <p className="text-sm text-[#647068]">
                   {results.length} structured matches · surname shown first by default
                 </p>
                 {!lockedSurnameId && !lockedFirstNameId && (
                   <p className="mt-1 text-xs text-[#7a827d]">
                     New batches avoid names already shown in this session. Keep either part to vary the other.
+                  </p>
+                )}
+                {batch.reusedCount > 0 && (
+                  <p className="mt-1 text-xs font-semibold text-[#8d493c]">
+                    The unique reviewed pool was exhausted, so a new cycle has started.
                   </p>
                 )}
               </div>
@@ -182,10 +281,26 @@ export function NameGenerator() {
                 </div>
               )}
             </div>
+            {batch.exactCount < results.length && (
+              <div className="mb-4 rounded-xl border border-[#decf9f] bg-[#f7f1df] px-4 py-3 text-sm leading-6 text-[#685526]">
+                <strong>
+                  {batch.exactCount > 0
+                    ? `${batch.exactCount} exact matches.`
+                    : "No exact matches in the reviewed dataset."}
+                </strong>{" "}
+                Showing the closest unique structured names
+                {batch.relaxedFilters.length > 0
+                  ? ` by relaxing ${batch.relaxedFilters
+                      .map((filter) => filterLabels[filter])
+                      .join(", ")}.`
+                  : "."}
+              </div>
+            )}
             <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
               {results.map((item) => (
                 <GeneratedNameCard
                   firstNameLocked={lockedFirstNameId === item.firstName.id}
+                  highlightKanji={kanjiFilter.kanji}
                   item={item}
                   key={item.key}
                   onLockFirstName={() => {
@@ -208,14 +323,35 @@ export function NameGenerator() {
           </>
         ) : (
           <div className="surface py-12 text-center">
-            <p className="text-lg font-semibold">No structured matches yet</p>
-            <p className="mx-auto mt-2 max-w-lg text-sm leading-6 text-[#647068]">
-              This combination is not represented in the reviewed demo dataset.
-              Try a broader meaning, style, or name mode.
-            </p>
-            <button className="button-secondary mt-5" onClick={resetFilters} type="button">
-              Clear filters
-            </button>
+            {kanjiFilter.kanji ? (
+              <>
+                <p className="text-lg font-semibold">
+                  {kanjiFilterCopy.noMatchingNames}
+                </p>
+                <p className="mx-auto mt-2 max-w-lg text-sm leading-6 text-[#647068]">
+                  We couldn&apos;t find a name containing this kanji with the
+                  selected filters. Try another kanji or change where it appears.
+                </p>
+                <button
+                  className="button-secondary mt-5"
+                  onClick={clearKanjiFilter}
+                  type="button"
+                >
+                  {kanjiFilterCopy.clearKanjiFilter}
+                </button>
+              </>
+            ) : (
+              <>
+                <p className="text-lg font-semibold">Structured data unavailable</p>
+                <p className="mx-auto mt-2 max-w-lg text-sm leading-6 text-[#647068]">
+                  No reviewed records are available for the locked name parts.
+                  Remove a lock or clear the filters to continue.
+                </p>
+                <button className="button-secondary mt-5" onClick={resetFilters} type="button">
+                  Clear filters
+                </button>
+              </>
+            )}
           </div>
         )}
       </div>

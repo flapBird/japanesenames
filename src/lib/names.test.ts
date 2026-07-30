@@ -1,5 +1,10 @@
 import { describe, expect, it } from "vitest";
-import { generateNames, getFirstNameBySlug, getSurnameBySlug } from "@/lib/names";
+import {
+  generateNameBatch,
+  generateNames,
+  getFirstNameBySlug,
+  getSurnameBySlug,
+} from "@/lib/names";
 import type { GeneratorFilters } from "@/types/names";
 
 const filters: GeneratorFilters = {
@@ -125,12 +130,176 @@ describe("structured name generation", () => {
     ).toBe(true);
   });
 
-  it("returns an explicit empty collection when no data matches", () => {
+  it("returns an explicit empty collection when no reviewed data matches", () => {
     const results = generateNames({
-      filters: { ...filters, meaning: "moon" },
+      filters: { ...filters, meaning: "fire" },
       seed: 7,
     });
     expect(results).toEqual([]);
+  });
+
+  it("fills an uncovered boy fiction-friendly request with unique reviewed names", () => {
+    const batch = generateNameBatch({
+      filters: {
+        ...filters,
+        gender: "boy",
+        mode: "fiction_friendly",
+      },
+      seed: 14,
+    });
+
+    expect(batch.results).toHaveLength(6);
+    expect(batch.exactCount).toBe(0);
+    expect(batch.relaxedFilters).toContain("mode");
+    expect(
+      batch.results.every((result) => result.firstName.genders.includes("boy")),
+    ).toBe(true);
+    expect(new Set(batch.results.map((result) => result.key)).size).toBe(6);
+  });
+
+  it("returns unique results for every visible generator filter combination", () => {
+    const genders = ["girl", "boy", "unisex", "any"] as const;
+    const styles = ["modern", "traditional", "timeless", "any"] as const;
+    const modes = ["realistic", "fiction_friendly", "any"] as const;
+    const meanings = [
+      "nature",
+      "strength",
+      "beauty",
+      "light",
+      "hope",
+      "wisdom",
+      "love",
+      "peace",
+      "water",
+      "moon",
+      "fire",
+      "any",
+    ] as const;
+
+    for (const gender of genders) {
+      for (const style of styles) {
+        for (const mode of modes) {
+          for (const meaning of meanings) {
+            const batch = generateNameBatch({
+              filters: { ...filters, gender, style, mode, meaning },
+              seed: 15,
+            });
+            expect(batch.results).toHaveLength(6);
+            expect(new Set(batch.results.map((result) => result.key)).size).toBe(
+              6,
+            );
+          }
+        }
+      }
+    }
+  });
+
+  it("filters given-name variations before selecting results", () => {
+    const batch = generateNameBatch({
+      filters,
+      kanjiFilter: { kanji: "月", target: "given-name" },
+      seed: 16,
+    });
+
+    expect(batch.results).toHaveLength(6);
+    expect(
+      batch.results.every((result) => result.variation.kanji.includes("月")),
+    ).toBe(true);
+    expect(
+      batch.results.every((result) => result.variation.kanji === "美月"),
+    ).toBe(true);
+  });
+
+  it("checks only surnames when the surname target is selected", () => {
+    const moonInSurname = generateNameBatch({
+      filters,
+      kanjiFilter: { kanji: "月", target: "surname" },
+      seed: 17,
+    });
+    const mountainInSurname = generateNameBatch({
+      filters,
+      kanjiFilter: { kanji: "山", target: "surname" },
+      seed: 18,
+    });
+
+    expect(moonInSurname.results).toEqual([]);
+    expect(mountainInSurname.results).toHaveLength(6);
+    expect(
+      mountainInSurname.results.every((result) =>
+        result.surname.kanji.includes("山"),
+      ),
+    ).toBe(true);
+  });
+
+  it("matches either the surname or given-name side when requested", () => {
+    const givenMatch = generateNameBatch({
+      filters,
+      kanjiFilter: { kanji: "月", target: "either" },
+      seed: 19,
+    });
+    const surnameMatch = generateNameBatch({
+      filters,
+      kanjiFilter: { kanji: "山", target: "either" },
+      seed: 20,
+    });
+
+    expect(
+      givenMatch.results.every(
+        (result) =>
+          result.variation.kanji.includes("月") ||
+          result.surname.kanji.includes("月"),
+      ),
+    ).toBe(true);
+    expect(
+      surnameMatch.results.every(
+        (result) =>
+          result.variation.kanji.includes("山") ||
+          result.surname.kanji.includes("山"),
+      ),
+    ).toBe(true);
+  });
+
+  it("does not fall back to unrelated names for an unmatched kanji", () => {
+    const batch = generateNameBatch({
+      filters,
+      kanjiFilter: { kanji: "龍", target: "given-name" },
+      seed: 21,
+    });
+
+    expect(batch.results).toEqual([]);
+    expect(batch.relaxedFilters).toEqual([]);
+  });
+
+  it("does not relax other selected filters while a kanji filter is active", () => {
+    const batch = generateNameBatch({
+      filters: { ...filters, gender: "boy" },
+      kanjiFilter: { kanji: "月", target: "given-name" },
+      seed: 24,
+    });
+
+    expect(batch.results).toEqual([]);
+    expect(batch.relaxedFilters).toEqual([]);
+  });
+
+  it("restores the normal generator pool when the kanji is cleared", () => {
+    const filtered = generateNameBatch({
+      filters,
+      kanjiFilter: { kanji: "月", target: "given-name" },
+      seed: 22,
+    });
+    const cleared = generateNameBatch({
+      filters,
+      kanjiFilter: { target: "given-name" },
+      seed: 23,
+    });
+
+    expect(
+      filtered.results.every((result) => result.variation.kanji.includes("月")),
+    ).toBe(true);
+    expect(cleared.results).toHaveLength(6);
+    expect(
+      cleared.results.some((result) => !result.variation.kanji.includes("月")),
+    ).toBe(true);
   });
 });
 

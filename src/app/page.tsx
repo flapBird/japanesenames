@@ -11,19 +11,19 @@ import { siteUrl } from "@/lib/seo";
 export const metadata: Metadata = {
   title: "Japanese Name Generator with Meanings & Surname Origins",
   description:
-    "Generate authentic Japanese names with kanji, meanings, pronunciation, and surname origins. Explore Japanese girl names, boy names, and family names.",
-  alternates: { canonical: "/" },
+    "Use our Japanese Name Generator to create authentic full names with kanji, meanings, pronunciation, and surname origins for girl, boy, and unisex ideas.",
+  alternates: { canonical: null },
   openGraph: {
     title: "Japanese Name Generator with Meanings & Surname Origins",
     description:
-      "Generate authentic Japanese names and discover the meanings, kanji, and stories behind their surnames.",
-    url: "/",
+      "Use our Japanese Name Generator to create authentic full names with kanji, meanings, pronunciation, and surname origins.",
+    url: "https://japanesenames.site/",
   },
   twitter: {
     card: "summary",
     title: "Japanese Name Generator with Meanings & Surname Origins",
     description:
-      "Generate authentic Japanese names and explore kanji meanings and surname stories.",
+      "Create authentic full names with our Japanese Name Generator and explore kanji, meanings, pronunciation, and surname origins.",
   },
 };
 
@@ -48,12 +48,28 @@ const faq = [
     answer:
       "Japanese order normally places the family name first. The generator uses this by default and also provides a Western-order display.",
   },
+  {
+    question: "Are all generated names real Japanese names?",
+    answer:
+      "The surnames, readings, and kanji variations come from structured name records, while the full-name pairing is generated. A combination can be plausible without being common or belonging to a known person.",
+  },
+  {
+    question: "Can I choose a specific kanji?",
+    answer:
+      "Yes. Enter one kanji and choose whether it should appear in the given name, surname, or either part. The filter keeps documented reading-and-spelling pairs instead of forcing the character into an unsupported name.",
+  },
+  {
+    question: "Can I use these names for a character or a child?",
+    answer:
+      "Fiction-friendly mode supports broader creative exploration. For an important personal name, use the generator as a starting point and ask a fluent Japanese speaker or qualified naming professional to review its pronunciation, nuance, and cultural fit.",
+  },
 ];
 
 export default function HomePage() {
   const featured = getIndexableSurnames().slice(0, 3);
   return (
     <>
+      <link rel="canonical" href="https://japanesenames.site/" />
       <JsonLd
         data={{
           "@context": "https://schema.org",
@@ -85,13 +101,16 @@ export default function HomePage() {
       />
       <section className="container-page relative pb-8 pt-7 sm:pt-9">
         <SakuraMotif className="pointer-events-none absolute right-1 top-1 hidden w-44 opacity-70 sm:block lg:right-6 lg:w-52" />
-        <div className="relative z-[1] mb-5 max-w-3xl">
+        <div className="relative z-[1] mb-5">
           <h1 className="section-title !text-[clamp(2.2rem,6vw,3.8rem)]">
             Japanese Name Generator
           </h1>
-          <p className="mt-3 max-w-2xl text-base leading-6 text-[#59645d] sm:leading-7">
-            Generate authentic Japanese names and discover the meanings, kanji,
-            and stories behind their surnames.
+          <p className="mt-3 text-base leading-6 text-[#59645d] sm:leading-7">
+            Create Japanese full names from reviewed surname and given-name
+            records. Filter by gender, style, meaning, name mode, or a specific
+            kanji, then compare each result in kanji, hiragana, and romaji.
+            Lock the surname or given name you like and generate new
+            combinations without losing your choice.
           </p>
         </div>
         <Suspense fallback={<div className="surface min-h-96 p-8">Loading the structured generator…</div>}>
@@ -113,15 +132,15 @@ export default function HomePage() {
             {[
               [
                 "Choose and generate",
-                "Set only the filters that matter to you, then generate six structured matches.",
+                "Choose Girl, Boy, Unisex, or Any, then narrow the results by style, meaning, name mode, or a specific kanji. Leave filters open for broader variety.",
               ],
               [
                 "Lock one part",
-                "Lock surname keeps the family name. Lock first name keeps the given name.",
+                "When one part feels right, lock the surname or first name. The next generation keeps your choice and changes the other part for easier comparison.",
               ],
               [
                 "Copy or explore",
-                "Copy the complete name, or open either detail page for meanings and context.",
+                "Switch name order, copy the full name, save a favorite, or open a detail page to check pronunciation, meanings, and surname context.",
               ],
             ].map(([title, text], index) => (
               <li className="flex gap-3" key={title}>
@@ -206,16 +225,27 @@ export default function HomePage() {
           </div>
           <div className="max-w-3xl space-y-3 text-sm leading-6 text-[#59645d] sm:text-base sm:leading-7">
             <p>
-              Japanese Names is a reference-first generator for exploring natural
-              Japanese full names. It combines reviewed surname records, established
-              first-name readings, and documented kanji variations instead of
-              inventing characters or pronunciations.
+              The Japanese Name Generator combines established first-name
+              readings, documented kanji spellings, and reviewed surname
+              records. It does not invent pronunciations or create names by
+              joining arbitrary characters. Instead, it uses structured records
+              and compatibility rules to produce useful Japanese full-name
+              combinations.
             </p>
             <p>
-              Each result shows the name in kanji, hiragana, and romaji, together
-              with its meaning, style, and surname context. You can lock either part
-              to compare alternatives, then open the name or surname page for more
-              detail.
+              Each result separates the family name from the given name and
+              shows kanji, hiragana, romaji, meaning notes, style, and surname
+              context. You can filter by gender, style, meaning, or a specific
+              kanji, then lock either part while generating new combinations.
+              Switch the display order, save favorites, copy a full name, or
+              open a detail page to examine a reading or spelling more closely.
+            </p>
+            <p>
+              Treat every result as a careful starting point rather than proof
+              that a combination is common in everyday life. Kanji can suggest
+              literal meanings, but pronunciation, usage, regional variation,
+              family history, and personal intention all affect how a Japanese
+              name is understood.
             </p>
           </div>
         </div>
@@ -260,6 +290,35 @@ export default function HomePage() {
               <p className="mt-2 text-sm leading-6 text-[#647068]">{text}</p>
             </article>
           ))}
+        </div>
+      </section>
+
+      <section className="border-y border-[#deddd5] bg-[#f7f5ef] py-16">
+        <div className="container-page">
+          <p className="eyebrow">Review the result</p>
+          <h2 className="section-title mt-2">How to evaluate a generated Japanese name</h2>
+          <div className="mt-8 grid gap-6 md:grid-cols-3">
+            {[
+              [
+                "Start with pronunciation",
+                "The same romanized sound may have several established kanji spellings, while one kanji can have different readings in names. Compare the romaji with the hiragana instead of guessing from the characters alone.",
+              ],
+              [
+                "Read meanings in context",
+                "Treat each kanji note as context rather than a one-line translation of a person. Two spellings with the same pronunciation can create different associations, and a surname’s literal meaning does not establish ancestry.",
+              ],
+              [
+                "Consider the full name",
+                "Switch between family-name-first and given-name-first order, say the complete name aloud, and compare several combinations. Naturalness labels are useful guidance, not a guarantee of popularity or cultural suitability.",
+              ],
+            ].map(([title, text], index) => (
+              <article className="surface p-6" key={title}>
+                <span className="text-xs font-bold text-[#a34837]">0{index + 1}</span>
+                <h3 className="mt-3 text-lg font-semibold">{title}</h3>
+                <p className="mt-3 text-sm leading-6 text-[#647068]">{text}</p>
+              </article>
+            ))}
+          </div>
         </div>
       </section>
 

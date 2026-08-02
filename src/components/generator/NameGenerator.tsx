@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { useSearchParams } from "next/navigation";
 import { GeneratorFilters } from "@/components/generator/GeneratorFilters";
 import { GeneratedNameCard } from "@/components/generator/GeneratedNameCard";
 import { KanjiFilterFields, KanjiPopularShortcuts } from "@/components/generator/KanjiFilterControls";
@@ -45,11 +44,6 @@ function createRandomSeed() {
 }
 
 export function NameGenerator() {
-  const searchParams = useSearchParams();
-  const initialSurnameId = searchParams.get("surname") ?? undefined;
-  const initialFirstNameId = searchParams.get("firstName") ?? undefined;
-  const validSurnameId = initialSurnameId && surnameById.has(initialSurnameId) ? initialSurnameId : undefined;
-  const validFirstNameId = initialFirstNameId && firstNameById.has(initialFirstNameId) ? initialFirstNameId : undefined;
   const [draftFilters, setDraftFilters] = useState(defaultFilters);
   const [filters, setFilters] = useState(defaultFilters);
   const [draftKanji, setDraftKanji] = useState("");
@@ -59,8 +53,8 @@ export function NameGenerator() {
     target: "given-name",
   });
   const [kanjiError, setKanjiError] = useState<string>();
-  const [lockedSurnameId, setLockedSurnameId] = useState(validSurnameId);
-  const [lockedFirstNameId, setLockedFirstNameId] = useState(validFirstNameId);
+  const [lockedSurnameId, setLockedSurnameId] = useState<string>();
+  const [lockedFirstNameId, setLockedFirstNameId] = useState<string>();
   const [seed, setSeed] = useState(20260729);
   const [excludedKeys, setExcludedKeys] = useState<string[]>([]);
   const [excludedSurnameIds, setExcludedSurnameIds] = useState<string[]>([]);
@@ -119,6 +113,19 @@ export function NameGenerator() {
   useEffect(() => {
     const frame = requestAnimationFrame(() => setSeed(createRandomSeed()));
     return () => cancelAnimationFrame(frame);
+  }, []);
+
+  useEffect(() => {
+    const searchParams = new URLSearchParams(window.location.search);
+    const surnameId = searchParams.get("surname") ?? undefined;
+    const firstNameId = searchParams.get("firstName") ?? undefined;
+
+    if (surnameId && surnameById.has(surnameId)) {
+      setLockedSurnameId(surnameId);
+    }
+    if (firstNameId && firstNameById.has(firstNameId)) {
+      setLockedFirstNameId(firstNameId);
+    }
   }, []);
 
   function advanceSeed() {

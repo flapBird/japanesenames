@@ -10,7 +10,11 @@
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
-    "validate:data": "node --import tsx scripts/validate-name-data.ts"
+    "validate:data": "node --import tsx scripts/validate-name-data.ts",
+    "data:import:jmnedict": "node --import tsx scripts/import-jmnedict.ts",
+    "data:import:kanjidic2": "node --import tsx scripts/import-kanjidic2.ts",
+    "data:curate": "node --import tsx scripts/curate-name-data.ts",
+    "data:report": "node --import tsx scripts/report-name-coverage.ts"
   },
   "dependencies": {
     "next": "^15.5.22",

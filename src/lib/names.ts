@@ -28,13 +28,25 @@ export function getFirstNameBySlug(slug: string) {
 
 export function getIndexableSurnames() {
   return surnames.filter(
-    (item) => item.isIndexable && item.verificationStatus !== "needs_review",
+    (item) =>
+      item.isIndexable &&
+      ["verified", "partially_verified"].includes(item.verificationStatus),
   );
 }
 
 export function getIndexableFirstNames() {
   return firstNames.filter(
-    (item) => item.isIndexable && item.verificationStatus !== "needs_review",
+    (item) =>
+      item.isIndexable &&
+      ["verified", "partially_verified"].includes(item.verificationStatus),
+  );
+}
+
+export function getBrowseableSurnames() {
+  return surnames.filter(
+    (item) =>
+      (item.generatorEligible ?? item.verificationStatus !== "needs_review") &&
+      ["verified", "partially_verified"].includes(item.verificationStatus),
   );
 }
 
@@ -57,7 +69,9 @@ function firstNameCandidates(request: GeneratorRequest) {
     : firstNames;
 
   return pool.filter((name) => {
-    if (name.verificationStatus === "needs_review") return false;
+    const generatorEligible =
+      name.generatorEligible ?? name.verificationStatus !== "needs_review";
+    if (!generatorEligible || !["verified", "partially_verified"].includes(name.verificationStatus)) return false;
     if (
       filters.gender !== "any" &&
       !name.genders.includes(filters.gender)
@@ -93,7 +107,7 @@ function firstNameCandidates(request: GeneratorRequest) {
         );
       }
       if (filters.mode === "fiction_friendly") {
-        return variation.naturalness === "fiction_friendly";
+        return variation.naturalness !== "needs_review";
       }
       return true;
     });
@@ -108,12 +122,31 @@ function surnameCandidates(request: GeneratorRequest) {
     : surnames;
 
   return pool.filter((surname) =>
-    surname.verificationStatus !== "needs_review" &&
+    (surname.generatorEligible ?? surname.verificationStatus !== "needs_review") &&
+    ["verified", "partially_verified"].includes(surname.verificationStatus) &&
     surnameMatchesPopularity(
       surname.popularityLevel,
       request.filters.surnamePopularity,
     ),
   );
+}
+
+export function getKanjiShortcutCount(
+  kanji: string,
+  target: "given-name" | "surname",
+  filters: GeneratorFilters,
+) {
+  if (target === "given-name") {
+    return firstNameCandidates({ filters }).filter((name) =>
+      name.variations.some((variation) =>
+        ["verified", "partially_verified"].includes(variation.verificationStatus) &&
+        containsKanji(variation.kanji, kanji),
+      ),
+    ).length;
+  }
+  return surnameCandidates({ filters }).filter((surname) =>
+    containsKanji(surname.kanji, kanji),
+  ).length;
 }
 
 function seededShuffle<T>(items: T[], seed: number): T[] {
@@ -148,7 +181,7 @@ function variationMatchesMode(
   if (mode === "realistic") {
     return naturalness === "high" || naturalness === "medium";
   }
-  return naturalness === "fiction_friendly";
+  return naturalness !== "needs_review";
 }
 
 function matchesKanjiFilter(
@@ -189,6 +222,19 @@ function takeDiverseNames(
     for (let index = 0; index < remaining.length; index += 1) {
       const candidate = remaining[index];
       let score = 0;
+      const firstCount = request.shownFirstNameCounts?.[candidate.firstName.id] ?? 0;
+      const surnameCount = request.shownSurnameCounts?.[candidate.surname.id] ?? 0;
+      const variationCount = request.shownVariationCounts?.[candidate.variation.kanji] ?? 0;
+      // Keys already shown are removed before this ranking. Least-used parts
+      // then win, with the seeded source order providing deterministic ties.
+      score -= firstCount * 1000 + surnameCount * 100 + variationCount * 10;
+
+      // Dictionary breadth remains available for exact Kanji searches, while
+      // the default generator favors a smaller usability-reviewed shortlist.
+      if (!candidate.firstName.candidateStatus || candidate.firstName.curationPriority === "recommended") score += 100_000;
+      if (!candidate.surname.candidateStatus || candidate.surname.curationPriority === "recommended") score += 10_000;
+      if (!request.lockedFirstNameId && usedFirstNameIds.has(candidate.firstName.id)) score -= 200_000;
+      if (!request.lockedSurnameId && usedSurnameIds.has(candidate.surname.id)) score -= 20_000;
 
       if (
         request.lockedSurnameId ||
@@ -235,21 +281,11 @@ export function generateNames(request: GeneratorRequest): GeneratedName[] {
   const shuffled = matchingCombinations(request);
   const excludedKeys = new Set(request.excludeKeys ?? []);
 
-  if (excludedKeys.size === 0) {
-    return takeDiverseNames(shuffled, count, request);
-  }
-
-  const unseen = shuffled.filter((item) => !excludedKeys.has(item.key));
-  if (unseen.length >= count) {
-    return takeDiverseNames(unseen, count, request);
-  }
-
-  // A narrow filter or two locked parts can exhaust the unseen pool.
-  // Fill the remainder only then, so the generator stays useful rather
-  // than returning fewer cards without explanation.
-  const previouslySeen = shuffled.filter((item) => excludedKeys.has(item.key));
-  const selected = takeDiverseNames(unseen, count, request);
-  return takeDiverseNames(previouslySeen, count, request, selected);
+  return takeDiverseNames(
+    shuffled.filter((item) => !excludedKeys.has(item.key)),
+    count,
+    request,
+  );
 }
 
 function matchingCombinations(request: GeneratorRequest) {
@@ -260,7 +296,7 @@ function matchingCombinations(request: GeneratorRequest) {
   for (const surname of familyNames) {
     for (const firstName of names) {
       for (const variation of firstName.variations) {
-        if (variation.verificationStatus === "needs_review") continue;
+        if (!["verified", "partially_verified"].includes(variation.verificationStatus)) continue;
         if (
           request.filters.kanjiLength !== "any" &&
           [...variation.kanji].length !== request.filters.kanjiLength
@@ -288,123 +324,6 @@ function matchingCombinations(request: GeneratorRequest) {
   return seededShuffle(combinations, request.seed ?? 1);
 }
 
-const broadFilters: GeneratorFilters = {
-  gender: "any",
-  style: "any",
-  mode: "any",
-  meaning: "any",
-  kanjiLength: "any",
-  surnamePopularity: "any",
-};
-
-const filterWeights: Record<keyof GeneratorFilters, number> = {
-  gender: 8,
-  style: 5,
-  mode: 4,
-  meaning: 6,
-  kanjiLength: 3,
-  surnamePopularity: 2,
-};
-
-function mismatchedFilters(
-  item: GeneratedName,
-  filters: GeneratorFilters,
-): Array<keyof GeneratorFilters> {
-  const mismatches: Array<keyof GeneratorFilters> = [];
-  if (
-    filters.gender !== "any" &&
-    !item.firstName.genders.includes(filters.gender)
-  ) {
-    mismatches.push("gender");
-  }
-  if (
-    filters.style !== "any" &&
-    !item.firstName.styles.includes(filters.style)
-  ) {
-    mismatches.push("style");
-  }
-  if (!variationMatchesMode(item.variation.naturalness, filters.mode)) {
-    mismatches.push("mode");
-  }
-  if (
-    filters.meaning !== "any" &&
-    !item.firstName.meaningTags.includes(filters.meaning.toLowerCase())
-  ) {
-    mismatches.push("meaning");
-  }
-  if (
-    filters.kanjiLength !== "any" &&
-    [...item.variation.kanji].length !== filters.kanjiLength
-  ) {
-    mismatches.push("kanjiLength");
-  }
-  if (
-    !surnameMatchesPopularity(
-      item.surname.popularityLevel,
-      filters.surnamePopularity,
-    )
-  ) {
-    mismatches.push("surnamePopularity");
-  }
-  return mismatches;
-}
-
-function takeClosestDiverseNames(
-  candidates: GeneratedName[],
-  count: number,
-  request: GeneratorRequest,
-  selected: GeneratedName[],
-) {
-  const remaining = [...candidates];
-  const usedSurnameIds = new Set(selected.map((item) => item.surname.id));
-  const usedFirstNameIds = new Set(selected.map((item) => item.firstName.id));
-
-  while (remaining.length > 0 && selected.length < count) {
-    let bestIndex = 0;
-    let bestScore = Number.NEGATIVE_INFINITY;
-
-    for (let index = 0; index < remaining.length; index += 1) {
-      const candidate = remaining[index];
-      const mismatches = new Set(
-        mismatchedFilters(candidate, request.filters),
-      );
-      let score = 0;
-
-      for (const [filter, weight] of Object.entries(filterWeights) as Array<
-        [keyof GeneratorFilters, number]
-      >) {
-        if (request.filters[filter] !== "any" && !mismatches.has(filter)) {
-          score += weight * 100;
-        }
-      }
-      if (
-        request.lockedSurnameId ||
-        !usedSurnameIds.has(candidate.surname.id)
-      ) {
-        score += 8;
-      }
-      if (
-        request.lockedFirstNameId ||
-        !usedFirstNameIds.has(candidate.firstName.id)
-      ) {
-        score += 8;
-      }
-
-      if (score > bestScore) {
-        bestIndex = index;
-        bestScore = score;
-      }
-    }
-
-    const [picked] = remaining.splice(bestIndex, 1);
-    selected.push(picked);
-    usedSurnameIds.add(picked.surname.id);
-    usedFirstNameIds.add(picked.firstName.id);
-  }
-
-  return selected;
-}
-
 export function generateNameBatch(
   request: GeneratorRequest,
 ): GeneratedNameBatch {
@@ -415,68 +334,11 @@ export function generateNameBatch(
     (item) => !excludedKeys.has(item.key),
   );
   const selected = takeDiverseNames(exactPool, count, request);
-  const exactCount = selected.length;
-
-  if (selected.length === count) {
-    return {
-      results: selected,
-      exactCount,
-      relaxedFilters: [],
-      reusedCount: 0,
-    };
-  }
-
-  if (request.kanjiFilter?.kanji) {
-    const beforeReuse = selected.length;
-    const selectedKeys = new Set(selected.map((item) => item.key));
-    const previouslySeenExact = allExactMatches.filter(
-      (item) => excludedKeys.has(item.key) && !selectedKeys.has(item.key),
-    );
-    takeDiverseNames(previouslySeenExact, count, request, selected);
-
-    return {
-      results: selected,
-      exactCount: selected.length,
-      relaxedFilters: [],
-      reusedCount: selected.length - beforeReuse,
-    };
-  }
-
-  const selectedKeys = new Set(selected.map((item) => item.key));
-  const broadRequest: GeneratorRequest = {
-    ...request,
-    filters: broadFilters,
-    excludeKeys: [],
-  };
-  const broadPool = matchingCombinations(broadRequest);
-  const unseenFallback = broadPool.filter(
-    (item) => !excludedKeys.has(item.key) && !selectedKeys.has(item.key),
-  );
-  takeClosestDiverseNames(unseenFallback, count, request, selected);
-
-  let reusedCount = 0;
-  if (selected.length < count) {
-    const beforeReuse = selected.length;
-    const currentKeys = new Set(selected.map((item) => item.key));
-    const previouslySeen = broadPool.filter(
-      (item) => excludedKeys.has(item.key) && !currentKeys.has(item.key),
-    );
-    takeClosestDiverseNames(previouslySeen, count, request, selected);
-    reusedCount = selected.length - beforeReuse;
-  }
-
-  const relaxedFilters = [
-    ...new Set(
-      selected
-        .slice(exactCount)
-        .flatMap((item) => mismatchedFilters(item, request.filters)),
-    ),
-  ];
-
   return {
     results: selected,
-    exactCount,
-    relaxedFilters,
-    reusedCount,
+    exactCount: selected.length,
+    relaxedFilters: [],
+    reusedCount: 0,
+    poolCount: allExactMatches.length,
   };
 }

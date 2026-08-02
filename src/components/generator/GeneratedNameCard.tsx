@@ -49,6 +49,7 @@ export function GeneratedNameCard({
     order === "japanese"
       ? `${item.surname.hiragana} ${item.firstName.hiragana}`
       : `${item.firstName.hiragana} ${item.surname.hiragana}`;
+  const dictionaryListed = Boolean(item.firstName.candidateStatus);
 
   return (
     <article className="surface name-result-card flex h-full flex-col p-5">
@@ -76,11 +77,11 @@ export function GeneratedNameCard({
       </div>
       <dl className="mb-5 grid gap-2 border-t border-[#e3e2dc] pt-4 text-sm">
         <div className="flex justify-between gap-4">
-          <dt className="text-[#707970]">Naturalness</dt>
+          <dt className="text-[#707970]">{dictionaryListed ? "Evidence" : "Naturalness"}</dt>
           <dd
             className={`rounded-full px-2 py-0.5 text-xs font-bold ${naturalnessTone[item.naturalness]}`}
           >
-            {naturalnessLabel[item.naturalness]}
+            {dictionaryListed ? "Dictionary-listed" : naturalnessLabel[item.naturalness]}
           </dd>
         </div>
         <div className="flex justify-between gap-4">
@@ -90,21 +91,9 @@ export function GeneratedNameCard({
           </dd>
         </div>
         <div className="flex justify-between gap-4">
-          <dt className="text-[#707970]">Style</dt>
-          <dd className="font-semibold capitalize text-[#9f4f60]">
-            {item.firstName.styles[0]}
-          </dd>
-        </div>
-        <div className="flex justify-between gap-4">
           <dt className="text-[#707970]">Meaning</dt>
           <dd className="max-w-[65%] text-right font-semibold">
             {item.variation.meanings.join(", ")}
-          </dd>
-        </div>
-        <div className="flex justify-between gap-4">
-          <dt className="text-[#707970]">Surname origin</dt>
-          <dd className="font-semibold capitalize text-[#315c4b]">
-            {item.surname.originTypes[0]}
           </dd>
         </div>
       </dl>
@@ -143,8 +132,8 @@ export function GeneratedNameCard({
         />
       </div>
       <div className="mt-3 flex gap-4 text-xs font-bold text-[#315c4b]">
-        <Link href={`/surname/${item.surname.slug}`}>Explore surname</Link>
-        <Link href={`/name/${item.firstName.slug}`}>Explore first name</Link>
+        {item.surname.isIndexable && <Link href={`/surname/${item.surname.slug}`}>Explore surname</Link>}
+        {item.firstName.isIndexable && <Link href={`/name/${item.firstName.slug}`}>Explore first name</Link>}
       </div>
     </article>
   );

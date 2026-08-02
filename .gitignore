@@ -5,3 +5,5 @@ coverage
 .DS_Store
 .env*
 !.env.example
+.data-cache/
+src/data/generated/candidates/*.json

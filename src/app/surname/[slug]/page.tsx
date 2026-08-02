@@ -18,7 +18,7 @@ import { breadcrumbJsonLd } from "@/lib/seo";
 import { getSurnameBySlug } from "@/lib/names";
 
 export function generateStaticParams() {
-  return surnames.map((surname) => ({ slug: surname.slug }));
+  return surnames.filter((surname) => surname.isIndexable).map((surname) => ({ slug: surname.slug }));
 }
 
 export async function generateMetadata({
@@ -116,14 +116,6 @@ export default async function SurnamePage({
           </div>
         </div>
         <dl className="surface grid gap-3 p-5 text-sm">
-          <div className="flex justify-between gap-4">
-            <dt className="text-[#647068]">Popularity</dt>
-            <dd className="font-semibold capitalize">{surname.popularityLevel.replace("_", " ")}</dd>
-          </div>
-          <div className="flex justify-between gap-4">
-            <dt className="text-[#647068]">Origin type</dt>
-            <dd className="text-right font-semibold capitalize">{surname.originTypes.join(", ")}</dd>
-          </div>
           <div className="flex justify-between gap-4">
             <dt className="text-[#647068]">Literal meaning</dt>
             <dd className="text-right font-semibold">{surname.literalMeaning}</dd>

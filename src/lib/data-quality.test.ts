@@ -20,6 +20,12 @@ describe("indexing quality gates", () => {
     }
   });
 
+  it("includes restored editorial surname and first-name pages", () => {
+    const urls = sitemap().map((entry) => entry.url);
+    expect(urls).toContain("https://japanesenames.site/surname/yamamoto");
+    expect(urls).toContain("https://japanesenames.site/name/haruto");
+  });
+
   it("detects an invalid source reference", () => {
     const invalidNames = structuredClone(firstNames);
     invalidNames[0].sourceIds = ["source-that-does-not-exist"];

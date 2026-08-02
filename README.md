@@ -1,5 +1,22 @@
 # Japanese Names
 
+## Data updates
+
+The production name dataset is a deliberately reviewed subset of JMnedict; it
+does not call an external API at runtime. Download the official XML.gz to
+`.data-cache/jmnedict/JMnedict.xml.gz`, then run:
+
+```sh
+npm run data:import:jmnedict
+npm run data:import:kanjidic2
+npm run data:curate
+npm run data:report
+npm run validate:data
+```
+
+See [THIRD_PARTY_DATA.md](./THIRD_PARTY_DATA.md) and
+[DATA_LICENSES.md](./DATA_LICENSES.md) for attribution and licence terms.
+
 Japanese Names is an English-language reference and name-generation website for exploring Japanese given names, full names, and surnames with cultural context.
 
 Website: [japanesenames.site](https://japanesenames.site)

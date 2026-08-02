@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useMemo, useState } from "react";
+import { CopyButton } from "@/components/shared/CopyButton";
 import { FavoriteButton } from "@/components/shared/FavoriteButton";
 import { PronunciationButton } from "@/components/shared/PronunciationButton";
 import { trackEvent } from "@/lib/analytics";
@@ -44,7 +45,7 @@ export function SurnameExplorer({ surnames }: { surnames: SurnameRecord[] }) {
         if (region === "not_available" && surname.regions.length > 0) return false;
         return true;
       })
-      .sort((a, b) => a.romaji.localeCompare(b.romaji));
+      .sort((a, b) => Number(b.isIndexable) - Number(a.isIndexable) || a.romaji.localeCompare(b.romaji));
   }, [letter, origin, popularity, query, region, surnames]);
 
   const displayed = randomId
@@ -144,9 +145,17 @@ export function SurnameExplorer({ surnames }: { surnames: SurnameRecord[] }) {
               <article className="surface flex flex-col p-5" key={surname.id}>
                 <div className="flex items-start justify-between">
                   <div>
-                    <Link className="japanese-display text-3xl font-medium" href={`/surname/${surname.slug}`}>
-                      {surname.kanji}
-                    </Link>
+                    {surname.isIndexable ? (
+                      <Link
+                        className="japanese-display text-3xl font-medium underline decoration-[#9db4a5] decoration-1 underline-offset-4 transition-colors hover:text-[#315c4b]"
+                        href={`/surname/${surname.slug}`}
+                        title={`Read the ${surname.romaji} surname story`}
+                      >
+                        {surname.kanji}
+                      </Link>
+                    ) : (
+                      <span className="japanese-display text-3xl font-medium">{surname.kanji}</span>
+                    )}
                     <p className="mt-1 font-semibold">{surname.romaji}</p>
                     <p className="japanese-display text-sm text-[#647068]">{surname.hiragana}</p>
                   </div>
@@ -154,6 +163,12 @@ export function SurnameExplorer({ surnames }: { surnames: SurnameRecord[] }) {
                     <PronunciationButton
                       label={surname.romaji}
                       text={surname.hiragana}
+                    />
+                    <CopyButton
+                      compact
+                      eventName="copy_surname"
+                      label={`Copy ${surname.romaji}`}
+                      text={`${surname.kanji} — ${surname.romaji} — ${surname.hiragana}`}
                     />
                     <FavoriteButton
                       compact
@@ -163,20 +178,30 @@ export function SurnameExplorer({ surnames }: { surnames: SurnameRecord[] }) {
                         label: `${surname.kanji} · ${surname.romaji}`,
                         sublabel: surname.literalMeaning,
                         pronunciation: surname.hiragana,
-                        href: `/surname/${surname.slug}`,
+                        href: surname.isIndexable ? `/surname/${surname.slug}` : "/japanese-last-names",
                       }}
                     />
                   </div>
                 </div>
                 <p className="mt-4 text-sm leading-6 text-[#536058]">{surname.literalMeaning}</p>
                 <div className="mt-4 flex flex-wrap gap-1.5">
+                  <span className={`chip ${surname.isIndexable ? "!border-[#aac0b1] !bg-[#e7eee9] !text-[#315c4b]" : "!bg-[#efeeea] !text-[#68726b]"}`}>
+                    {surname.isIndexable ? "Origin story available" : "Dictionary record"}
+                  </span>
                   <span className="chip capitalize">{surname.popularityLevel.replace("_", " ")}</span>
                   {surname.originTypes.slice(0, 2).map((item) => <span className="chip capitalize" key={item}>{item}</span>)}
                 </div>
                 <div className="mt-5 flex gap-4 border-t border-[#e3e2dc] pt-4 text-xs font-bold text-[#315c4b]">
-                  <Link href={`/surname/${surname.slug}`} onClick={() => trackEvent("open_surname", { id: surname.id })}>
-                    View surname
-                  </Link>
+                  {surname.isIndexable && (
+                    <Link href={`/surname/${surname.slug}`} onClick={() => trackEvent("open_surname", { id: surname.id })}>
+                      View surname story →
+                    </Link>
+                  )}
+                  {!surname.isIndexable && (
+                    <span className="font-medium text-[#747d77]" title="A sourced origin story has not completed editorial review.">
+                      Story not reviewed yet
+                    </span>
+                  )}
                   <Link href={`/?surname=${surname.id}#generator`}>Use in generator</Link>
                 </div>
               </article>

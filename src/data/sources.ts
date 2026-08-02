@@ -2,6 +2,27 @@ import type { SourceReference } from "@/types/names";
 
 export const sources: SourceReference[] = [
   {
+    id: "edrdg-kanjidic2-2026-08-01",
+    sourceId: "edrdg-kanjidic2-2026-08-01",
+    title: "KANJIDIC2 Kanji Database",
+    publisher: "Electronic Dictionary Research and Development Group",
+    url: "https://ftp.edrdg.org/pub/Nihongo/kanjidic2.xml.gz",
+    accessedAt: "2026-08-01",
+    license: "CC BY-SA 4.0",
+    evidenceType: "meaning",
+  },
+  {
+    id: "edrdg-jmnedict-2026-08-01",
+    sourceId: "edrdg-jmnedict-2026-08-01",
+    title: "JMnedict Japanese Multilingual Named Entity Dictionary",
+    publisher: "Electronic Dictionary Research and Development Group",
+    url: "https://ftp.edrdg.org/pub/Nihongo/JMnedict.xml.gz",
+    accessedAt: "2026-08-01",
+    datasetVersion: "JMnedict created 2026-08-01",
+    license: "CC BY-SA 4.0",
+    evidenceType: "reading_kanji_pair",
+  },
+  {
     id: "moj-surname-history",
     title: "Changes in Japan’s surname system",
     publisher: "Ministry of Justice, Japan",

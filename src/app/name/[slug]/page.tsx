@@ -12,7 +12,7 @@ import { getFirstNameBySlug } from "@/lib/names";
 import { breadcrumbJsonLd } from "@/lib/seo";
 
 export function generateStaticParams() {
-  return firstNames.map((name) => ({ slug: name.slug }));
+  return firstNames.filter((name) => name.isIndexable).map((name) => ({ slug: name.slug }));
 }
 
 export async function generateMetadata({
@@ -116,14 +116,6 @@ export default async function FirstNamePage({
           <div className="flex justify-between gap-4">
             <dt className="text-[#647068]">Gender tendency</dt>
             <dd className="font-semibold capitalize">{name.genders.join(", ")}</dd>
-          </div>
-          <div className="flex justify-between gap-4">
-            <dt className="text-[#647068]">Style</dt>
-            <dd className="font-semibold capitalize">{name.styles.join(", ")}</dd>
-          </div>
-          <div className="flex justify-between gap-4">
-            <dt className="text-[#647068]">Commonness</dt>
-            <dd className="font-semibold capitalize">{name.popularityLevel.replace("_", " ")}</dd>
           </div>
           <div className="flex justify-between gap-4">
             <dt className="text-[#647068]">Common reading</dt>

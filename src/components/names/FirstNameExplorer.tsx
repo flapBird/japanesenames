@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useMemo, useState } from "react";
+import { CopyButton } from "@/components/shared/CopyButton";
 import { FavoriteButton } from "@/components/shared/FavoriteButton";
 import { PronunciationButton } from "@/components/shared/PronunciationButton";
 import { trackEvent } from "@/lib/analytics";
@@ -21,7 +22,7 @@ export function FirstNameExplorer({
   const [style, setStyle] = useState("any");
   const [popularity, setPopularity] = useState("any");
   const [length, setLength] = useState("any");
-  const [sort, setSort] = useState("alphabetical");
+  const [sort, setSort] = useState("popularity");
   const [visible, setVisible] = useState(PAGE_SIZE);
 
   const meaningOptions = useMemo(
@@ -39,6 +40,8 @@ export function FirstNameExplorer({
     popularity,
     length,
   ].filter((value) => value !== "any").length;
+  const hasActiveSettings =
+    activeFilterCount > 0 || letter !== "All" || sort !== "popularity";
 
   const filtered = useMemo(() => {
     const result = names.filter((name) => {
@@ -51,7 +54,7 @@ export function FirstNameExplorer({
     });
     return result.sort((a, b) => {
       if (sort === "popularity") {
-        const rank = { very_common: 0, common: 1, uncommon: 2, rare: 3 };
+        const rank = { very_common: 0, common: 1, uncommon: 2, rare: 3, unranked: 4 };
         return rank[a.popularityLevel] - rank[b.popularityLevel];
       }
       if (sort === "kanji_length") {
@@ -67,14 +70,14 @@ export function FirstNameExplorer({
     setStyle("any");
     setPopularity("any");
     setLength("any");
-    setSort("alphabetical");
+    setSort("popularity");
     setVisible(PAGE_SIZE);
   }
 
   return (
     <section aria-labelledby="browse-heading">
       <div className="surface p-3 sm:p-4">
-        <div className="grid gap-2.5 sm:grid-cols-2 lg:grid-cols-5">
+        <div className="grid gap-2.5 sm:grid-cols-2 lg:grid-cols-[repeat(5,minmax(0,1fr))_auto]">
           <label className="grid gap-1.5 text-[0.7rem] font-bold">
             Meaning theme
             <select
@@ -152,6 +155,16 @@ export function FirstNameExplorer({
               <option value="kanji_length">Shortest Kanji first</option>
             </select>
           </label>
+          <div className="col-span-2 flex items-end lg:col-span-1">
+            <button
+              className="button-secondary w-full !min-h-[2.55rem] !px-3 !text-sm"
+              disabled={!hasActiveSettings}
+              onClick={clearFilters}
+              type="button"
+            >
+              Reset
+            </button>
+          </div>
         </div>
 
         <div className="mt-3 flex items-center gap-2 overflow-x-auto border-t border-[#e3e2dc] pt-3 pb-1" aria-label="Browse by first letter">
@@ -174,15 +187,6 @@ export function FirstNameExplorer({
               {item}
             </button>
           ))}
-          {activeFilterCount > 0 && (
-            <button
-              className="button-quiet ml-auto !min-h-8 shrink-0 !px-2 text-xs"
-              onClick={clearFilters}
-              type="button"
-            >
-              Clear filters
-            </button>
-          )}
         </div>
       </div>
 
@@ -201,9 +205,13 @@ export function FirstNameExplorer({
                 <article className="surface flex flex-col p-5" key={name.id}>
                   <div className="flex items-start justify-between gap-3">
                     <div>
-                      <Link className="japanese-display text-3xl font-medium" href={`/name/${name.slug}`}>
-                        {variation.kanji}
-                      </Link>
+                      {name.isIndexable ? (
+                        <Link className="japanese-display text-3xl font-medium" href={`/name/${name.slug}`}>
+                          {variation.kanji}
+                        </Link>
+                      ) : (
+                        <span className="japanese-display text-3xl font-medium">{variation.kanji}</span>
+                      )}
                       <p className="mt-1 font-semibold">{name.romaji}</p>
                       <p className="japanese-display text-sm text-[#647068]">{name.hiragana}</p>
                     </div>
@@ -211,6 +219,12 @@ export function FirstNameExplorer({
                       <PronunciationButton
                         label={name.romaji}
                         text={name.hiragana}
+                      />
+                      <CopyButton
+                        compact
+                        eventName="copy_first_name"
+                        label={`Copy ${name.romaji}`}
+                        text={`${variation.kanji} — ${name.romaji} — ${name.hiragana}`}
                       />
                       <FavoriteButton
                         compact
@@ -221,7 +235,11 @@ export function FirstNameExplorer({
                           label: `${variation.kanji} · ${name.romaji}`,
                           sublabel: name.hiragana,
                           pronunciation: name.hiragana,
-                          href: `/name/${name.slug}`,
+                          href: name.isIndexable
+                            ? `/name/${name.slug}`
+                            : gender === "girl"
+                              ? "/japanese-girl-names"
+                              : "/japanese-boy-names",
                         }}
                       />
                     </div>
@@ -234,7 +252,7 @@ export function FirstNameExplorer({
                     <span className="chip capitalize">{name.popularityLevel.replace("_", " ")}</span>
                   </div>
                   <div className="mt-5 flex items-center gap-4 border-t border-[#e3e2dc] pt-4 text-xs font-bold text-[#315c4b]">
-                    <Link href={`/name/${name.slug}`}>View details</Link>
+                    {name.isIndexable && <Link href={`/name/${name.slug}`}>View details</Link>}
                     <Link
                       href={`/?firstName=${name.id}#generator`}
                       onClick={() => trackEvent("use_name_in_generator", { firstNameId: name.id })}

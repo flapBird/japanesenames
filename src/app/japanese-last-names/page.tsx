@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { JsonLd } from "@/components/shared/JsonLd";
 import { SurnameExplorer } from "@/components/surnames/SurnameExplorer";
-import { getIndexableSurnames } from "@/lib/names";
+import { getBrowseableSurnames, getIndexableSurnames } from "@/lib/names";
 import { siteUrl } from "@/lib/seo";
 
 export const metadata: Metadata = {
@@ -22,7 +22,8 @@ export const metadata: Metadata = {
 };
 
 export default function LastNamesPage() {
-  const surnames = getIndexableSurnames();
+  const surnames = getBrowseableSurnames();
+  const indexableSurnames = getIndexableSurnames();
   return (
     <div className="container-page themed-page theme-moss">
       <JsonLd
@@ -31,7 +32,7 @@ export default function LastNamesPage() {
           "@type": "ItemList",
           name: "Japanese last names and surnames",
           url: `${siteUrl}/japanese-last-names`,
-          itemListElement: surnames.map((surname, index) => ({
+          itemListElement: indexableSurnames.map((surname, index) => ({
             "@type": "ListItem",
             position: index + 1,
             url: `${siteUrl}/surname/${surname.slug}`,

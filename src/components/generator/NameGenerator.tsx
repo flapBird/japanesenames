@@ -1,19 +1,21 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { GeneratorFilters } from "@/components/generator/GeneratorFilters";
 import { GeneratedNameCard } from "@/components/generator/GeneratedNameCard";
-import { KanjiFilterControls } from "@/components/generator/KanjiFilterControls";
+import { KanjiFilterFields, KanjiPopularShortcuts } from "@/components/generator/KanjiFilterControls";
 import { NameOrderToggle } from "@/components/generator/NameOrderToggle";
 import { firstNameById, surnameById } from "@/data";
 import { trackEvent } from "@/lib/analytics";
 import {
+  givenNamePopularKanji,
   isSingleKanji,
   kanjiFilterCopy,
   normalizeKanjiInput,
+  surnamePopularKanji,
 } from "@/lib/kanji";
-import { generateNameBatch } from "@/lib/names";
+import { generateNameBatch, getKanjiShortcutCount } from "@/lib/names";
 import type {
   GeneratorFilters as FilterState,
   KanjiFilter,
@@ -30,19 +32,16 @@ const defaultFilters: FilterState = {
   surnamePopularity: "any",
 };
 
-const filterLabels: Record<keyof FilterState, string> = {
-  gender: "gender",
-  style: "style",
-  mode: "name mode",
-  meaning: "meaning",
-  kanjiLength: "written length",
-  surnamePopularity: "surname commonness",
-};
-
 function kanjiResultTitle(kanji: string, target: KanjiTarget) {
   if (target === "given-name") return "Japanese given names with";
   if (target === "surname") return "Japanese surnames with";
   return "Names containing";
+}
+
+function createRandomSeed() {
+  const values = new Uint32Array(1);
+  crypto.getRandomValues(values);
+  return values[0] || 1;
 }
 
 export function NameGenerator() {
@@ -66,6 +65,9 @@ export function NameGenerator() {
   const [excludedKeys, setExcludedKeys] = useState<string[]>([]);
   const [excludedSurnameIds, setExcludedSurnameIds] = useState<string[]>([]);
   const [excludedFirstNameIds, setExcludedFirstNameIds] = useState<string[]>([]);
+  const [shownFirstNameCounts, setShownFirstNameCounts] = useState<Record<string, number>>({});
+  const [shownVariationCounts, setShownVariationCounts] = useState<Record<string, number>>({});
+  const [shownSurnameCounts, setShownSurnameCounts] = useState<Record<string, number>>({});
   const [order, setOrder] = useState<NameOrder>("japanese");
   const normalizedDraftKanji = normalizeKanjiInput(draftKanji);
   const hasPendingFilters =
@@ -73,6 +75,13 @@ export function NameGenerator() {
     normalizedDraftKanji !== (kanjiFilter.kanji ?? "") ||
     (Boolean(normalizedDraftKanji) &&
       draftKanjiTarget !== (kanjiFilter.target ?? "given-name"));
+  const hasActiveSettings =
+    JSON.stringify(draftFilters) !== JSON.stringify(defaultFilters) ||
+    JSON.stringify(filters) !== JSON.stringify(defaultFilters) ||
+    Boolean(normalizedDraftKanji) ||
+    Boolean(kanjiFilter.kanji) ||
+    draftKanjiTarget !== "given-name" ||
+    Boolean(lockedSurnameId || lockedFirstNameId);
 
   const batch = useMemo(
     () =>
@@ -84,6 +93,9 @@ export function NameGenerator() {
         excludeKeys: excludedKeys,
         excludeSurnameIds: excludedSurnameIds,
         excludeFirstNameIds: excludedFirstNameIds,
+        shownFirstNameCounts,
+        shownVariationCounts,
+        shownSurnameCounts,
         seed,
       }),
     [
@@ -95,9 +107,23 @@ export function NameGenerator() {
       lockedFirstNameId,
       lockedSurnameId,
       seed,
+      shownFirstNameCounts,
+      shownSurnameCounts,
+      shownVariationCounts,
     ],
   );
   const results = batch.results;
+  const givenCounts = useMemo(() => Object.fromEntries(givenNamePopularKanji.map((item) => [item.kanji, getKanjiShortcutCount(item.kanji, "given-name", draftFilters)])), [draftFilters]);
+  const surnameCounts = useMemo(() => Object.fromEntries(surnamePopularKanji.map((item) => [item.kanji, getKanjiShortcutCount(item.kanji, "surname", draftFilters)])), [draftFilters]);
+
+  useEffect(() => {
+    const frame = requestAnimationFrame(() => setSeed(createRandomSeed()));
+    return () => cancelAnimationFrame(frame);
+  }, []);
+
+  function advanceSeed() {
+    setSeed(createRandomSeed());
+  }
 
   function rememberCurrentResults() {
     if (results.length === 0) return;
@@ -110,6 +136,21 @@ export function NameGenerator() {
     setExcludedFirstNameIds((current) => [
       ...new Set([...current, ...results.map((item) => item.firstName.id)]),
     ]);
+    const increment = (current: Record<string, number>, values: string[]) => {
+      const next = { ...current };
+      for (const value of values) next[value] = (next[value] ?? 0) + 1;
+      return next;
+    };
+    setShownFirstNameCounts((current) => increment(current, results.map((item) => item.firstName.id)));
+    setShownVariationCounts((current) => increment(current, results.map((item) => item.variation.kanji)));
+    setShownSurnameCounts((current) => increment(current, results.map((item) => item.surname.id)));
+  }
+
+  function startNewCycle() {
+    setExcludedKeys([]);
+    setExcludedSurnameIds([]);
+    setExcludedFirstNameIds([]);
+    advanceSeed();
   }
 
   function generate() {
@@ -126,7 +167,7 @@ export function NameGenerator() {
       kanji: normalizedDraftKanji || undefined,
       target: draftKanjiTarget,
     });
-    setSeed((value) => value + 1);
+    advanceSeed();
     if (hasPendingFilters) {
       const properties = {
         ...draftFilters,
@@ -151,7 +192,9 @@ export function NameGenerator() {
     setDraftKanjiTarget("given-name");
     setKanjiFilter({ target: "given-name" });
     setKanjiError(undefined);
-    setSeed((value) => value + 1);
+    setLockedSurnameId(undefined);
+    setLockedFirstNameId(undefined);
+    advanceSeed();
   }
 
   function clearKanjiFilter() {
@@ -160,7 +203,7 @@ export function NameGenerator() {
     setDraftKanjiTarget("given-name");
     setKanjiFilter({ target: "given-name" });
     setKanjiError(undefined);
-    setSeed((value) => value + 1);
+    advanceSeed();
   }
 
   return (
@@ -180,37 +223,58 @@ export function NameGenerator() {
         <div className="p-4 sm:p-5">
           <GeneratorFilters
             action={
-              <button
-                aria-label={
-                  hasPendingFilters
-                    ? "Apply filters and generate 6 names"
-                    : "Generate 6 new names"
-                }
-                className="button-primary w-full !min-h-[2.55rem] !px-4 !text-[0.82rem] lg:w-auto sm:!text-sm"
-                disabled={Boolean(lockedSurnameId && lockedFirstNameId)}
-                onClick={generate}
-                type="button"
-              >
-                Generate
-              </button>
+              <div className="flex w-full items-center gap-2 lg:w-auto">
+                <button
+                  aria-label={
+                    hasPendingFilters
+                      ? "Apply filters and generate 6 names"
+                      : "Generate 6 new names"
+                  }
+                  className="button-primary flex-1 !min-h-[2.55rem] !px-4 !text-sm lg:w-28 lg:flex-none"
+                  disabled={Boolean(lockedSurnameId && lockedFirstNameId)}
+                  onClick={generate}
+                  type="button"
+                >
+                  Generate
+                </button>
+                <button
+                  className="button-secondary flex-1 !min-h-[2.55rem] !px-3 !text-sm lg:flex-none"
+                  disabled={!hasActiveSettings}
+                  onClick={resetFilters}
+                  type="button"
+                >
+                  Reset
+                </button>
+              </div>
+            }
+            kanjiControl={
+              <KanjiFilterFields
+                error={kanjiError}
+                kanji={draftKanji}
+                onChange={(value) => {
+                  setDraftKanji(value.kanji);
+                  setDraftKanjiTarget(value.target);
+                  setKanjiError(value.kanji && !isSingleKanji(value.kanji) ? kanjiFilterCopy.invalidKanji : undefined);
+                }}
+                onSubmit={generate}
+                target={draftKanjiTarget}
+              />
             }
             onChange={setDraftFilters}
+            popularKanji={
+              <KanjiPopularShortcuts
+                givenCounts={givenCounts}
+                kanji={draftKanji}
+                onChange={(value) => {
+                  setDraftKanji(value.kanji);
+                  setDraftKanjiTarget(value.target);
+                  setKanjiError(value.kanji && !isSingleKanji(value.kanji) ? kanjiFilterCopy.invalidKanji : undefined);
+                }}
+                surnameCounts={surnameCounts}
+                target={draftKanjiTarget}
+              />
+            }
             value={draftFilters}
-          />
-          <KanjiFilterControls
-            error={kanjiError}
-            kanji={draftKanji}
-            onChange={(value) => {
-              setDraftKanji(value.kanji);
-              setDraftKanjiTarget(value.target);
-              setKanjiError(
-                value.kanji && !isSingleKanji(value.kanji)
-                  ? kanjiFilterCopy.invalidKanji
-                  : undefined,
-              );
-            }}
-            onSubmit={generate}
-            target={draftKanjiTarget}
           />
           {lockedSurnameId && lockedFirstNameId && (
             <p className="mt-2 text-xs text-[#68726b]">
@@ -236,19 +300,6 @@ export function NameGenerator() {
                     </span>
                   </h2>
                 )}
-                <p className="text-sm text-[#647068]">
-                  {results.length} structured matches · surname shown first by default
-                </p>
-                {!lockedSurnameId && !lockedFirstNameId && (
-                  <p className="mt-1 text-xs text-[#7a827d]">
-                    New batches avoid names already shown in this session. Keep either part to vary the other.
-                  </p>
-                )}
-                {batch.reusedCount > 0 && (
-                  <p className="mt-1 text-xs font-semibold text-[#8d493c]">
-                    The unique reviewed pool was exhausted, so a new cycle has started.
-                  </p>
-                )}
               </div>
               {(lockedSurnameId || lockedFirstNameId) && (
                 <div className="flex flex-wrap gap-2" aria-label="Kept name parts">
@@ -258,7 +309,7 @@ export function NameGenerator() {
                       onClick={() => {
                         rememberCurrentResults();
                         setLockedSurnameId(undefined);
-                        setSeed((value) => value + 1);
+                        advanceSeed();
                       }}
                       type="button"
                     >
@@ -271,7 +322,7 @@ export function NameGenerator() {
                       onClick={() => {
                         rememberCurrentResults();
                         setLockedFirstNameId(undefined);
-                        setSeed((value) => value + 1);
+                        advanceSeed();
                       }}
                       type="button"
                     >
@@ -281,21 +332,7 @@ export function NameGenerator() {
                 </div>
               )}
             </div>
-            {batch.exactCount < results.length && (
-              <div className="mb-4 rounded-xl border border-[#decf9f] bg-[#f7f1df] px-4 py-3 text-sm leading-6 text-[#685526]">
-                <strong>
-                  {batch.exactCount > 0
-                    ? `${batch.exactCount} exact matches.`
-                    : "No exact matches in the reviewed dataset."}
-                </strong>{" "}
-                Showing the closest unique structured names
-                {batch.relaxedFilters.length > 0
-                  ? ` by relaxing ${batch.relaxedFilters
-                      .map((filter) => filterLabels[filter])
-                      .join(", ")}.`
-                  : "."}
-              </div>
-            )}
+            {results.length < 6 && <div className="mb-4 rounded-xl border border-[#decf9f] bg-[#f7f1df] px-4 py-3 text-sm leading-6 text-[#685526]">Only {results.length} unseen exact matches remain. Filters and kanji constraints were not relaxed.</div>}
             <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
               {results.map((item) => (
                 <GeneratedNameCard
@@ -306,13 +343,13 @@ export function NameGenerator() {
                   onLockFirstName={() => {
                     rememberCurrentResults();
                     setLockedFirstNameId(item.firstName.id);
-                    setSeed((value) => value + 1);
+                    advanceSeed();
                     trackEvent("lock_first_name", { id: item.firstName.id });
                   }}
                   onLockSurname={() => {
                     rememberCurrentResults();
                     setLockedSurnameId(item.surname.id);
-                    setSeed((value) => value + 1);
+                    advanceSeed();
                     trackEvent("lock_surname", { id: item.surname.id });
                   }}
                   order={order}
@@ -323,7 +360,13 @@ export function NameGenerator() {
           </>
         ) : (
           <div className="surface py-12 text-center">
-            {kanjiFilter.kanji ? (
+            {batch.poolCount > 0 ? (
+              <>
+                <p className="text-lg font-semibold">This exact pool has completed its cycle.</p>
+                <p className="mx-auto mt-2 max-w-lg text-sm leading-6 text-[#647068]">Start a new cycle to allow previously shown full names again. Your filters remain unchanged.</p>
+                <button className="button-secondary mt-5" onClick={startNewCycle} type="button">Start new cycle</button>
+              </>
+            ) : kanjiFilter.kanji ? (
               <>
                 <p className="text-lg font-semibold">
                   {kanjiFilterCopy.noMatchingNames}
@@ -339,6 +382,8 @@ export function NameGenerator() {
                 >
                   {kanjiFilterCopy.clearKanjiFilter}
                 </button>
+                <button className="button-secondary ml-2 mt-5" onClick={resetFilters} type="button">Clear other filters</button>
+                {(kanjiFilter.target ?? "given-name") !== "either" && <button className="button-secondary ml-2 mt-5" onClick={() => { setDraftKanjiTarget("either"); setKanjiFilter({ kanji: kanjiFilter.kanji, target: "either" }); advanceSeed(); }} type="button">Change to Either</button>}
               </>
             ) : (
               <>

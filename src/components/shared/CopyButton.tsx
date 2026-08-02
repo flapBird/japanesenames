@@ -9,11 +9,13 @@ export function CopyButton({
   eventName = "copy_full_name",
   label = "Copy",
   className = "",
+  compact = false,
 }: {
   text: string;
   eventName?: EventName;
   label?: string;
   className?: string;
+  compact?: boolean;
 }) {
   const [copied, setCopied] = useState(false);
 
@@ -31,12 +33,23 @@ export function CopyButton({
   return (
     <button
       aria-label={`${label}: ${text}`}
-      className={`button-quiet !min-h-9 !px-2.5 ${className}`}
+      className={`button-quiet !min-h-9 ${
+        compact
+          ? `!size-10 !min-h-10 !shrink-0 !border !p-0 ${
+              copied
+                ? "!border-[#9eb8a8] !bg-[#e7eee9] !text-[#315c4b]"
+                : "!border-[#deddd5] !bg-[#fffefb] !text-[#647068] hover:!border-[#315c4b]"
+            }`
+          : "!px-2.5"
+      } ${className}`}
       onClick={copy}
+      title={copied ? "Copied" : label}
       type="button"
     >
       <CopyIcon />
-      {copied ? "Copied" : label}
+      {compact ? (
+        <span aria-live="polite" className="sr-only">{copied ? "Copied" : ""}</span>
+      ) : copied ? "Copied" : label}
     </button>
   );
 }

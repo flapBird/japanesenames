@@ -15,7 +15,7 @@ export const kanjiFilterCopy = {
   clearKanjiFilter: "Clear Kanji Filter",
 } as const;
 
-export const popularKanji = [
+export const givenNamePopularKanji = [
   { label: "Moon", kanji: "月" },
   { label: "Love", kanji: "愛" },
   { label: "Cherry Blossom", kanji: "桜" },
@@ -25,6 +25,20 @@ export const popularKanji = [
   { label: "Ocean", kanji: "海" },
   { label: "Beauty", kanji: "美" },
 ] as const;
+
+export const surnamePopularKanji = [
+  { label: "Mountain", kanji: "山" },
+  { label: "Rice Field", kanji: "田" },
+  { label: "River", kanji: "川" },
+  { label: "Center", kanji: "中" },
+  { label: "Tree", kanji: "木" },
+  { label: "Base", kanji: "本" },
+  { label: "Grove", kanji: "林" },
+  { label: "Island", kanji: "島" },
+] as const;
+
+// Kept as a compatibility export for tests and any external consumers.
+export const popularKanji = givenNamePopularKanji;
 
 export const kanjiTargetOptions: Array<{
   label: string;

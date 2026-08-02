@@ -4,6 +4,8 @@ export type EventName =
   | "lock_surname"
   | "lock_first_name"
   | "copy_full_name"
+  | "copy_first_name"
+  | "copy_surname"
   | "favorite_full_name"
   | "open_surname"
   | "open_first_name"

@@ -1,0 +1,13 @@
+{
+  "sourceId": "edrdg-jmnedict-2026-08-01",
+  "title": "JMnedict Japanese Multilingual Named Entity Dictionary",
+  "publisher": "Electronic Dictionary Research and Development Group",
+  "url": "https://ftp.edrdg.org/pub/Nihongo/JMnedict.xml.gz",
+  "documentation": "https://www.edrdg.org/enamdict/enamdict_doc.html",
+  "license": "CC BY-SA 4.0",
+  "datasetVersion": "JMnedict created 2026-08-01",
+  "accessedAt": "2026-08-01",
+  "lastImportedAt": "2026-08-01",
+  "inputFile": "JMnedict.xml.gz",
+  "importedCandidateCount": 327935
+}

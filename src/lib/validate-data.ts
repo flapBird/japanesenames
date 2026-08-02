@@ -43,8 +43,14 @@ export function validateNameData({
     if (!surname.slug || !surname.romaji || !surname.hiragana || !surname.kanji) {
       errors.push(`Surname ${surname.id} is missing slug, Romaji, Hiragana, or Kanji`);
     }
-    if (surname.isIndexable && surname.verificationStatus === "needs_review") {
-      errors.push(`Indexable surname ${surname.id} cannot be needs_review`);
+    if (surname.isIndexable && !["verified", "partially_verified"].includes(surname.verificationStatus)) {
+      errors.push(`Indexable surname ${surname.id} must be verified or partially verified`);
+    }
+    if (surname.generatorEligible && !["verified", "partially_verified"].includes(surname.verificationStatus)) {
+      errors.push(`Generator surname ${surname.id} must be verified or partially verified`);
+    }
+    if (surname.candidateStatus && ["verified", "partially_verified"].includes(surname.verificationStatus) && (!surname.upstreamIds?.length || !surname.sourceIds.length)) {
+      errors.push(`Surname ${surname.id} has no upstream pair evidence`);
     }
     for (const sourceId of surname.sourceIds) {
       if (!sourceIds.has(sourceId)) errors.push(`Surname ${surname.id} references missing source ${sourceId}`);
@@ -77,8 +83,14 @@ export function validateNameData({
     if (!name.slug || !name.romaji || !name.hiragana || name.variations.length === 0) {
       errors.push(`First name ${name.id} is missing slug, Romaji, Hiragana, or Kanji variation`);
     }
-    if (name.isIndexable && name.verificationStatus === "needs_review") {
-      errors.push(`Indexable first name ${name.id} cannot be needs_review`);
+    if (name.isIndexable && !["verified", "partially_verified"].includes(name.verificationStatus)) {
+      errors.push(`Indexable first name ${name.id} must be verified or partially verified`);
+    }
+    if (name.generatorEligible && !["verified", "partially_verified"].includes(name.verificationStatus)) {
+      errors.push(`Generator first name ${name.id} must be verified or partially verified`);
+    }
+    if (name.candidateStatus && ["verified", "partially_verified"].includes(name.verificationStatus) && (!name.upstreamIds?.length || !name.sourceIds.length)) {
+      errors.push(`First name ${name.id} has no upstream pair evidence`);
     }
     for (const sourceId of name.sourceIds) {
       if (!sourceIds.has(sourceId)) errors.push(`First name ${name.id} references missing source ${sourceId}`);
@@ -88,6 +100,11 @@ export function validateNameData({
     }
     for (const duplicate of duplicates(name.variations.map((variation) => variation.kanji))) {
       errors.push(`First name ${name.id} has duplicate Kanji variation ${duplicate}`);
+    }
+    for (const variation of name.variations) {
+      if (["verified", "partially_verified"].includes(variation.verificationStatus) && !name.sourceIds.length) {
+        errors.push(`Variation ${name.id}/${variation.kanji} has no source evidence`);
+      }
     }
   }
 

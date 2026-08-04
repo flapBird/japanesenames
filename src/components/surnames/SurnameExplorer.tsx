@@ -63,7 +63,9 @@ export function SurnameExplorer({ surnames }: { surnames: SurnameRecord[] }) {
               onChange={(event) => {
                 setQuery(event.target.value);
                 setRandomId(undefined);
-                trackEvent("search_surnames", { query: event.target.value });
+                trackEvent("search_surnames", {
+                  queryLength: [...event.target.value].length,
+                });
               }}
               placeholder="Search Kanji, Romaji, or Hiragana"
               type="search"

@@ -28,8 +28,9 @@ export function Footer() {
           <h2 className="mb-3 text-sm font-bold">Site</h2>
           <div className="grid gap-2 text-sm text-[#647068]">
             <Link href="/about">About our data</Link>
-            <Link href="/favorites">Favorites</Link>
-            <span>japanesenames.site</span>
+            <Link href="/privacy">Privacy Policy</Link>
+            <Link href="/terms">Terms of Use</Link>
+            <Link href="/contact">Contact</Link>
           </div>
         </div>
       </div>

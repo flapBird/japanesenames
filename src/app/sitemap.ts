@@ -3,13 +3,16 @@ import { getIndexableFirstNames, getIndexableSurnames } from "@/lib/names";
 import { siteUrl } from "@/lib/seo";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const now = new Date("2026-07-29");
+  const now = new Date("2026-08-04");
   const staticPages = [
     "",
     "/japanese-girl-names",
     "/japanese-boy-names",
     "/japanese-last-names",
     "/about",
+    "/privacy",
+    "/terms",
+    "/contact",
   ].map((path) => ({
     url: `${siteUrl}${path}`,
     lastModified: now,

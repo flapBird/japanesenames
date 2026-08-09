@@ -14,6 +14,7 @@ export function validateNameData({
   sources: SourceReference[];
 }) {
   const errors: string[] = [];
+  const placeholderPattern = /not yet reviewed/i;
   const sourceIds = new Set(sources.map((source) => source.id));
   const surnameIds = new Set(surnames.map((surname) => surname.id));
   const firstNameIds = new Set(firstNames.map((name) => name.id));
@@ -40,14 +41,30 @@ export function validateNameData({
     errors.push(`Duplicate surname slug: ${duplicate}`);
   }
   for (const surname of surnames) {
+    const generatorEligible =
+      surname.generatorEligible ?? surname.verificationStatus !== "needs_review";
     if (!surname.slug || !surname.romaji || !surname.hiragana || !surname.kanji) {
       errors.push(`Surname ${surname.id} is missing slug, Romaji, Hiragana, or Kanji`);
     }
     if (surname.isIndexable && !["verified", "partially_verified"].includes(surname.verificationStatus)) {
       errors.push(`Indexable surname ${surname.id} must be verified or partially verified`);
     }
-    if (surname.generatorEligible && !["verified", "partially_verified"].includes(surname.verificationStatus)) {
+    if (generatorEligible && !["verified", "partially_verified"].includes(surname.verificationStatus)) {
       errors.push(`Generator surname ${surname.id} must be verified or partially verified`);
+    }
+    if (
+      generatorEligible &&
+      (placeholderPattern.test(surname.literalMeaning) ||
+        placeholderPattern.test(surname.summary))
+    ) {
+      errors.push(`Generator surname ${surname.id} contains placeholder content`);
+    }
+    if (
+      surname.fieldEvidence?.kanjiMeaning === "dictionary_supported" &&
+      (!surname.kanjiBreakdown.length ||
+        !surname.sourceIds.includes("edrdg-kanjidic2-2026-08-01"))
+    ) {
+      errors.push(`Dictionary-supported surname ${surname.id} is missing KANJIDIC2 evidence`);
     }
     if (surname.candidateStatus && ["verified", "partially_verified"].includes(surname.verificationStatus) && (!surname.upstreamIds?.length || !surname.sourceIds.length)) {
       errors.push(`Surname ${surname.id} has no upstream pair evidence`);
@@ -80,13 +97,15 @@ export function validateNameData({
     errors.push(`Duplicate first-name slug: ${duplicate}`);
   }
   for (const name of firstNames) {
+    const generatorEligible =
+      name.generatorEligible ?? name.verificationStatus !== "needs_review";
     if (!name.slug || !name.romaji || !name.hiragana || name.variations.length === 0) {
       errors.push(`First name ${name.id} is missing slug, Romaji, Hiragana, or Kanji variation`);
     }
     if (name.isIndexable && !["verified", "partially_verified"].includes(name.verificationStatus)) {
       errors.push(`Indexable first name ${name.id} must be verified or partially verified`);
     }
-    if (name.generatorEligible && !["verified", "partially_verified"].includes(name.verificationStatus)) {
+    if (generatorEligible && !["verified", "partially_verified"].includes(name.verificationStatus)) {
       errors.push(`Generator first name ${name.id} must be verified or partially verified`);
     }
     if (name.candidateStatus && ["verified", "partially_verified"].includes(name.verificationStatus) && (!name.upstreamIds?.length || !name.sourceIds.length)) {
@@ -104,6 +123,25 @@ export function validateNameData({
     for (const variation of name.variations) {
       if (["verified", "partially_verified"].includes(variation.verificationStatus) && !name.sourceIds.length) {
         errors.push(`Variation ${name.id}/${variation.kanji} has no source evidence`);
+      }
+      if (
+        generatorEligible &&
+        variation.meanings.some((meaning) => placeholderPattern.test(meaning))
+      ) {
+        errors.push(`Generator variation ${name.id}/${variation.kanji} contains placeholder content`);
+      }
+      if (
+        variation.meaningEvidence === "dictionary_glosses" &&
+        (!variation.kanjiBreakdown.length ||
+          !variation.sourceIds?.includes("edrdg-kanjidic2-2026-08-01") ||
+          !variation.upstreamIds?.length)
+      ) {
+        errors.push(`Dictionary-supported variation ${name.id}/${variation.kanji} is missing field-level evidence`);
+      }
+      for (const sourceId of variation.sourceIds ?? []) {
+        if (!sourceIds.has(sourceId)) {
+          errors.push(`Variation ${name.id}/${variation.kanji} references missing source ${sourceId}`);
+        }
       }
     }
   }

@@ -145,22 +145,10 @@ export function SurnameExplorer({ surnames }: { surnames: SurnameRecord[] }) {
           <div className="mt-4 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             {displayed.map((surname) => (
               <article className="surface flex flex-col p-5" key={surname.id}>
-                <div className="flex items-start justify-between">
-                  <div>
-                    {surname.isIndexable ? (
-                      <Link
-                        className="japanese-display text-3xl font-medium underline decoration-[#9db4a5] decoration-1 underline-offset-4 transition-colors hover:text-[#315c4b]"
-                        href={`/surname/${surname.slug}`}
-                        title={`Read the ${surname.romaji} surname story`}
-                      >
-                        {surname.kanji}
-                      </Link>
-                    ) : (
-                      <span className="japanese-display text-3xl font-medium">{surname.kanji}</span>
-                    )}
-                    <p className="mt-1 font-semibold">{surname.romaji}</p>
-                    <p className="japanese-display text-sm text-[#647068]">{surname.hiragana}</p>
-                  </div>
+                <div className="mb-3 flex items-center justify-between gap-3">
+                  <p className="text-[0.65rem] font-bold uppercase tracking-[0.09em] text-[#747d77]">
+                    Surname formats
+                  </p>
                   <div className="flex shrink-0 items-center gap-2">
                     <PronunciationButton
                       label={surname.romaji}
@@ -185,10 +173,58 @@ export function SurnameExplorer({ surnames }: { surnames: SurnameRecord[] }) {
                     />
                   </div>
                 </div>
-                <p className="mt-4 text-sm leading-6 text-[#536058]">{surname.literalMeaning}</p>
+                <div className="grid grid-cols-2 overflow-hidden rounded-xl border border-[#e3e2dc]">
+                  <div className="min-w-0 bg-[#faf9f5] p-3.5">
+                    <p className="text-[0.62rem] font-bold uppercase tracking-[0.08em] text-[#747d77]">
+                      Romanized form
+                    </p>
+                    {surname.isIndexable ? (
+                      <Link
+                        className="mt-2 block text-xl font-semibold leading-tight tracking-[-0.02em]"
+                        href={`/surname/${surname.slug}`}
+                        title={`Read the ${surname.romaji} surname story`}
+                      >
+                        {surname.romaji}
+                      </Link>
+                    ) : (
+                      <p className="mt-2 text-xl font-semibold leading-tight tracking-[-0.02em]">
+                        {surname.romaji}
+                      </p>
+                    )}
+                  </div>
+                  <div className="min-w-0 border-l border-[#e3e2dc] p-3.5">
+                    <p className="text-[0.62rem] font-bold uppercase tracking-[0.08em] text-[#747d77]">
+                      Japanese form
+                    </p>
+                    {surname.isIndexable ? (
+                      <Link
+                        className="japanese-display mt-2 block text-3xl font-medium leading-tight"
+                        href={`/surname/${surname.slug}`}
+                        title={`Read the ${surname.romaji} surname story`}
+                      >
+                        {surname.kanji}
+                      </Link>
+                    ) : (
+                      <p className="japanese-display mt-2 text-3xl font-medium leading-tight">
+                        {surname.kanji}
+                      </p>
+                    )}
+                    <p className="japanese-display mt-1 text-sm text-[#647068]">
+                      {surname.hiragana}
+                    </p>
+                  </div>
+                </div>
+                <div className="mt-4">
+                  <p className="text-[0.68rem] font-bold uppercase tracking-[0.08em] text-[#747d77]">
+                    Meaning
+                  </p>
+                  <p className="mt-1 text-sm leading-6 text-[#536058]">
+                    {surname.literalMeaning}
+                  </p>
+                </div>
                 <div className="mt-4 flex flex-wrap gap-1.5">
                   <span className={`chip ${surname.isIndexable ? "!border-[#aac0b1] !bg-[#e7eee9] !text-[#315c4b]" : "!bg-[#efeeea] !text-[#68726b]"}`}>
-                    {surname.isIndexable ? "Origin story available" : "Dictionary record"}
+                    {surname.isIndexable ? "Origin story available" : "Source-backed record"}
                   </span>
                   <span className="chip capitalize">{surname.popularityLevel.replace("_", " ")}</span>
                   {surname.originTypes.slice(0, 2).map((item) => <span className="chip capitalize" key={item}>{item}</span>)}
@@ -200,8 +236,8 @@ export function SurnameExplorer({ surnames }: { surnames: SurnameRecord[] }) {
                     </Link>
                   )}
                   {!surname.isIndexable && (
-                    <span className="font-medium text-[#747d77]" title="A sourced origin story has not completed editorial review.">
-                      Story not reviewed yet
+                    <span className="font-medium text-[#747d77]" title="The source record supports the spelling and reading; no family-origin claim is inferred from kanji alone.">
+                      Origin not inferred from kanji
                     </span>
                   )}
                   <Link href={`/?surname=${surname.id}#generator`}>Use in generator</Link>

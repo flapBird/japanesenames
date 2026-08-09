@@ -2,7 +2,7 @@ import Link from "next/link";
 import { BrandMark } from "@/components/BrandMark";
 
 const navigation = [
-  { href: "/#generator", label: "Generator" },
+  { href: "/#generator", label: "Japanese Name Generator" },
   { href: "/japanese-girl-names", label: "Girl Names" },
   { href: "/japanese-boy-names", label: "Boy Names" },
   { href: "/japanese-last-names", label: "Last Names" },

@@ -52,6 +52,26 @@ console.log(JSON.stringify({
     firstNameReadings: firstNames.filter((item) => item.generatorEligible ?? item.verificationStatus !== "needs_review").length,
     surnames: surnames.filter((item) => item.generatorEligible ?? item.verificationStatus !== "needs_review").length,
   },
+  evidenceCoverage: {
+    dictionarySupportedVariations: firstNames.reduce(
+      (count, item) =>
+        count +
+        item.variations.filter(
+          (variation) => variation.meaningEvidence === "dictionary_glosses",
+        ).length,
+      0,
+    ),
+    dictionarySupportedSurnames: surnames.filter(
+      (item) => item.fieldEvidence?.kanjiMeaning === "dictionary_supported",
+    ).length,
+    placeholderMeanings: firstNames.reduce(
+      (count, item) =>
+        count +
+        item.variations.flatMap((variation) => variation.meanings)
+          .filter((meaning) => /not yet reviewed/i.test(meaning)).length,
+      0,
+    ) + surnames.filter((item) => /not yet reviewed/i.test(item.literalMeaning)).length,
+  },
   indexable: firstNames.filter((item) => item.isIndexable).length + surnames.filter((item) => item.isIndexable).length,
   imported_unreviewed: manifest.importedCandidateCount ?? statusCount("imported_unreviewed"),
   partially_verified: statusCount("partially_verified"),

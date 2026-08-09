@@ -14,7 +14,7 @@ export function SourceList({ sources }: { sources: SourceReference[] }) {
             {source.title}
           </a>
           <p className="mt-1 text-xs text-[#647068]">
-            {[source.publisher, source.publishedAt && `Published ${source.publishedAt}`, source.accessedAt && `Accessed ${source.accessedAt}`]
+            {[source.publisher, source.datasetVersion, source.evidenceType && `Evidence: ${source.evidenceType.replaceAll("_", " ")}`, source.license, source.publishedAt && `Published ${source.publishedAt}`, source.accessedAt && `Accessed ${source.accessedAt}`]
               .filter(Boolean)
               .join(" · ")}
           </p>

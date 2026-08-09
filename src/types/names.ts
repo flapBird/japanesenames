@@ -20,6 +20,21 @@ export type EvidenceType =
   | "surname_origin"
   | "regional_distribution";
 
+export type FieldEvidenceStatus =
+  | "editorially_reviewed"
+  | "source_recorded"
+  | "dictionary_supported"
+  | "not_reviewed";
+
+export interface NameFieldEvidence {
+  spellingReading: FieldEvidenceStatus;
+  kanjiMeaning: FieldEvidenceStatus;
+  genderUsage?: FieldEvidenceStatus;
+  style?: FieldEvidenceStatus;
+  popularity?: FieldEvidenceStatus;
+  origin?: FieldEvidenceStatus;
+}
+
 export type PopularityLevel =
   | "very_common"
   | "common"
@@ -119,6 +134,7 @@ export interface SurnameRecord {
   curationPriority?: "recommended" | "extended";
   candidateStatus?: CandidateStatus;
   reviewNotes?: string;
+  fieldEvidence?: NameFieldEvidence;
   upstreamIds?: string[];
   classificationBasis?: string;
   popularityEvidence?: string;
@@ -132,6 +148,9 @@ export interface FirstNameVariation {
   kanjiBreakdown: KanjiMeaning[];
   naturalness: Naturalness;
   verificationStatus: VerificationStatus;
+  meaningEvidence?: "editorially_reviewed" | "dictionary_glosses";
+  sourceIds?: string[];
+  upstreamIds?: string[];
 }
 
 export interface FirstNameRecord {
@@ -153,6 +172,7 @@ export interface FirstNameRecord {
   curationPriority?: "recommended" | "extended";
   candidateStatus?: CandidateStatus;
   reviewNotes?: string;
+  fieldEvidence?: NameFieldEvidence;
   upstreamIds?: string[];
   classificationBasis?: string;
   popularityEvidence?: string;

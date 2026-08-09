@@ -73,24 +73,43 @@ export default async function SurnamePage({
           { label: surname.romaji },
         ]}
       />
-      <header className="page-intro my-6 grid gap-8 lg:grid-cols-[1fr_0.8fr] lg:items-end">
+      <header className="page-intro my-6 grid gap-8 lg:grid-cols-[1.25fr_0.75fr] lg:items-end">
         <div>
           {surname.verificationStatus === "needs_review" && (
             <p className="mb-4 inline-flex rounded-full bg-[#f4e9e5] px-3 py-1 text-xs font-bold text-[#843c2f]">
               Editorial review incomplete · not indexed
             </p>
           )}
-          <p className="eyebrow">Japanese surname</p>
-          <div className="mt-3 flex items-end gap-5">
-            <h1 className="japanese-display text-7xl font-medium sm:text-8xl">
-              {surname.kanji}
-            </h1>
-            <span className="seal mb-2" aria-hidden="true">姓</span>
+          {!surname.isIndexable && surname.candidateStatus && (
+            <p className="mb-4 inline-flex rounded-full bg-[#edf0eb] px-3 py-1 text-xs font-bold text-[#536058]">
+              Source-backed dictionary record · not indexed
+            </p>
+          )}
+          <div className="flex items-center justify-between gap-4">
+            <p className="eyebrow">Japanese surname</p>
+            <span className="seal" aria-hidden="true">姓</span>
           </div>
-          <p className="mt-4 text-2xl font-semibold">{surname.romaji}</p>
-          <p className="japanese-display mt-1 text-base text-[#647068]">
-            {surname.hiragana} · {surname.katakana}
-          </p>
+          <div className="mt-4 grid overflow-hidden rounded-2xl border border-[#d9ddd6] bg-[#fffefb] sm:grid-cols-2">
+            <div className="min-w-0 bg-[#faf9f5] p-5 sm:p-6">
+              <p className="text-[0.68rem] font-bold uppercase tracking-[0.09em] text-[#747d77]">
+                Romanized surname
+              </p>
+              <h1 className="mt-3 text-4xl font-semibold leading-tight tracking-[-0.03em] sm:text-5xl">
+                {surname.romaji}
+              </h1>
+            </div>
+            <div className="min-w-0 border-t border-[#d9ddd6] p-5 sm:border-t-0 sm:border-l sm:p-6">
+              <p className="text-[0.68rem] font-bold uppercase tracking-[0.09em] text-[#747d77]">
+                Japanese surname
+              </p>
+              <p className="japanese-display mt-3 text-5xl font-medium leading-tight sm:text-6xl">
+                {surname.kanji}
+              </p>
+              <p className="japanese-display mt-2 text-sm text-[#647068] sm:text-base">
+                {surname.hiragana} · {surname.katakana}
+              </p>
+            </div>
+          </div>
           <div className="mt-5 flex flex-wrap gap-2">
             <CopyButton
               label="Copy"
@@ -117,7 +136,7 @@ export default async function SurnamePage({
         </div>
         <dl className="surface grid gap-3 p-5 text-sm">
           <div className="flex justify-between gap-4">
-            <dt className="text-[#647068]">Literal meaning</dt>
+            <dt className="text-[#647068]">Meaning</dt>
             <dd className="text-right font-semibold">{surname.literalMeaning}</dd>
           </div>
           <div className="flex justify-between gap-4">

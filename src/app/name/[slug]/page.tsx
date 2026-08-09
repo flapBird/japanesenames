@@ -85,6 +85,11 @@ export default async function FirstNamePage({
               Editorial review incomplete · not indexed
             </p>
           )}
+          {!name.isIndexable && name.candidateStatus && (
+            <p className="mb-4 inline-flex rounded-full bg-[#edf0eb] px-3 py-1 text-xs font-bold text-[#536058]">
+              Source-backed dictionary record · not indexed
+            </p>
+          )}
           <p className="eyebrow">Japanese given name</p>
           <div className="mt-3 flex items-end gap-5">
             <h1 className="japanese-display text-7xl font-medium sm:text-8xl">{preferred.kanji}</h1>
@@ -134,7 +139,12 @@ export default async function FirstNamePage({
                 <p className="japanese-display text-5xl">{variation.kanji}</p>
                 <span className="chip capitalize">{variation.naturalness.replace("_", "-")}</span>
               </div>
-              <p className="mt-5 font-semibold">{variation.meanings.join("; ")}</p>
+              <p className="mt-5 text-[0.68rem] font-bold uppercase tracking-[0.08em] text-[#747d77]">
+                {variation.meaningEvidence === "dictionary_glosses"
+                  ? "Kanji component glosses"
+                  : "Meaning"}
+              </p>
+              <p className="mt-2 font-semibold">{variation.meanings.join("; ")}</p>
               <dl className="mt-5 grid gap-2 border-t border-[#e3e2dc] pt-4">
                 {variation.kanjiBreakdown.map((part) => (
                   <div className="flex items-center justify-between text-sm" key={part.kanji}>
@@ -145,8 +155,9 @@ export default async function FirstNamePage({
               </dl>
               {variation.verificationStatus !== "verified" && (
                 <p className="mt-4 rounded-lg bg-[#f4e9e5] p-3 text-xs leading-5 text-[#6d5048]">
-                  This variation is {variation.verificationStatus.replace("_", " ")}.
-                  Confirm current real-world usage before choosing it.
+                  {variation.meaningEvidence === "dictionary_glosses"
+                    ? "JMnedict documents this spelling-reading pair. KANJIDIC2 supplies the component glosses; they do not prove a combined meaning, popularity, or current naming style."
+                    : `This variation is ${variation.verificationStatus.replace("_", " ")}. Confirm current real-world usage before choosing it.`}
                 </p>
               )}
             </article>

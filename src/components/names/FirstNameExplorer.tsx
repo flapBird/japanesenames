@@ -6,6 +6,7 @@ import { CopyButton } from "@/components/shared/CopyButton";
 import { FavoriteButton } from "@/components/shared/FavoriteButton";
 import { PronunciationButton } from "@/components/shared/PronunciationButton";
 import { trackEvent } from "@/lib/analytics";
+import { getMeaningPreview } from "@/lib/name-display";
 import type { FirstNameRecord, Gender } from "@/types/names";
 
 const PAGE_SIZE = 9;
@@ -201,20 +202,14 @@ export function FirstNameExplorer({
           <div className="mt-4 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             {filtered.slice(0, visible).map((name) => {
               const variation = name.variations[0];
+              const usesDictionaryGlosses =
+                variation.meaningEvidence === "dictionary_glosses";
               return (
                 <article className="surface flex flex-col p-5" key={name.id}>
-                  <div className="flex items-start justify-between gap-3">
-                    <div>
-                      {name.isIndexable ? (
-                        <Link className="japanese-display text-3xl font-medium" href={`/name/${name.slug}`}>
-                          {variation.kanji}
-                        </Link>
-                      ) : (
-                        <span className="japanese-display text-3xl font-medium">{variation.kanji}</span>
-                      )}
-                      <p className="mt-1 font-semibold">{name.romaji}</p>
-                      <p className="japanese-display text-sm text-[#647068]">{name.hiragana}</p>
-                    </div>
+                  <div className="mb-3 flex items-center justify-between gap-3">
+                    <p className="text-[0.65rem] font-bold uppercase tracking-[0.09em] text-[#747d77]">
+                      Given name formats
+                    </p>
                     <div className="flex shrink-0 items-center gap-2">
                       <PronunciationButton
                         label={name.romaji}
@@ -244,15 +239,64 @@ export function FirstNameExplorer({
                       />
                     </div>
                   </div>
-                  <p className="mt-4 text-sm leading-6 text-[#536058]">
-                    {variation.meanings.join("; ")}
-                  </p>
+                  <div className="grid grid-cols-2 overflow-hidden rounded-xl border border-[#e3e2dc]">
+                    <div className="min-w-0 bg-[#faf9f5] p-3.5">
+                      <p className="text-[0.62rem] font-bold uppercase tracking-[0.08em] text-[#747d77]">
+                        Romanized form
+                      </p>
+                      {name.isIndexable ? (
+                        <Link
+                          className="mt-2 block text-xl font-semibold leading-tight tracking-[-0.02em]"
+                          href={`/name/${name.slug}`}
+                        >
+                          {name.romaji}
+                        </Link>
+                      ) : (
+                        <p className="mt-2 text-xl font-semibold leading-tight tracking-[-0.02em]">
+                          {name.romaji}
+                        </p>
+                      )}
+                    </div>
+                    <div className="min-w-0 border-l border-[#e3e2dc] p-3.5">
+                      <p className="text-[0.62rem] font-bold uppercase tracking-[0.08em] text-[#747d77]">
+                        Japanese form
+                      </p>
+                      {name.isIndexable ? (
+                        <Link
+                          className="japanese-display mt-2 block text-3xl font-medium leading-tight"
+                          href={`/name/${name.slug}`}
+                        >
+                          {variation.kanji}
+                        </Link>
+                      ) : (
+                        <p className="japanese-display mt-2 text-3xl font-medium leading-tight">
+                          {variation.kanji}
+                        </p>
+                      )}
+                      <p className="japanese-display mt-1 text-sm text-[#647068]">
+                        {name.hiragana}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="mt-4">
+                    <p className="text-[0.68rem] font-bold uppercase tracking-[0.08em] text-[#747d77]">
+                      Meaning
+                    </p>
+                    <p className="mt-1 text-sm leading-6 text-[#536058]">
+                      {getMeaningPreview(variation)}
+                    </p>
+                  </div>
                   <div className="mt-4 flex flex-wrap gap-1.5">
                     {name.styles.map((item) => <span className="chip capitalize" key={item}>{item}</span>)}
                     <span className="chip capitalize">{name.popularityLevel.replace("_", " ")}</span>
                   </div>
                   <div className="mt-5 flex items-center gap-4 border-t border-[#e3e2dc] pt-4 text-xs font-bold text-[#315c4b]">
                     {name.isIndexable && <Link href={`/name/${name.slug}`}>View details</Link>}
+                    {usesDictionaryGlosses && (
+                      <span className="font-medium text-[#747d77]">
+                        Source-backed
+                      </span>
+                    )}
                     <Link
                       href={`/?firstName=${name.id}#generator`}
                       onClick={() => trackEvent("use_name_in_generator", { firstNameId: name.id })}

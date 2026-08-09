@@ -12,7 +12,10 @@ type Group = {
 };
 
 const inputPath = resolve("src/data/generated/candidates/jmnedict-candidates.json");
+const kanjidicPath = resolve("src/data/generated/candidates/kanjidic2-meanings.json");
 const outputPath = resolve("src/data/generated/curated/name-data.ts");
+const jmnedictSourceId = "edrdg-jmnedict-2026-08-01";
+const kanjidicSourceId = "edrdg-kanjidic2-2026-08-01";
 const wantedGivenKanji = ["月", "愛", "桜", "花", "光", "空", "海", "美"];
 const wantedSurnameKanji = ["山", "田", "川", "中", "木", "本", "林", "島"];
 const nameTargetMinimums: Record<string, number> = { 月: 10, 愛: 12, 桜: 10, 花: 14, 光: 10, 空: 8, 海: 10, 美: 22 };
@@ -84,8 +87,32 @@ function variationSort(kanji: string) {
   return -targetScore * 100 + [...kanji].length;
 }
 
+function sourcedKanjiBreakdown(
+  writtenForm: string,
+  kanjidicMeanings: Record<string, string[]>,
+) {
+  return [...writtenForm]
+    .filter((character) => /\p{Script=Han}/u.test(character))
+    .map((kanji) => ({
+      kanji,
+      meanings: kanjidicMeanings[kanji] ?? [],
+    }))
+    .filter((part) => part.meanings.length > 0);
+}
+
+function conciseDictionaryGlosses(
+  parts: ReturnType<typeof sourcedKanjiBreakdown>,
+) {
+  return parts.map(
+    (part) => `${part.kanji}: ${part.meanings.slice(0, 3).join(", ")}`,
+  );
+}
+
 async function main() {
   const candidates = JSON.parse(await readFile(inputPath, "utf8")) as ImportedCandidate[];
+  const kanjidicMeanings = JSON.parse(
+    await readFile(kanjidicPath, "utf8"),
+  ) as Record<string, string[]>;
   const groups = new Map<string, Group>();
   for (const candidate of candidates) {
     if (candidate.kind === "surname" || !validWrittenName(candidate.kanji) || !/^[ぁ-ゖ]+$/u.test(candidate.hiragana)) continue;
@@ -131,13 +158,29 @@ async function main() {
       const variations = [...variationMap.values()]
         .sort((a, b) => variationSort(a.kanji) - variationSort(b.kanji) || a.kanji.localeCompare(b.kanji, "ja"))
         .slice(0, 2)
-        .map((candidate) => ({
-          kanji: candidate.kanji,
-          meanings: ["Meaning not yet reviewed"],
-          kanjiBreakdown: [],
-          naturalness: "medium" as const,
-          verificationStatus: "partially_verified" as const,
-        }));
+        .map((candidate) => {
+          const kanjiBreakdown = sourcedKanjiBreakdown(
+            candidate.kanji,
+            kanjidicMeanings,
+          );
+          const variationUpstreamIds = [
+            ...new Set(
+              group.candidates
+                .filter((item) => item.kanji === candidate.kanji)
+                .map((item) => item.upstreamEntryId),
+            ),
+          ];
+          return {
+            kanji: candidate.kanji,
+            meanings: conciseDictionaryGlosses(kanjiBreakdown),
+            kanjiBreakdown,
+            naturalness: "medium" as const,
+            verificationStatus: "partially_verified" as const,
+            meaningEvidence: "dictionary_glosses" as const,
+            sourceIds: [jmnedictSourceId, kanjidicSourceId],
+            upstreamIds: variationUpstreamIds,
+          };
+        });
       const upstreamIds = [...new Set([...variationMap.values()].map((item) => item.upstreamEntryId))];
       const stableId = `${idPart(group.romaji)}-${stableSuffix(group.hiragana)}`;
       return {
@@ -157,10 +200,17 @@ async function main() {
         generatorEligible: true,
         curationPriority: preferredGivenReadings.has(group.hiragana) ? "recommended" as const : "extended" as const,
         candidateStatus: "partially_verified" as const,
-        reviewNotes: "JMnedict directly records the kanji-reading pair; popularity, style, and naming intent remain unreviewed.",
+        reviewNotes: "JMnedict records the spelling-reading pair. KANJIDIC2 supplies the component glosses; popularity, style, combined-name meaning, and naming intent remain unreviewed.",
+        fieldEvidence: {
+          spellingReading: "source_recorded" as const,
+          kanjiMeaning: "dictionary_supported" as const,
+          genderUsage: "source_recorded" as const,
+          style: "not_reviewed" as const,
+          popularity: "not_reviewed" as const,
+        },
         upstreamIds,
         classificationBasis: "JMnedict name_type classification",
-        sourceIds: ["edrdg-jmnedict-2026-08-01"],
+        sourceIds: [jmnedictSourceId, kanjidicSourceId],
         isIndexable: false,
       };
     })
@@ -186,6 +236,11 @@ async function main() {
     .sort((a, b) => a.kanji.localeCompare(b.kanji, "ja") || a.hiragana.localeCompare(b.hiragana, "ja"))
     .map((candidate) => {
       const stableId = `${idPart(candidate.romaji)}-${stableSuffix(`${candidate.kanji}:${candidate.hiragana}`)}`;
+      const kanjiBreakdown = sourcedKanjiBreakdown(
+        candidate.kanji,
+        kanjidicMeanings,
+      );
+      const literalMeaning = conciseDictionaryGlosses(kanjiBreakdown).join("; ");
       return {
         id: `jmnedict-surname-${stableId}`,
         slug: stableId,
@@ -193,9 +248,9 @@ async function main() {
         hiragana: candidate.hiragana,
         katakana: candidate.katakana,
         romaji: displayRomaji(candidate.romaji),
-        literalMeaning: "Origin meaning not yet reviewed.",
-        summary: "JMnedict records this surname spelling and reading. Origin, popularity, and regional distribution are not asserted here.",
-        kanjiBreakdown: [],
+        literalMeaning,
+        summary: "JMnedict records this surname spelling and reading. KANJIDIC2 supplies the component glosses shown here; they do not establish one family origin, current popularity, or regional distribution.",
+        kanjiBreakdown,
         popularityLevel: "unranked" as const,
         originTypes: ["uncertain" as const],
         originConfidence: "uncertain" as const,
@@ -207,10 +262,16 @@ async function main() {
         generatorEligible: true,
         curationPriority: preferredSurnamePairs.has(`${candidate.kanji}:${candidate.hiragana}`) ? "recommended" as const : "extended" as const,
         candidateStatus: "partially_verified" as const,
-        reviewNotes: "JMnedict directly records the kanji-reading pair; origin, popularity, and distribution remain unreviewed.",
+        reviewNotes: "JMnedict records the spelling-reading pair. KANJIDIC2 supplies the component glosses; origin, popularity, and distribution remain unreviewed.",
+        fieldEvidence: {
+          spellingReading: "source_recorded" as const,
+          kanjiMeaning: "dictionary_supported" as const,
+          popularity: "not_reviewed" as const,
+          origin: "not_reviewed" as const,
+        },
         upstreamIds: [candidate.upstreamEntryId],
         classificationBasis: "JMnedict name_type surname classification",
-        sourceIds: ["edrdg-jmnedict-2026-08-01"],
+        sourceIds: [jmnedictSourceId, kanjidicSourceId],
         isIndexable: false,
       };
     });

@@ -86,7 +86,7 @@ export default function HomePage() {
               applicationCategory: "ReferenceApplication",
               operatingSystem: "Any",
               description:
-                "A browser-based generator that combines reviewed Japanese surname and first-name records.",
+                "A browser-based generator that combines source-backed Japanese surname and first-name records.",
             },
             {
               "@type": "FAQPage",
@@ -106,7 +106,7 @@ export default function HomePage() {
             Japanese Name Generator
           </h1>
           <p className="mt-3 text-base leading-6 text-[#59645d] sm:leading-7">
-            Create Japanese full names from reviewed surname and given-name
+            Create Japanese full names from source-backed surname and given-name
             records. Filter by gender, style, meaning, name mode, or a specific
             kanji, then compare each result in kanji, hiragana, and romaji.
             Lock the surname or given name you like and generate new
@@ -140,7 +140,7 @@ export default function HomePage() {
               ],
               [
                 "Copy or explore",
-                "Switch name order, copy the full name, save a favorite, or open a detail page to check pronunciation, meanings, and surname context.",
+                "Compare both displayed name orders, copy the full name, save a favorite, or open a detail page to check pronunciation, meanings, and surname context.",
               ],
             ].map(([title, text], index) => (
               <li className="flex gap-3" key={title}>
@@ -157,6 +157,46 @@ export default function HomePage() {
               </li>
             ))}
           </ol>
+        </section>
+        <section
+          aria-labelledby="verification-title"
+          className="mt-8 rounded-2xl border border-[#d9ddd6] bg-[#f3f4ef] p-5 sm:p-6"
+        >
+          <div className="grid gap-5 lg:grid-cols-[0.7fr_1.3fr] lg:items-start">
+            <div>
+              <p className="eyebrow">Evidence before interpretation</p>
+              <h2 className="mt-2 text-xl font-semibold" id="verification-title">
+                How this Japanese Name Generator verifies names
+              </h2>
+              <Link
+                className="mt-4 inline-flex text-sm font-bold text-[#315c4b] underline underline-offset-4"
+                href="/about"
+              >
+                Read the full data method
+              </Link>
+            </div>
+            <div className="grid gap-4 sm:grid-cols-3">
+              {[
+                [
+                  "Recorded spelling",
+                  "JMnedict establishes the stored kanji-and-reading pair and preserves its upstream entry ID.",
+                ],
+                [
+                  "Kanji components",
+                  "KANJIDIC2 supplies dictionary glosses for each character without inventing a combined-name meaning.",
+                ],
+                [
+                  "Clear limits",
+                  "Popularity, style, family origin, and personal intent are shown only when separate evidence supports them.",
+                ],
+              ].map(([title, text]) => (
+                <article key={title}>
+                  <h3 className="text-sm font-semibold">{title}</h3>
+                  <p className="mt-2 text-xs leading-5 text-[#647068]">{text}</p>
+                </article>
+              ))}
+            </div>
+          </div>
         </section>
       </section>
 
@@ -226,7 +266,7 @@ export default function HomePage() {
           <div className="max-w-3xl space-y-3 text-sm leading-6 text-[#59645d] sm:text-base sm:leading-7">
             <p>
               The Japanese Name Generator combines established first-name
-              readings, documented kanji spellings, and reviewed surname
+              readings, documented kanji spellings, and source-backed surname
               records. It does not invent pronunciations or create names by
               joining arbitrary characters. Instead, it uses structured records
               and compatibility rules to produce useful Japanese full-name
@@ -237,8 +277,9 @@ export default function HomePage() {
               shows kanji, hiragana, romaji, meaning notes, style, and surname
               context. You can filter by gender, style, meaning, or a specific
               kanji, then lock either part while generating new combinations.
-              Switch the display order, save favorites, copy a full name, or
-              open a detail page to examine a reading or spelling more closely.
+              Compare Western and Japanese order side by side, save favorites,
+              copy a full name, or open a detail page to examine a reading or
+              spelling more closely.
             </p>
             <p>
               Treat every result as a careful starting point rather than proof
@@ -262,9 +303,28 @@ export default function HomePage() {
                 href={`/surname/${surname.slug}`}
                 key={surname.id}
               >
-                <p className="japanese-display text-4xl">{surname.kanji}</p>
-                <h3 className="mt-3 text-lg font-semibold">{surname.romaji}</h3>
-                <p className="mt-1 text-sm font-medium text-[#a34837]">{surname.literalMeaning}</p>
+                <div className="grid grid-cols-2 overflow-hidden rounded-xl border border-[#e3e2dc]">
+                  <div className="min-w-0 bg-[#faf9f5] p-3.5">
+                    <p className="text-[0.62rem] font-bold uppercase tracking-[0.08em] text-[#747d77]">
+                      Romanized surname
+                    </p>
+                    <h3 className="mt-2 text-xl font-semibold leading-tight">
+                      {surname.romaji}
+                    </h3>
+                  </div>
+                  <div className="min-w-0 border-l border-[#e3e2dc] p-3.5">
+                    <p className="text-[0.62rem] font-bold uppercase tracking-[0.08em] text-[#747d77]">
+                      Japanese surname
+                    </p>
+                    <p className="japanese-display mt-2 text-3xl leading-tight">
+                      {surname.kanji}
+                    </p>
+                    <p className="japanese-display mt-1 text-xs text-[#647068]">
+                      {surname.hiragana}
+                    </p>
+                  </div>
+                </div>
+                <p className="mt-4 text-sm font-medium text-[#a34837]">{surname.literalMeaning}</p>
                 <p className="mt-4 line-clamp-3 text-sm leading-6 text-[#647068]">{surname.summary}</p>
               </Link>
             ))}
@@ -309,7 +369,7 @@ export default function HomePage() {
               ],
               [
                 "Consider the full name",
-                "Switch between family-name-first and given-name-first order, say the complete name aloud, and compare several combinations. Naturalness labels are useful guidance, not a guarantee of popularity or cultural suitability.",
+                "Compare the family-name-first and given-name-first forms shown together, say the complete name aloud, and review several combinations. Naturalness labels are useful guidance, not a guarantee of popularity or cultural suitability.",
               ],
             ].map(([title, text], index) => (
               <article className="surface p-6" key={title}>

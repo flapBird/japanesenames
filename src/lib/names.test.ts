@@ -20,6 +20,14 @@ describe("strict, diverse name generation", () => {
       (item.surname.generatorEligible ?? item.surname.verificationStatus !== "needs_review") &&
       ["verified", "partially_verified"].includes(item.variation.verificationStatus),
     )).toBe(true);
+    expect(
+      results.every(
+        (item) =>
+          !item.variation.meanings.some((meaning) =>
+            /not yet reviewed/i.test(meaning),
+          ) && !/not yet reviewed/i.test(item.surname.literalMeaning),
+      ),
+    ).toBe(true);
   });
 
   it("keeps editorial detail records and their stable slugs", () => {

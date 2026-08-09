@@ -4,7 +4,6 @@ import { useEffect, useMemo, useState } from "react";
 import { GeneratorFilters } from "@/components/generator/GeneratorFilters";
 import { GeneratedNameCard } from "@/components/generator/GeneratedNameCard";
 import { KanjiFilterFields, KanjiPopularShortcuts } from "@/components/generator/KanjiFilterControls";
-import { NameOrderToggle } from "@/components/generator/NameOrderToggle";
 import { firstNameById, surnameById } from "@/data";
 import { trackEvent } from "@/lib/analytics";
 import {
@@ -19,7 +18,6 @@ import type {
   GeneratorFilters as FilterState,
   KanjiFilter,
   KanjiTarget,
-  NameOrder,
 } from "@/types/names";
 
 const defaultFilters: FilterState = {
@@ -62,7 +60,6 @@ export function NameGenerator() {
   const [shownFirstNameCounts, setShownFirstNameCounts] = useState<Record<string, number>>({});
   const [shownVariationCounts, setShownVariationCounts] = useState<Record<string, number>>({});
   const [shownSurnameCounts, setShownSurnameCounts] = useState<Record<string, number>>({});
-  const [order, setOrder] = useState<NameOrder>("japanese");
   const normalizedDraftKanji = normalizeKanjiInput(draftKanji);
   const hasPendingFilters =
     JSON.stringify(draftFilters) !== JSON.stringify(filters) ||
@@ -217,14 +214,13 @@ export function NameGenerator() {
     <section className="scroll-mt-4" id="generator" aria-labelledby="generator-title">
       <div className="surface overflow-hidden border-[#e4d6d8] shadow-[var(--shadow)]">
         <div className="border-b border-[#ead6da] bg-[#f7ecee] px-4 py-2.5 sm:px-5 sm:py-3">
-          <div className="flex flex-wrap items-center justify-between gap-3">
+          <div>
             <h2 className="sr-only" id="generator-title">
               Build an authentic full name
             </h2>
-            <span aria-hidden="true" className="hidden text-lg font-semibold sm:block">
+            <span aria-hidden="true" className="text-base font-semibold sm:text-lg">
               Build an authentic full name
             </span>
-            <NameOrderToggle onChange={setOrder} value={order} />
           </div>
         </div>
         <div className="p-4 sm:p-5">
@@ -340,7 +336,7 @@ export function NameGenerator() {
               )}
             </div>
             {results.length < 6 && <div className="mb-4 rounded-xl border border-[#decf9f] bg-[#f7f1df] px-4 py-3 text-sm leading-6 text-[#685526]">Only {results.length} unseen exact matches remain. Filters and kanji constraints were not relaxed.</div>}
-            <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+            <div className="grid gap-4 lg:grid-cols-2">
               {results.map((item) => (
                 <GeneratedNameCard
                   firstNameLocked={lockedFirstNameId === item.firstName.id}
@@ -359,7 +355,6 @@ export function NameGenerator() {
                     advanceSeed();
                     trackEvent("lock_surname", { id: item.surname.id });
                   }}
-                  order={order}
                   surnameLocked={lockedSurnameId === item.surname.id}
                 />
               ))}

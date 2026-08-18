@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import "@/app/globals.css";
 import { GoogleAnalytics } from "@/components/analytics/GoogleAnalytics";
 import { Footer } from "@/components/layout/Footer";
@@ -67,6 +68,14 @@ export default function RootLayout({
 
   return (
     <html lang="en">
+      <head>
+        <Script
+          async
+          crossOrigin="anonymous"
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4183802444188513"
+          strategy="beforeInteractive"
+        />
+      </head>
       <body>
         <Header />
         <main>{children}</main>

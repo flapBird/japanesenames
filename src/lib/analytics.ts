@@ -1,5 +1,6 @@
 export type EventName =
   | "generate_names"
+  | "generate_surname"
   | "regenerate_names"
   | "lock_surname"
   | "lock_first_name"

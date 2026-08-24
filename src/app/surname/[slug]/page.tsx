@@ -193,6 +193,22 @@ export default async function SurnamePage({
         <p className="eyebrow">Natural pairings</p>
         <h2 className="section-title mb-6 mt-2">First names to pair with {surname.romaji}</h2>
         <CompatibleNames names={compatibleNames} surname={surname} />
+        <div className="mt-6 rounded-2xl border border-[#d9ddd6] bg-[#f3f4ef] p-5 sm:p-6">
+          <h3 className="text-lg font-semibold">Use {surname.romaji} in a generated name</h3>
+          <p className="mt-2 max-w-3xl text-sm leading-6 text-[#647068]">
+            Want to use {surname.romaji} in a complete name? Keep this family
+            name in the Japanese Name Generator and compare it with documented
+            given-name readings, or generate another Japanese surname first.
+          </p>
+          <div className="mt-4 flex flex-wrap gap-3">
+            <Link className="button-primary" href={`/?surname=${surname.id}#generator`}>
+              Create a full Japanese name
+            </Link>
+            <Link className="button-secondary" href="/japanese-last-name-generator">
+              Try the Japanese Last Name Generator
+            </Link>
+          </div>
+        </div>
       </section>
 
       <section className="py-12" aria-labelledby="sources-heading">

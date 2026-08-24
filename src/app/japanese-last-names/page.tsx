@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { JsonLd } from "@/components/shared/JsonLd";
 import { SurnameExplorer } from "@/components/surnames/SurnameExplorer";
 import { getBrowseableSurnames, getIndexableSurnames } from "@/lib/names";
@@ -48,6 +49,14 @@ export default function LastNamesPage() {
           names—through their kanji, literal meanings, origin types, and
           evidence-aware stories. A shared spelling does not prove shared ancestry.
         </p>
+        <div className="mt-5 flex flex-wrap gap-3">
+          <Link className="button-primary" href="/japanese-last-name-generator">
+            Generate a Japanese last name
+          </Link>
+          <Link className="button-secondary" href="/#generator">
+            Create a complete Japanese name
+          </Link>
+        </div>
       </header>
       <SurnameExplorer surnames={surnames} />
       <section className="mt-16 grid gap-8 lg:grid-cols-2">
@@ -68,6 +77,16 @@ export default function LastNamesPage() {
             Regional maps appear only when a distribution source is attached.
           </p>
         </article>
+      </section>
+      <section className="mt-12 max-w-4xl rounded-2xl border border-[#d9ddd6] bg-[#f3f4ef] p-5 sm:p-6">
+        <h2 className="text-xl font-semibold">Browse records without multiplying thin pages</h2>
+        <p className="mt-3 leading-7 text-[#59645d]">
+          This hub keeps kanji, kana, romaji, short meanings, and available data
+          labels together for a broad set of Japanese surnames. A surname links
+          to its own story only when that page has enough reviewed context and
+          sources; the remaining records stay useful here and in the surname
+          generator without entering the sitemap as standalone URLs.
+        </p>
       </section>
     </div>
   );

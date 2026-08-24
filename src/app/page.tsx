@@ -9,21 +9,21 @@ import { getIndexableSurnames } from "@/lib/names";
 import { siteUrl } from "@/lib/seo";
 
 export const metadata: Metadata = {
-  title: "Japanese Name Generator with Meanings & Surname Origins",
+  title: "Japanese Name Generator with Kanji & Meanings",
   description:
-    "Use our Japanese Name Generator to create authentic full names with kanji, meanings, pronunciation, and surname origins for girl, boy, and unisex ideas.",
-  alternates: { canonical: null },
+    "Use our Japanese name generator to create male, female, and unisex Japanese full names with kanji, kana readings, romaji, and meanings.",
+  alternates: { canonical: "https://japanesenames.site/" },
   openGraph: {
-    title: "Japanese Name Generator with Meanings & Surname Origins",
+    title: "Japanese Name Generator with Kanji & Meanings",
     description:
-      "Use our Japanese Name Generator to create authentic full names with kanji, meanings, pronunciation, and surname origins.",
+      "Create Japanese full names with kanji, kana readings, romaji, and meanings.",
     url: "https://japanesenames.site/",
   },
   twitter: {
     card: "summary",
-    title: "Japanese Name Generator with Meanings & Surname Origins",
+    title: "Japanese Name Generator with Kanji & Meanings",
     description:
-      "Create authentic full names with our Japanese Name Generator and explore kanji, meanings, pronunciation, and surname origins.",
+      "Create male, female, and unisex Japanese full names with kanji, kana, romaji, and meanings.",
   },
 };
 
@@ -69,7 +69,6 @@ export default function HomePage() {
   const featured = getIndexableSurnames().slice(0, 3);
   return (
     <>
-      <link rel="canonical" href="https://japanesenames.site/" />
       <JsonLd
         data={{
           "@context": "https://schema.org",
@@ -86,7 +85,7 @@ export default function HomePage() {
               applicationCategory: "ReferenceApplication",
               operatingSystem: "Any",
               description:
-                "A browser-based generator that combines source-backed Japanese surname and first-name records.",
+                "A browser-based Japanese name generator for complete male, female, and unisex names with kanji, kana, romaji, and meanings.",
             },
             {
               "@type": "FAQPage",
@@ -106,11 +105,12 @@ export default function HomePage() {
             Japanese Name Generator
           </h1>
           <p className="mt-3 text-base leading-6 text-[#59645d] sm:leading-7">
-            Create Japanese full names from source-backed surname and given-name
-            records. Filter by gender, style, meaning, name mode, or a specific
-            kanji, then compare each result in kanji, hiragana, and romaji.
-            Lock the surname or given name you like and generate new
-            combinations without losing your choice.
+            Generate complete Japanese names for male, female, or unisex ideas
+            from source-backed surname and given-name records. Every result
+            separates the family name and given name, then shows its kanji,
+            kana reading, romaji, and meaning notes. Filter by gender, style,
+            meaning, name mode, or a specific kanji, and lock either name part
+            while you explore new combinations.
           </p>
         </div>
         <Suspense fallback={<div className="surface min-h-96 p-8">Loading the structured generator…</div>}>
@@ -201,7 +201,7 @@ export default function HomePage() {
       </section>
 
       <section className="container-page py-14">
-        <div className="grid gap-4 md:grid-cols-3">
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
           {[
             {
               href: "/japanese-girl-names",
@@ -218,6 +218,14 @@ export default function HomePage() {
               mark: "男",
               accent: "#718793",
               soft: "#eaf0f2",
+            },
+            {
+              href: "/japanese-last-name-generator",
+              title: "Japanese Last Name Generator",
+              text: "Generate a surname with kanji, reading, and meaning.",
+              mark: "作",
+              accent: "#a87965",
+              soft: "#f4ebe6",
             },
             {
               href: "/japanese-last-names",

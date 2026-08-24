@@ -9,7 +9,10 @@ import { trackEvent } from "@/lib/analytics";
 import { getMeaningPreview } from "@/lib/name-display";
 import type { FirstNameRecord, Gender } from "@/types/names";
 
-const PAGE_SIZE = 9;
+// Client components are still server-rendered by Next.js. Keeping the first
+// 24 records visible makes each hub useful in its initial HTML while filters
+// and progressive loading remain client-side enhancements.
+const PAGE_SIZE = 24;
 
 export function FirstNameExplorer({
   names,

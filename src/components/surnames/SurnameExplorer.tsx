@@ -8,7 +8,9 @@ import { PronunciationButton } from "@/components/shared/PronunciationButton";
 import { trackEvent } from "@/lib/analytics";
 import type { SurnameRecord } from "@/types/names";
 
-const PAGE_SIZE = 9;
+// Render a substantial browseable set in the initial HTML without creating a
+// detail URL for every source-backed database record.
+const PAGE_SIZE = 24;
 
 export function SurnameExplorer({ surnames }: { surnames: SurnameRecord[] }) {
   const [query, setQuery] = useState("");

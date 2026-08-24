@@ -3,6 +3,7 @@ import { BrandMark } from "@/components/BrandMark";
 
 const navigation = [
   { href: "/#generator", label: "Japanese Name Generator" },
+  { href: "/japanese-last-name-generator", label: "Last Name Generator" },
   { href: "/japanese-girl-names", label: "Girl Names" },
   { href: "/japanese-boy-names", label: "Boy Names" },
   { href: "/japanese-last-names", label: "Last Names" },
@@ -20,7 +21,7 @@ export function Header() {
           <BrandMark className="size-8" />
           <span>Japanese Names</span>
         </Link>
-        <nav aria-label="Main navigation" className="hidden items-center gap-6 md:flex">
+        <nav aria-label="Main navigation" className="hidden items-center gap-4 lg:flex">
           {navigation.map((item) => (
             <Link
               className="text-sm font-medium text-[#536058] hover:text-[#244638]"
@@ -34,7 +35,7 @@ export function Header() {
             Favorites
           </Link>
         </nav>
-        <details className="relative md:hidden">
+        <details className="relative lg:hidden">
           <summary className="button-secondary !min-h-10" aria-label="Open navigation">
             Menu
           </summary>

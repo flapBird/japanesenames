@@ -35,7 +35,7 @@ export default function PrivacyPage() {
           it is used, and the choices available to you when you visit
           japanesenames.site.
         </p>
-        <p className="mt-3 text-sm text-[#647068]">Last updated: August 4, 2026</p>
+        <p className="mt-3 text-sm text-[#647068]">Last updated: August 24, 2026</p>
       </header>
 
       <article className="surface my-10 space-y-10 p-6 sm:p-9">
@@ -74,12 +74,38 @@ export default function PrivacyPage() {
               into a search field.
             </li>
             <li>
+              <strong>AI-assisted name descriptions.</strong> When you use the
+              AI Japanese Name Generator, the description you submit is sent to
+              the configured AI service so it can extract supported naming
+              preferences. We do not send the full description as an analytics
+              parameter or intentionally store it in a site database. Please do
+              not include sensitive personal information in a description.
+            </li>
+            <li>
               <strong>Information you send us.</strong> If you email us, we
               receive your email address and the information included in your
               message so that we can respond and keep an appropriate record of
               the request.
             </li>
           </ul>
+        </section>
+
+        <section>
+          <h2 className={headingClass}>AI-assisted name generation</h2>
+          <p className={copyClass}>
+            The optional AI parser interprets a description into structured
+            fields such as gender, theme, style, and intended use. A configured
+            third-party AI provider may process the submitted description under
+            its own terms and privacy practices. The language model does not
+            create the displayed names: candidate retrieval, ranking, and name
+            data come from this site&apos;s structured records.
+          </p>
+          <p className={copyClass}>
+            If the provider is unavailable or not configured, a local keyword
+            parser can handle supported terms without sending the description to
+            an AI provider. Basic request metadata may be processed for security,
+            error handling, and rate limiting.
+          </p>
         </section>
 
         <section>

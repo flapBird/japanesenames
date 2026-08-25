@@ -1,0 +1,44 @@
+# Japanese Names
+
+> Japanese Names is an English-language reference and generation website for Japanese personal names. It provides database-backed Japanese full-name, given-name, and surname tools with kanji, kana readings, romaji, meaning notes, and evidence-aware explanations.
+
+Japanese Names uses stored spelling-and-reading records rather than inventing arbitrary kanji combinations. The standard generators are not generative AI. The optional AI-assisted beta interprets a user's natural-language preferences, but all recommended names, readings, written forms, and displayed meanings still come from the site's structured records.
+
+Important interpretation notes:
+
+- Japanese name order normally places the family name before the given name.
+- A given-name meaning belongs to a particular kanji spelling; the same reading may have multiple written forms and meanings.
+- Kanji glosses explain character components and do not prove a name bearer's intended meaning.
+- A surname's literal kanji meaning does not prove one geographic origin, lineage, or shared ancestry.
+- Detail pages are published only for a small editorially reviewed set. The broader database remains available through the generators and browse hubs without creating thin standalone pages.
+- Generated full-name pairings can be plausible without being common or belonging to a known person. Important real-world naming decisions should be reviewed by a fluent Japanese speaker or qualified naming professional.
+
+## Core tools
+
+- [Japanese Name Generator](https://japanesenames.site/): Generate complete male, female, or unisex Japanese names from stored surname and given-name records, with kanji, kana, romaji, meanings, filters, and Japanese or Western name order.
+- [Japanese Last Name Generator](https://japanesenames.site/japanese-last-name-generator): Generate one stored Japanese surname at a time and view its kanji, kana, romaji, literal meaning, and available commonness or origin labels.
+
+## Browse and research
+
+- [Japanese Girl Names](https://japanesenames.site/japanese-girl-names): Browse Japanese girl-name readings and kanji spellings with meaning, style, commonness, and written-length filters.
+- [Japanese Boy Names](https://japanesenames.site/japanese-boy-names): Browse Japanese boy-name readings and kanji spellings with meaning, style, commonness, and written-length filters.
+- [Japanese Last Names and Surnames](https://japanesenames.site/japanese-last-names): Browse Japanese family names with kanji, kana, romaji, literal meanings, origin classifications, and evidence labels.
+- [Data method and sources](https://japanesenames.site/about): Explains how the site uses JMnedict spelling-and-reading records, KANJIDIC2 character glosses, editorial review, confidence labels, and source-aware publishing rules.
+
+## Selected surname references
+
+- [Satō (佐藤)](https://japanesenames.site/surname/sato): Reviewed surname reference with reading, kanji components, meaning context, and evidence limitations.
+- [Suzuki (鈴木)](https://japanesenames.site/surname/suzuki): Reviewed surname reference with reading, kanji components, meaning context, and evidence limitations.
+- [Takahashi (高橋)](https://japanesenames.site/surname/takahashi): Reviewed surname reference with reading, kanji components, meaning context, and evidence limitations.
+- [Tanaka (田中)](https://japanesenames.site/surname/tanaka): Reviewed surname reference with reading, kanji components, meaning context, and evidence limitations.
+- [Yamamoto (山本)](https://japanesenames.site/surname/yamamoto): Reviewed surname reference with reading, kanji components, meaning context, and evidence limitations.
+- [Hayashi (林)](https://japanesenames.site/surname/hayashi): Reviewed surname reference with reading, kanji components, meaning context, and evidence limitations.
+- [Kawaguchi (川口)](https://japanesenames.site/surname/kawaguchi): Reviewed surname reference with reading, kanji components, meaning context, and evidence limitations.
+
+## Optional
+
+- [AI Japanese Name Generator beta](https://japanesenames.site/ai-japanese-name-generator): Interpret a natural-language name idea and rank matching records from the existing database. AI does not invent names, readings, kanji, or meanings. Creative mood matches are labeled separately from direct evidence.
+- [Privacy](https://japanesenames.site/privacy): Privacy practices, including analytics and AI-assisted prompt processing.
+- [Terms](https://japanesenames.site/terms): Usage terms and limitations for generated and AI-assisted recommendations.
+- [Contact](https://japanesenames.site/contact): Contact the site team about data, corrections, or other questions.
+- [XML sitemap](https://japanesenames.site/sitemap.xml): Editorially limited list of canonical pages intended for search indexing.

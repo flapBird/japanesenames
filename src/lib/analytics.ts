@@ -1,6 +1,9 @@
 export type EventName =
   | "generate_names"
   | "generate_surname"
+  | "ai_name_generator_submit"
+  | "ai_name_generator_success"
+  | "ai_name_generator_error"
   | "regenerate_names"
   | "lock_surname"
   | "lock_first_name"

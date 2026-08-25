@@ -24,6 +24,8 @@ Website: [japanesenames.site](https://japanesenames.site)
 ## Main Features
 
 - Generate Japanese full names from a structured local name database.
+- Describe a preferred name in natural language and match it against the same
+  structured database through the isolated AI-assisted generator.
 - Filter names by gender, style, name mode, and meaning.
 - Include a specific kanji in the given name, surname, or either part of the full name.
 - Choose common kanji through English meaning shortcuts such as Moon, Love, Light, and Beauty.
@@ -35,7 +37,22 @@ Website: [japanesenames.site](https://japanesenames.site)
 - Explore surname kanji breakdowns, origin illustrations, regional information, timelines, confidence labels, and cited sources.
 - Clearly distinguish verified, partially verified, uncertain, and review-needed data.
 
-The generator only selects recorded names and kanji variations from the project data. It does not create new kanji combinations, invent readings, or use a language model at runtime.
+The standard generator only selects recorded names and kanji variations from
+the project data. It does not create new kanji combinations, invent readings,
+or use a language model at runtime.
+
+The optional AI-assisted page uses a language model only to parse intent. Name
+retrieval, ranking, full-name pairing, and explanations remain local and
+database-backed. When no provider is configured, a local keyword parser keeps
+the page functional. Copy `.env.example` to `.env.local` and set `AI_API_KEY`,
+`AI_MODEL`, and optionally `AI_BASE_URL` / `AI_API_STYLE` to enable the remote
+parser. Secrets are read only by the server-side API route.
+
+Providers that implement Chat Completions but not strict Structured Outputs can
+use `AI_API_STYLE=chat_completions` with `AI_RESPONSE_FORMAT=json_object`. The
+server still validates every returned field against the same allowlisted intent
+schema before using it. `AI_MAX_OUTPUT_TOKENS` can be raised for reasoning-style
+compatible models that spend part of their output budget before returning JSON.
 
 ## Local Development
 

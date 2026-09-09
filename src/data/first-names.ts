@@ -324,7 +324,7 @@ export const firstNames: FirstNameRecord[] = [
     variations: [
       {
         kanji: "健二",
-        meanings: ["healthy or strong", "second son"],
+        meanings: ["healthy or strong", "two or second"],
         kanjiBreakdown: breakdown([
           ["健", ["healthy", "strong"], ["ken"]],
           ["二", ["two", "second"], ["ji"]],

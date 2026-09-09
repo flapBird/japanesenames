@@ -1,6 +1,7 @@
 import { generatedFirstNames, generatedSurnames } from "./generated/curated/name-data";
 import { firstNames as editorialFirstNames } from "./first-names";
 import { surnames as editorialSurnames } from "./surnames";
+import { editorialPairEvidence } from "./editorial-pair-evidence";
 
 function mergeEditorialFirstNames() {
   const merged = new Map(
@@ -8,9 +9,18 @@ function mergeEditorialFirstNames() {
   );
   // Editorial records intentionally win for an existing reading: they carry
   // reviewed meanings, stable slugs, styles, and detail-page source notes.
-  for (const item of editorialFirstNames) merged.set(item.hiragana, item);
+  for (const item of editorialFirstNames) {
+    const variations = item.variations.map((variation) => {
+      const upstreamIds = editorialPairEvidence[`${variation.kanji}:${item.hiragana}`] ?? [];
+      return { ...variation, upstreamIds, sourceIds: upstreamIds.length ? ["edrdg-jmnedict-2026-08-01"] : [] };
+    });
+    merged.set(item.hiragana, {
+      ...item, variations,
+      sourceIds: [...item.sourceIds, ...(variations.some((variation) => variation.upstreamIds.length) ? ["edrdg-jmnedict-2026-08-01"] : [])],
+    });
+  }
   return [
-    ...editorialFirstNames,
+    ...editorialFirstNames.map((item) => merged.get(item.hiragana)!),
     ...[...merged.values()].filter(
       (item) => !editorialFirstNames.some((editorial) => editorial.id === item.id),
     ),

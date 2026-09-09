@@ -1,12 +1,14 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { notFound, permanentRedirect } from "next/navigation";
+import { BROWSE_PAGE_SIZE, browseHref, parseBrowsePage, compareBrowseNames, toBrowseName } from "@/lib/browse";
 import { FirstNameExplorer } from "@/components/names/FirstNameExplorer";
 import { JsonLd } from "@/components/shared/JsonLd";
 import { firstNames } from "@/data";
-import { getIndexableFirstNames } from "@/lib/names";
+
 import { siteUrl } from "@/lib/seo";
 
-export const metadata: Metadata = {
+const baseMetadata: Metadata = {
   title: "Japanese Boy Names with Meanings and Kanji",
   description:
     "Browse Japanese boy names by meaning, style, popularity, and kanji length. Compare recommended kanji, hiragana, and naturalness.",
@@ -23,15 +25,25 @@ export const metadata: Metadata = {
   },
 };
 
-export default function BoyNamesPage() {
-  const names = firstNames.filter(
-    (name) =>
-      name.genders.includes("boy") &&
-      name.verificationStatus !== "needs_review",
-  );
-  const detailPages = getIndexableFirstNames().filter((name) =>
-    name.genders.includes("boy"),
-  );
+type Props = { params: Promise<{ page?: string }> };
+const basePath = "/japanese-boy-names";
+function getNames() {
+  return firstNames.filter((name) => name.genders.includes("boy") && name.verificationStatus !== "needs_review").sort(compareBrowseNames);
+}
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const page = parseBrowsePage((await params).page, getNames().length);
+  if (!page) return { robots: { index: false } };
+  const title = `${baseMetadata.title}${page > 1 ? ` – Page ${page}` : ""}`;
+  return { ...baseMetadata, title, alternates: { canonical: browseHref(basePath, page) },
+    openGraph: { ...baseMetadata.openGraph, title, url: browseHref(basePath, page) }, twitter: { ...baseMetadata.twitter, title } };
+}
+export default async function BoyNamesPage({ params }: Props) {
+  const rawPage = (await params).page;
+  const page = parseBrowsePage(rawPage, getNames().length);
+  if (!page) notFound();
+  if (rawPage === "1") permanentRedirect(basePath);
+  const names = getNames();
+  const detailPages = names.slice((page - 1) * BROWSE_PAGE_SIZE, page * BROWSE_PAGE_SIZE);
   return (
     <div className="container-page themed-page theme-indigo">
       <JsonLd
@@ -39,11 +51,11 @@ export default function BoyNamesPage() {
           "@context": "https://schema.org",
           "@type": "ItemList",
           name: "Japanese boy names",
-          url: `${siteUrl}/japanese-boy-names`,
+          url: `${siteUrl}${browseHref(basePath, page)}`,
           itemListElement: detailPages.map((name, index) => ({
             "@type": "ListItem",
-            position: index + 1,
-            url: `${siteUrl}/name/${name.slug}`,
+            position: (page - 1) * BROWSE_PAGE_SIZE + index + 1,
+            ...(name.isIndexable ? { url: `${siteUrl}/name/${name.slug}` } : {}),
             name: name.romaji,
           })),
         }}
@@ -57,12 +69,13 @@ export default function BoyNamesPage() {
         </p>
         <Link
           className="mt-5 inline-flex font-bold text-[#315c4b] underline underline-offset-4"
-          href="/#generator"
+          href="/?gender=boy#generator"
         >
           Use a boy name in the Japanese Name Generator
         </Link>
       </header>
-      <FirstNameExplorer gender="boy" names={names} />
+      <FirstNameExplorer key={page} initialPage={page} gender="boy" names={names.map(toBrowseName)} />
+      <p className="mt-4 text-sm leading-6 text-[#647068]">Editorial selection is a browsing order, not a popularity ranking. Style and usage estimates are editorial guidance. Dictionary notes do not establish a name’s intended meaning.</p>
       <section className="mt-16 max-w-3xl">
         <h2 className="section-title !text-3xl">Readings and kanji variations</h2>
         <p className="mt-4 leading-7 text-[#59645d]">
@@ -71,10 +84,11 @@ export default function BoyNamesPage() {
           the detail page so distinct variations are not flattened together.
         </p>
         <p className="mt-4 leading-7 text-[#59645d]">
-          This hub keeps verified readings and written forms browseable on one
-          substantial page. Only a small editorial set receives a separate
-          detail URL; every listed record can still be used in the complete
-          Japanese name generator.
+          Ren written 蓮 uses the character for lotus, while Takumi written 匠
+          points to an artisan. Haruto written 陽翔 combines characters associated
+          with sunlight and soaring. These written-form notes do not establish
+          a particular person’s naming intention. Use a name in the generator
+          to compare how it reads alongside different surnames.
         </p>
       </section>
     </div>

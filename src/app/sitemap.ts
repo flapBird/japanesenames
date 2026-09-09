@@ -47,7 +47,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date("2026-08-23");
   const staticPages = staticPagePaths.map((path) => ({
     url: `${siteUrl}${path}`,
-    lastModified: now,
+    lastModified: ["", "/japanese-girl-names", "/japanese-boy-names", "/japanese-last-names", "/about"].includes(path)
+      ? new Date("2026-09-09") : now,
     changeFrequency: "weekly" as const,
     priority: path === "" ? 1 : 0.8,
   }));
@@ -63,7 +64,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     .filter((name) => firstNameSlugAllowlist.has(name.slug))
     .map((name) => ({
     url: `${siteUrl}/name/${name.slug}`,
-    lastModified: now,
+    lastModified: new Date("2026-09-09"),
     changeFrequency: "monthly" as const,
     priority: 0.7,
     }));

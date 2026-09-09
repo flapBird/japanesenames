@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { CharacterNotes } from "@/components/shared/CharacterNotes";
 import { LockIcon } from "@/components/icons";
 import { CopyButton } from "@/components/shared/CopyButton";
 import { FavoriteButton } from "@/components/shared/FavoriteButton";
@@ -97,7 +98,7 @@ export function GeneratedNameCard({
       </div>
       <dl className="mb-5 grid gap-2 border-t border-[#e3e2dc] pt-4 text-sm">
         <div className="flex justify-between gap-4">
-          <dt className="text-[#707970]">{dictionaryListed ? "Evidence" : "Naturalness"}</dt>
+          <dt className="text-[#707970]">{dictionaryListed ? "Evidence" : "Editorial assessment"}</dt>
           <dd
             className={`rounded-full px-2 py-0.5 text-xs font-bold ${naturalnessTone[item.naturalness]}`}
           >
@@ -124,6 +125,7 @@ export function GeneratedNameCard({
           </dd>
         </div>
       </dl>
+      {usesDictionaryGlosses && <CharacterNotes parts={item.variation.kanjiBreakdown} />}
       <div className="mt-auto grid grid-cols-[minmax(0,1fr)_minmax(0,1fr)_auto] items-center gap-1 border-t border-[#e3e2dc] pt-3">
         <button
           aria-label={`Lock surname ${item.surname.romaji} and generate different first names`}

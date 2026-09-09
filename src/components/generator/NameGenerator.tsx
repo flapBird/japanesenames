@@ -114,6 +114,11 @@ export function NameGenerator() {
 
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
+    const gender = searchParams.get("gender");
+    if (gender === "girl" || gender === "boy" || gender === "unisex" || gender === "any") {
+      setDraftFilters((current) => ({ ...current, gender }));
+      setFilters((current) => ({ ...current, gender }));
+    }
     const surnameId = searchParams.get("surname") ?? undefined;
     const firstNameId = searchParams.get("firstName") ?? undefined;
 
@@ -216,10 +221,10 @@ export function NameGenerator() {
         <div className="border-b border-[#ead6da] bg-[#f7ecee] px-4 py-2.5 sm:px-5 sm:py-3">
           <div>
             <h2 className="sr-only" id="generator-title">
-              Build an authentic full name
+              Generate a Japanese full name
             </h2>
             <span aria-hidden="true" className="text-base font-semibold sm:text-lg">
-              Build an authentic full name
+              Generate a Japanese full name
             </span>
           </div>
         </div>

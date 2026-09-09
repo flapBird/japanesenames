@@ -7,18 +7,23 @@ import { FavoriteButton } from "@/components/shared/FavoriteButton";
 import { PronunciationButton } from "@/components/shared/PronunciationButton";
 import { trackEvent } from "@/lib/analytics";
 import { getMeaningPreview } from "@/lib/name-display";
-import type { FirstNameRecord, Gender } from "@/types/names";
+import { BrowsePagination } from "@/components/shared/BrowsePagination";
+import { CharacterNotes } from "@/components/shared/CharacterNotes";
+import { BROWSE_PAGE_SIZE, compareBrowseNames, type BrowseName } from "@/lib/browse";
+import type { Gender } from "@/types/names";
 
 // Client components are still server-rendered by Next.js. Keeping the first
-// 24 records visible makes each hub useful in its initial HTML while filters
-// and progressive loading remain client-side enhancements.
-const PAGE_SIZE = 24;
+// current page visible makes each URL useful in its initial HTML while filters
+// remain client-side enhancements.
+const PAGE_SIZE = BROWSE_PAGE_SIZE;
 
 export function FirstNameExplorer({
   names,
   gender,
+  initialPage = 1,
 }: {
-  names: FirstNameRecord[];
+  names: BrowseName[];
+  initialPage?: number;
   gender: Extract<Gender, "girl" | "boy">;
 }) {
   const [letter, setLetter] = useState("All");
@@ -26,8 +31,8 @@ export function FirstNameExplorer({
   const [style, setStyle] = useState("any");
   const [popularity, setPopularity] = useState("any");
   const [length, setLength] = useState("any");
-  const [sort, setSort] = useState("popularity");
-  const [visible, setVisible] = useState(PAGE_SIZE);
+  const [sort, setSort] = useState("recommended");
+  const [localPage, setLocalPage] = useState(1);
 
   const meaningOptions = useMemo(
     () => [...new Set(names.flatMap((name) => name.meaningTags))].sort(),
@@ -45,7 +50,7 @@ export function FirstNameExplorer({
     length,
   ].filter((value) => value !== "any").length;
   const hasActiveSettings =
-    activeFilterCount > 0 || letter !== "All" || sort !== "popularity";
+    activeFilterCount > 0 || letter !== "All" || sort !== "recommended";
 
   const filtered = useMemo(() => {
     const result = names.filter((name) => {
@@ -57,6 +62,7 @@ export function FirstNameExplorer({
       return true;
     });
     return result.sort((a, b) => {
+      if (sort === "recommended") return compareBrowseNames(a, b);
       if (sort === "popularity") {
         const rank = { very_common: 0, common: 1, uncommon: 2, rare: 3, unranked: 4 };
         return rank[a.popularityLevel] - rank[b.popularityLevel];
@@ -68,14 +74,16 @@ export function FirstNameExplorer({
     });
   }, [length, letter, meaning, names, popularity, sort, style]);
 
+  const page = Math.min(hasActiveSettings ? localPage : initialPage, Math.max(1, Math.ceil(filtered.length / PAGE_SIZE)));
+
   function clearFilters() {
     setLetter("All");
     setMeaning("any");
     setStyle("any");
     setPopularity("any");
     setLength("any");
-    setSort("popularity");
-    setVisible(PAGE_SIZE);
+    setSort("recommended");
+    setLocalPage(1);
   }
 
   return (
@@ -88,7 +96,7 @@ export function FirstNameExplorer({
               className="field capitalize"
               onChange={(event) => {
                 setMeaning(event.target.value);
-                setVisible(PAGE_SIZE);
+                setLocalPage(1);
               }}
               value={meaning}
             >
@@ -104,7 +112,7 @@ export function FirstNameExplorer({
               className="field"
               onChange={(event) => {
                 setStyle(event.target.value);
-                setVisible(PAGE_SIZE);
+                setLocalPage(1);
               }}
               value={style}
             >
@@ -120,7 +128,7 @@ export function FirstNameExplorer({
               className="field"
               onChange={(event) => {
                 setPopularity(event.target.value);
-                setVisible(PAGE_SIZE);
+                setLocalPage(1);
               }}
               value={popularity}
             >
@@ -137,7 +145,7 @@ export function FirstNameExplorer({
               className="field"
               onChange={(event) => {
                 setLength(event.target.value);
-                setVisible(PAGE_SIZE);
+                setLocalPage(1);
               }}
               value={length}
             >
@@ -151,11 +159,12 @@ export function FirstNameExplorer({
             Sort results
             <select
               className="field"
-              onChange={(event) => setSort(event.target.value)}
+              onChange={(event) => { setSort(event.target.value); setLocalPage(1); }}
               value={sort}
             >
+              <option value="recommended">Editorial selection first</option>
               <option value="alphabetical">Alphabetical</option>
-              <option value="popularity">Most common first</option>
+              <option value="popularity">Usage estimate</option>
               <option value="kanji_length">Shortest Kanji first</option>
             </select>
           </label>
@@ -184,7 +193,7 @@ export function FirstNameExplorer({
               key={item}
               onClick={() => {
                 setLetter(item);
-                setVisible(PAGE_SIZE);
+                setLocalPage(1);
               }}
               type="button"
             >
@@ -203,7 +212,7 @@ export function FirstNameExplorer({
       {filtered.length ? (
         <>
           <div className="mt-4 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            {filtered.slice(0, visible).map((name) => {
+            {filtered.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE).map((name) => {
               const variation = name.variations[0];
               const usesDictionaryGlosses =
                 variation.meaningEvidence === "dictionary_glosses";
@@ -289,9 +298,10 @@ export function FirstNameExplorer({
                       {getMeaningPreview(variation)}
                     </p>
                   </div>
+                  {usesDictionaryGlosses && <CharacterNotes parts={variation.kanjiBreakdown} />}
                   <div className="mt-4 flex flex-wrap gap-1.5">
                     {name.styles.map((item) => <span className="chip capitalize" key={item}>{item}</span>)}
-                    <span className="chip capitalize">{name.popularityLevel.replace("_", " ")}</span>
+                    <span className="chip capitalize">{name.popularityLevel === "unranked" ? "Usage not ranked" : `Usage estimate: ${name.popularityLevel.replace("_", " ")}`}</span>
                   </div>
                   <div className="mt-5 flex items-center gap-4 border-t border-[#e3e2dc] pt-4 text-xs font-bold text-[#315c4b]">
                     {name.isIndexable && <Link href={`/name/${name.slug}`}>View details</Link>}
@@ -301,7 +311,7 @@ export function FirstNameExplorer({
                       </span>
                     )}
                     <Link
-                      href={`/?firstName=${name.id}#generator`}
+                      href={`/?firstName=${name.id}&gender=${gender}#generator`}
                       onClick={() => trackEvent("use_name_in_generator", { firstNameId: name.id })}
                     >
                       Use this name
@@ -311,13 +321,8 @@ export function FirstNameExplorer({
               );
             })}
           </div>
-          {visible < filtered.length && (
-            <div className="mt-8 text-center">
-              <button className="button-secondary" onClick={() => setVisible((value) => value + PAGE_SIZE)} type="button">
-                Load more
-              </button>
-            </div>
-          )}
+          <BrowsePagination basePath={`/japanese-${gender}-names`} page={page} count={filtered.length}
+            filtered={hasActiveSettings} onPageChange={setLocalPage} />
         </>
       ) : (
         <div className="surface mt-4 py-12 text-center">

@@ -24,18 +24,18 @@ export default function AboutPage() {
     <div className="container-page themed-page theme-gold">
       <header className="page-intro my-6">
         <p className="eyebrow">Method and limits</p>
-        <h1 className="section-title mt-2">Names deserve better than plausible-sounding guesses</h1>
+        <h1 className="section-title mt-2">How to read our name records</h1>
         <p className="mt-5 max-w-3xl text-lg leading-8 text-[#59645d]">
           Japanese Names is a structured reference and generation tool. It
           combines only stored surname records, given-name readings, and kanji
-          variations—never an on-demand language model.
+          variations. The standard generator uses local records; the optional AI-assisted tool interprets preferences and retrieves from the same records.
         </p>
       </header>
       <section className="grid gap-4 md:grid-cols-3">
         {[
           ["Source-recorded pairs", "JMnedict documents a stored spelling-and-reading pair and the original name classification."],
           ["Dictionary-supported glosses", "KANJIDIC2 supports character-level glosses without asserting one combined personal-name meaning."],
-          ["Editorially reviewed context", "Indexable entries add reviewed usage, interpretation, or surname context beyond the source record."],
+          ["Editorially reviewed context", "Expanded entries add editorial explanations of written forms or surname context. These explanations are not a current usage survey."],
         ].map(([title, text]) => (
           <article className="surface p-6" key={title}>
             <h2 className="text-lg font-semibold">{title}</h2>
@@ -69,6 +69,12 @@ export default function AboutPage() {
           still support generator breadth because their spelling and reading are
           directly documented.
         </p>
+      </section>
+      <section className="mt-16 max-w-4xl">
+        <h2 className="section-title !text-3xl">Editorial guidance and evidence</h2>
+        <p className="mt-4 leading-7 text-[#59645d]">Editorial selection describes our browsing order, not a popularity ranking. Style, naturalness, and usage estimates are editorial guidance unless a specific supporting source is given. The general Jōyō Kanji table does not verify every personal-name reading, gender association, or frequency of use.</p>
+        <p className="mt-4 leading-7 text-[#59645d]">Dictionary glosses can include senses used in abbreviations or unrelated contexts. We keep those senses in character notes rather than joining them into an asserted name meaning. A spelling-and-reading record is evidence that a dictionary records the pair, not evidence of a particular person’s naming intention.</p>
+        <p className="mt-4 text-sm text-[#647068]">Display method updated September 9, 2026: separated general character glosses from name meanings and labeled editorial usage estimates.</p>
       </section>
       <section className="mt-16 max-w-4xl">
         <h2 className="section-title !text-3xl">What confidence labels mean</h2>

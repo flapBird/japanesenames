@@ -105,12 +105,9 @@ export default function HomePage() {
             Japanese Name Generator
           </h1>
           <p className="mt-3 text-base leading-6 text-[#59645d] sm:leading-7">
-            Generate complete Japanese names for male, female, or unisex ideas
-            from source-backed surname and given-name records. Every result
-            separates the family name and given name, then shows its kanji,
-            kana reading, romaji, and meaning notes. Filter by gender, style,
-            meaning, name mode, or a specific kanji, and lock either name part
-            while you explore new combinations.
+            Generate Japanese names with kanji, pronunciation, and meaning notes
+            for characters, stories, or personal inspiration. Keep the surname
+            or given name you like and explore new combinations. Free, with no sign-up.
           </p>
         </div>
         <Suspense fallback={<div className="surface min-h-96 p-8">Loading the structured generator…</div>}>
@@ -166,7 +163,7 @@ export default function HomePage() {
             <div>
               <p className="eyebrow">Evidence before interpretation</p>
               <h2 className="mt-2 text-xl font-semibold" id="verification-title">
-                How this Japanese Name Generator verifies names
+                What the name records tell you
               </h2>
               <Link
                 className="mt-4 inline-flex text-sm font-bold text-[#315c4b] underline underline-offset-4"
@@ -179,7 +176,7 @@ export default function HomePage() {
               {[
                 [
                   "Recorded spelling",
-                  "JMnedict establishes the stored kanji-and-reading pair and preserves its upstream entry ID.",
+                  "Imported records preserve their JMnedict spelling, reading, and entry ID. Editorial entries have separate source notes.",
                 ],
                 [
                   "Kanji components",
@@ -187,7 +184,7 @@ export default function HomePage() {
                 ],
                 [
                   "Clear limits",
-                  "Popularity, style, family origin, and personal intent are shown only when separate evidence supports them.",
+                  "Style and naturalness are editorial guidance, not guarantees. Character glosses alone do not establish popularity, family origin, or naming intent.",
                 ],
               ].map(([title, text]) => (
                 <article key={title}>

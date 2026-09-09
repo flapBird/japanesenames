@@ -6,19 +6,21 @@ import { CopyButton } from "@/components/shared/CopyButton";
 import { FavoriteButton } from "@/components/shared/FavoriteButton";
 import { PronunciationButton } from "@/components/shared/PronunciationButton";
 import { trackEvent } from "@/lib/analytics";
+import { BrowsePagination } from "@/components/shared/BrowsePagination";
+import { BROWSE_PAGE_SIZE, type BrowseSurname } from "@/lib/browse";
 import type { SurnameRecord } from "@/types/names";
 
 // Render a substantial browseable set in the initial HTML without creating a
 // detail URL for every source-backed database record.
-const PAGE_SIZE = 24;
+const PAGE_SIZE = BROWSE_PAGE_SIZE;
 
-export function SurnameExplorer({ surnames }: { surnames: SurnameRecord[] }) {
+export function SurnameExplorer({ surnames, initialPage = 1 }: { surnames: BrowseSurname[]; initialPage?: number }) {
   const [query, setQuery] = useState("");
   const [letter, setLetter] = useState("All");
   const [popularity, setPopularity] = useState("any");
   const [origin, setOrigin] = useState("any");
   const [region, setRegion] = useState("any");
-  const [visible, setVisible] = useState(PAGE_SIZE);
+  const [localPage, setLocalPage] = useState(1);
   const [randomId, setRandomId] = useState<string>();
 
   const origins = [...new Set(surnames.flatMap((surname) => surname.originTypes))].sort();
@@ -50,9 +52,11 @@ export function SurnameExplorer({ surnames }: { surnames: SurnameRecord[] }) {
       .sort((a, b) => Number(b.isIndexable) - Number(a.isIndexable) || a.romaji.localeCompare(b.romaji));
   }, [letter, origin, popularity, query, region, surnames]);
 
+  const hasFilters = Boolean(query.trim()) || letter !== "All" || popularity !== "any" || origin !== "any" || region !== "any";
+  const page = Math.min(hasFilters ? localPage : initialPage, Math.max(1, Math.ceil(filtered.length / PAGE_SIZE)));
   const displayed = randomId
     ? filtered.filter((surname) => surname.id === randomId)
-    : filtered.slice(0, visible);
+    : filtered.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
 
   return (
     <section aria-labelledby="surname-results">
@@ -64,6 +68,7 @@ export function SurnameExplorer({ surnames }: { surnames: SurnameRecord[] }) {
               className="field"
               onChange={(event) => {
                 setQuery(event.target.value);
+                setLocalPage(1);
                 setRandomId(undefined);
                 trackEvent("search_surnames", {
                   queryLength: [...event.target.value].length,
@@ -76,7 +81,7 @@ export function SurnameExplorer({ surnames }: { surnames: SurnameRecord[] }) {
           </label>
           <label className="grid gap-1.5 text-xs font-bold">
             Commonness
-            <select className="field" onChange={(event) => setPopularity(event.target.value)} value={popularity}>
+            <select className="field" onChange={(event) => { setPopularity(event.target.value); setLocalPage(1); setRandomId(undefined); }} value={popularity}>
               <option value="any">Any commonness</option>
               <option value="common">Common</option>
               <option value="uncommon">Uncommon</option>
@@ -85,14 +90,14 @@ export function SurnameExplorer({ surnames }: { surnames: SurnameRecord[] }) {
           </label>
           <label className="grid gap-1.5 text-xs font-bold">
             Origin type
-            <select className="field capitalize" onChange={(event) => setOrigin(event.target.value)} value={origin}>
+            <select className="field capitalize" onChange={(event) => { setOrigin(event.target.value); setLocalPage(1); setRandomId(undefined); }} value={origin}>
               <option value="any">Any origin</option>
               {origins.map((item) => <option key={item} value={item}>{item}</option>)}
             </select>
           </label>
           <label className="grid gap-1.5 text-xs font-bold">
             Regional evidence
-            <select className="field" onChange={(event) => setRegion(event.target.value)} value={region}>
+            <select className="field" onChange={(event) => { setRegion(event.target.value); setLocalPage(1); setRandomId(undefined); }} value={region}>
               <option value="any">Any</option>
               <option value="documented">Documented distribution</option>
               <option value="not_available">Not yet available</option>
@@ -129,6 +134,7 @@ export function SurnameExplorer({ surnames }: { surnames: SurnameRecord[] }) {
               key={item}
               onClick={() => {
                 setLetter(item);
+                setLocalPage(1);
                 setRandomId(undefined);
               }}
               type="button"
@@ -247,13 +253,8 @@ export function SurnameExplorer({ surnames }: { surnames: SurnameRecord[] }) {
               </article>
             ))}
           </div>
-          {!randomId && visible < filtered.length && (
-            <div className="mt-8 text-center">
-              <button className="button-secondary" onClick={() => setVisible((value) => value + PAGE_SIZE)} type="button">
-                Load more
-              </button>
-            </div>
-          )}
+          {!randomId && <BrowsePagination basePath="/japanese-last-names" page={page} count={filtered.length}
+            filtered={hasFilters} onPageChange={setLocalPage} />}
         </>
       ) : (
         <div className="surface mt-4 py-12 text-center">

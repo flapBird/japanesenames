@@ -2,45 +2,21 @@ import { describe, expect, it } from "vitest";
 import { getMeaningPreview } from "@/lib/name-display";
 import type { FirstNameVariation } from "@/types/names";
 
-const baseVariation: FirstNameVariation = {
-  kanji: "愛",
-  meanings: ["愛: love, affection, favourite"],
-  kanjiBreakdown: [{ kanji: "愛", meanings: ["love", "affection", "favourite"] }],
-  naturalness: "high",
-  verificationStatus: "partially_verified",
+const base: FirstNameVariation = {
+  kanji: "阿愛", meanings: ["阿: Africa", "愛: love"],
+  kanjiBreakdown: [{ kanji: "阿", meanings: ["Africa", "flatter"] }, { kanji: "愛", meanings: ["love"] }],
+  naturalness: "medium", verificationStatus: "partially_verified", meaningEvidence: "dictionary_glosses",
 };
-
-describe("getMeaningPreview", () => {
-  it("uses one concise gloss per kanji for dictionary-supported forms", () => {
-    expect(
-      getMeaningPreview({
-        ...baseVariation,
-        meaningEvidence: "dictionary_glosses",
-      }),
-    ).toBe("Love");
+describe("name meaning evidence", () => {
+  it("does not turn dictionary abbreviations into a person's name meaning", () => {
+    expect(getMeaningPreview(base)).toBe("Name meaning not established from character glosses.");
+    expect(getMeaningPreview(base)).not.toMatch(/Africa|love|\+/);
   });
-
-  it("joins multi-kanji glosses without repeating the kanji", () => {
-    expect(
-      getMeaningPreview({
-        ...baseVariation,
-        kanji: "日香",
-        kanjiBreakdown: [
-          { kanji: "日", meanings: ["sun", "day"] },
-          { kanji: "香", meanings: ["fragrance"] },
-        ],
-        meaningEvidence: "dictionary_glosses",
-      }),
-    ).toBe("Sun + fragrance");
+  it("does not infer a combined meaning even when character glosses sound plausible", () => {
+    expect(getMeaningPreview({ ...base, kanji: "日香", kanjiBreakdown: [{ kanji: "日", meanings: ["sun"] }, { kanji: "香", meanings: ["fragrance"] }] })).not.toContain("Sun + fragrance");
   });
-
-  it("preserves editorial meanings", () => {
-    expect(
-      getMeaningPreview({
-        ...baseVariation,
-        meanings: ["Beloved", "Warm-hearted"],
-        meaningEvidence: "editorially_reviewed",
-      }),
-    ).toBe("Beloved; Warm-hearted");
+  it("preserves written-form editorial explanations and handles missing ones", () => {
+    expect(getMeaningPreview({ ...base, meaningEvidence: "editorially_reviewed", meanings: ["light", "lamp"] })).toBe("Light; lamp");
+    expect(getMeaningPreview({ ...base, meaningEvidence: undefined, meanings: [] })).toBe("Meaning not available");
   });
 });

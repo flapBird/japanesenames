@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "@/app/globals.css";
 import { GoogleAdsense } from "@/components/analytics/GoogleAdsense";
 import { GoogleAnalytics } from "@/components/analytics/GoogleAnalytics";
+import { MicrosoftClarity } from "@/components/analytics/MicrosoftClarity";
 import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
 import { siteName, siteUrl } from "@/lib/seo";
@@ -72,6 +73,7 @@ export default function RootLayout({
         <main>{children}</main>
         <Footer />
         <GoogleAdsense />
+        <MicrosoftClarity />
         {googleAnalyticsId ? (
           <GoogleAnalytics measurementId={googleAnalyticsId} />
         ) : null}

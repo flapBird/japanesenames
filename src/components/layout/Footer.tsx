@@ -19,7 +19,6 @@ export function Footer() {
           <h2 className="mb-3 text-sm font-bold">Explore</h2>
           <div className="grid gap-2 text-sm text-[#647068]">
             <Link href="/#generator">Japanese Name Generator</Link>
-            <Link href="/ai-japanese-name-generator">Describe a name with AI</Link>
             <Link href="/japanese-last-name-generator">Last name generator</Link>
             <Link href="/japanese-girl-names">Girl names</Link>
             <Link href="/japanese-boy-names">Boy names</Link>

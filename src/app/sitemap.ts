@@ -47,8 +47,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date("2026-08-23");
   const staticPages = staticPagePaths.map((path) => ({
     url: `${siteUrl}${path}`,
-    lastModified: ["", "/japanese-girl-names", "/japanese-boy-names", "/japanese-last-names", "/about"].includes(path)
-      ? new Date("2026-09-09") : now,
+    lastModified: ["/about", "/privacy", "/terms"].includes(path)
+      ? new Date("2026-10-25")
+      : ["", "/japanese-girl-names", "/japanese-boy-names", "/japanese-last-names"].includes(path)
+        ? new Date("2026-09-09") : now,
     changeFrequency: "weekly" as const,
     priority: path === "" ? 1 : 0.8,
   }));

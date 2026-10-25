@@ -32,7 +32,7 @@ export default function TermsPage() {
           These terms explain the conditions for using japanesenames.site and
           its Japanese-name reference and generation tools.
         </p>
-        <p className="mt-3 text-sm text-[#647068]">Effective: August 24, 2026</p>
+        <p className="mt-3 text-sm text-[#647068]">Effective: October 25, 2026</p>
       </header>
 
       <article className="surface my-10 space-y-10 p-6 sm:p-9">
@@ -59,12 +59,6 @@ export default function TermsPage() {
             suggestions, not statements that a name is common, legally available,
             culturally appropriate in every setting, or associated with a particular
             person or family.
-          </p>
-          <p className={copyClass}>
-            The AI-assisted generator may use a third-party language model to
-            interpret a natural-language description. The model is not the name
-            database and cannot establish that a creative mood match is a literal
-            meaning, historical fact, or common real-world usage.
           </p>
         </section>
 
@@ -129,7 +123,7 @@ export default function TermsPage() {
         <section>
           <h2 className={headingClass}>Third-party services and advertising</h2>
           <p className={copyClass}>
-            The website may use third-party analytics, hosting, AI processing,
+            The website may use third-party analytics, hosting,
             links, or advertising services, including Google services. Third
             parties operate under their own terms and privacy policies.
             Advertising does not constitute our

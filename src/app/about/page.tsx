@@ -28,7 +28,7 @@ export default function AboutPage() {
         <p className="mt-5 max-w-3xl text-lg leading-8 text-[#59645d]">
           Japanese Names is a structured reference and generation tool. It
           combines only stored surname records, given-name readings, and kanji
-          variations. The standard generator uses local records; the optional AI-assisted tool interprets preferences and retrieves from the same records.
+          variations from the local dataset.
         </p>
       </header>
       <section className="grid gap-4 md:grid-cols-3">

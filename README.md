@@ -16,14 +16,11 @@ An English-language reference and name-generation website for exploring Japanese
 - Explore detail pages with kanji breakdowns, regional context, timelines, confidence labels, and cited sources.
 - Listen to pronunciations through the browser's speech-synthesis API.
 - Copy names and save favorites locally in the browser.
-- Describe a preferred name in natural language with the optional AI-assisted generator.
 - Expose SEO metadata, structured data, a sitemap, robots rules, and a web app manifest.
 
 ## How name generation works
 
-The standard generator selects recorded names and kanji variations from the project's local dataset. It does not call an external API, invent readings, or create new kanji combinations at runtime.
-
-The AI-assisted generator also remains database-backed. A language model may parse a natural-language request into a strict, allowlisted intent schema, but local code handles name retrieval, ranking, full-name pairing, and explanations. If no provider is configured—or the provider is unavailable—the feature automatically falls back to local keyword matching.
+The generator selects recorded names and kanji variations from the project's local dataset. It does not call an external API, invent readings, or create new kanji combinations at runtime.
 
 Imported records retain their upstream JMnedict entry IDs. Data-quality fields distinguish reviewed, partially verified, uncertain, and review-needed content; KANJIDIC2 glosses describe individual characters and are not presented as proof of a complete name's meaning or naming intention.
 
@@ -50,7 +47,7 @@ cp .env.example .env.local
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000). The environment file is optional for the core site; without an AI provider, the AI-assisted page uses its local parser.
+Open [http://localhost:3000](http://localhost:3000). The environment file is optional; name generation uses the local dataset without external API configuration.
 
 For a production build:
 
@@ -61,28 +58,11 @@ npm start
 
 ## Environment variables
 
-Copy `.env.example` to `.env.local` and set only the values you need. Never commit `.env.local` or an API key.
+Copy `.env.example` to `.env.local` and set only the values you need. Never commit `.env.local` or secrets.
 
 | Variable | Required | Default | Purpose |
 | --- | --- | --- | --- |
 | `NEXT_PUBLIC_GA_MEASUREMENT_ID` | No | — | Valid Google Analytics 4 measurement ID, such as `G-XXXXXXXXXX`. |
-| `AI_API_KEY` | No | — | Server-only API key for the optional intent parser. |
-| `AI_MODEL` | With `AI_API_KEY` | — | Model name used by the configured provider. |
-| `AI_BASE_URL` | No | `https://api.openai.com/v1` | Base URL for an OpenAI-compatible provider. |
-| `AI_API_STYLE` | No | `responses` | API shape: `responses` or `chat_completions`. |
-| `AI_RESPONSE_FORMAT` | No | `json_schema` | Structured response mode: `json_schema` or `json_object`. |
-| `AI_MAX_OUTPUT_TOKENS` | No | `400` (`1200` for `json_object`) | Output budget, clamped to 200–2,000 tokens. |
-| `AI_TIMEOUT_MS` | No | `8000` | Provider timeout, clamped to 2,000–15,000 ms. |
-| `AI_NAME_GENERATOR_ENABLED` | No | `true` | Set to `false` to disable the AI-assisted API route. |
-
-Providers that support Chat Completions but not strict Structured Outputs can use:
-
-```dotenv
-AI_API_STYLE=chat_completions
-AI_RESPONSE_FORMAT=json_object
-```
-
-Every provider response is still parsed and validated against the same allowlisted schema before it is used. API secrets are read only by the server-side route.
 
 ## Available scripts
 
@@ -150,10 +130,10 @@ Editorial records in `src/data/first-names.ts` and `src/data/surnames.ts` take p
 
 ```text
 src/
-├── app/                         # App Router pages, metadata, and API routes
+├── app/                         # App Router pages and metadata
 ├── components/                  # Generators, explorers, shared UI, and analytics
 ├── data/                        # Editorial, generated, and source-reference data
-├── lib/                         # Name logic, AI parsing, SEO, validation, and tests
+├── lib/                         # Name logic, SEO, validation, and tests
 └── types/                       # Shared domain types
 scripts/                         # Data import, curation, reporting, and validation
 data-sources/                    # Source manifests and dataset-specific notes

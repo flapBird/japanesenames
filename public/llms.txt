@@ -2,7 +2,7 @@
 
 > Japanese Names is an English-language reference and generation website for Japanese personal names. It provides database-backed Japanese full-name, given-name, and surname tools with kanji, kana readings, romaji, meaning notes, and evidence-aware explanations.
 
-Japanese Names uses stored spelling-and-reading records rather than inventing arbitrary kanji combinations. The standard generators are not generative AI. The optional AI-assisted beta interprets a user's natural-language preferences, but all recommended names, readings, written forms, and displayed meanings still come from the site's structured records.
+Japanese Names uses stored spelling-and-reading records rather than inventing arbitrary kanji combinations. The generators select names from the local dataset without generative AI or external name-generation services. All names, readings, written forms, and displayed meanings come from the site's structured records.
 
 Important interpretation notes:
 
@@ -37,8 +37,7 @@ Important interpretation notes:
 
 ## Optional
 
-- [AI Japanese Name Generator beta](https://japanesenames.site/ai-japanese-name-generator): Interpret a natural-language name idea and rank matching records from the existing database. AI does not invent names, readings, kanji, or meanings. Creative mood matches are labeled separately from direct evidence.
-- [Privacy](https://japanesenames.site/privacy): Privacy practices, including analytics and AI-assisted prompt processing.
-- [Terms](https://japanesenames.site/terms): Usage terms and limitations for generated and AI-assisted recommendations.
+- [Privacy](https://japanesenames.site/privacy): Privacy practices, including browser storage, analytics, advertising, and contact information.
+- [Terms](https://japanesenames.site/terms): Usage terms and limitations for generated names and reference content.
 - [Contact](https://japanesenames.site/contact): Contact the site team about data, corrections, or other questions.
 - [XML sitemap](https://japanesenames.site/sitemap.xml): Editorially limited list of canonical pages intended for search indexing.

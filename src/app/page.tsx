@@ -5,8 +5,21 @@ import { NameGenerator } from "@/components/generator/NameGenerator";
 import { ArrowIcon } from "@/components/icons";
 import { SakuraMotif } from "@/components/SakuraMotif";
 import { JsonLd } from "@/components/shared/JsonLd";
+import { ArticleCard } from "@/components/articles/ArticleCard";
+import { articles } from "@/data/articles";
 import { getIndexableSurnames } from "@/lib/names";
 import { siteUrl } from "@/lib/seo";
+
+const featuredArticles = [
+  "how-japanese-names-work",
+  "most-popular-japanese-names",
+  "most-common-japanese-surnames",
+  "unisex-japanese-names",
+  "names-meaning-light",
+  "japanese-anime-names",
+]
+  .map((slug) => articles.find((article) => article.slug === slug))
+  .filter((article) => article !== undefined);
 
 export const metadata: Metadata = {
   title: "Japanese Name Generator with Kanji & Meanings",
@@ -334,6 +347,23 @@ export default function HomePage() {
               </Link>
             ))}
           </div>
+        </div>
+      </section>
+
+      <section className="container-page py-16">
+        <div className="flex flex-wrap items-end justify-between gap-4">
+          <div>
+            <p className="eyebrow">Guides</p>
+            <h2 className="section-title mt-2">Start with a name guide</h2>
+          </div>
+          <Link className="text-sm font-bold text-[#315c4b] underline underline-offset-4" href="/articles">
+            All guides →
+          </Link>
+        </div>
+        <div className="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {featuredArticles.map((article) => (
+            <ArticleCard article={article} key={article.slug} />
+          ))}
         </div>
       </section>
 

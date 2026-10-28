@@ -3,9 +3,34 @@ import Link from "next/link";
 import { notFound, permanentRedirect } from "next/navigation";
 import { BROWSE_PAGE_SIZE, browseHref, parseBrowsePage, toBrowseSurname } from "@/lib/browse";
 import { JsonLd } from "@/components/shared/JsonLd";
+import { TopPicksSection } from "@/components/shared/TopPicksSection";
 import { SurnameExplorer } from "@/components/surnames/SurnameExplorer";
 import { getBrowseableSurnames } from "@/lib/names";
+import { topSurnamePicks } from "@/data/top-picks";
 import { siteUrl } from "@/lib/seo";
+
+const surnameFaq = [
+  {
+    question: "What is the most common Japanese surname?",
+    answer:
+      "Sato (佐藤), held by roughly 1.5% of Japan's population — about one person in 65. Suzuki, Takahashi, Tanaka, and Watanabe follow, and the top 100 surnames together cover about a third of the country.",
+  },
+  {
+    question: "What do Japanese last names actually mean?",
+    answer:
+      "Most are landscape addresses registered in the 1870s: Tanaka is 'middle of the rice field', Yamamoto is 'mountain base', Shimizu is 'clear water', Hashimoto is 'bridge base'. A shared spelling does not prove shared ancestry — the same landscape name arose independently in many places.",
+  },
+  {
+    question: "Why do so many Japanese surnames end in -da or -ta?",
+    answer:
+      "The character 田 (ta, rice field) voices to 'da' in compounds like Yamada or Yoshida. Rice paddies were the center of village life, so thousands of surnames are literally addresses in the paddy landscape.",
+  },
+  {
+    question: "How many Japanese surnames are there?",
+    answer:
+      "Well over 100,000 distinct spellings — one of the densest surname stocks in the world — yet the top 10 cover roughly a tenth of the population. The 100-most-common-surnames guide lists the big names in order with their meanings.",
+  },
+] as const;
 
 const baseMetadata: Metadata = {
   title: "Japanese Last Names and Surnames: Meanings and Origins",
@@ -45,6 +70,17 @@ export default async function LastNamesPage({ params }: Props) {
       <JsonLd
         data={{
           "@context": "https://schema.org",
+          "@type": "FAQPage",
+          mainEntity: surnameFaq.map((item) => ({
+            "@type": "Question",
+            name: item.question,
+            acceptedAnswer: { "@type": "Answer", text: item.answer },
+          })),
+        }}
+      />
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
           "@type": "ItemList",
           name: "Japanese last names and surnames",
           url: `${siteUrl}${browseHref(basePath, page)}`,
@@ -73,6 +109,11 @@ export default async function LastNamesPage({ params }: Props) {
           </Link>
         </div>
       </header>
+      <TopPicksSection
+        title="Twelve Japanese surnames to start with"
+        intro="The most common Japanese family names, each card linking to a full profile with origin notes, prefecture maps, and historical timelines."
+        entries={topSurnamePicks}
+      />
       <SurnameExplorer key={page} initialPage={page} surnames={surnames.map(toBrowseSurname)} />
       <section className="mt-16 grid gap-8 lg:grid-cols-2">
         <article>
@@ -102,6 +143,38 @@ export default async function LastNamesPage({ params }: Props) {
           explain the available historical evidence separately from literal
           character meanings.
         </p>
+      </section>
+      <section className="mt-14 max-w-3xl">
+        <h2 className="section-title !text-3xl">Japanese surnames: questions and answers</h2>
+        <div className="mt-6 grid gap-4">
+          {surnameFaq.map((item) => (
+            <details className="surface p-5" key={item.question}>
+              <summary className="cursor-pointer font-semibold">{item.question}</summary>
+              <p className="mt-3 text-sm leading-6 text-[#59645d]">{item.answer}</p>
+            </details>
+          ))}
+        </div>
+      </section>
+      <section className="mt-14 max-w-3xl">
+        <h2 className="section-title !text-3xl">Keep exploring</h2>
+        <div className="mt-5 grid gap-4 sm:grid-cols-2">
+          <Link className="surface block p-5 transition hover:border-[#aac0b1]" href="/articles/most-common-japanese-surnames">
+            <span className="block font-semibold">The 100 most common Japanese surnames</span>
+            <span className="mt-2 block text-sm leading-6 text-[#59645d]">Sato to Hattori in order, with the landscape story behind every name.</span>
+          </Link>
+          <Link className="surface block p-5 transition hover:border-[#aac0b1]" href="/articles/cool-japanese-last-names">
+            <span className="block font-semibold">Cool Japanese last names</span>
+            <span className="mt-2 block text-sm leading-6 text-[#59645d]">Dark, rare, and dramatic surnames — Kurosawa, Kageyama, Shiranui — and the fictional ones to know on sight.</span>
+          </Link>
+          <Link className="surface block p-5 transition hover:border-[#aac0b1]" href="/articles/how-japanese-names-work">
+            <span className="block font-semibold">How Japanese names work</span>
+            <span className="mt-2 block text-sm leading-6 text-[#59645d]">Why surnames come first, which kanji are legal, and how 100,000 surnames arose.</span>
+          </Link>
+          <Link className="surface block p-5 transition hover:border-[#aac0b1]" href="/japanese-last-name-generator">
+            <span className="block font-semibold">Japanese last name generator</span>
+            <span className="mt-2 block text-sm leading-6 text-[#59645d]">Generate surnames by commonness, origin type, and region — with meanings on every result.</span>
+          </Link>
+        </div>
       </section>
     </div>
   );

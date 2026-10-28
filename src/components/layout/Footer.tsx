@@ -4,7 +4,7 @@ import { BrandMark } from "@/components/BrandMark";
 export function Footer() {
   return (
     <footer className="mt-24 border-t border-[#deddd5] bg-[#f1f0ea]">
-      <div className="container-page grid gap-10 py-12 md:grid-cols-[1.5fr_0.9fr_0.9fr]">
+      <div className="container-page grid gap-10 py-12 md:grid-cols-[1.4fr_0.8fr_1fr_0.8fr]">
         <div className="max-w-md">
           <div className="mb-4 flex items-center gap-3 font-semibold">
             <BrandMark className="size-8" />
@@ -23,6 +23,16 @@ export function Footer() {
             <Link href="/japanese-girl-names">Girl names</Link>
             <Link href="/japanese-boy-names">Boy names</Link>
             <Link href="/japanese-last-names">Japanese surnames</Link>
+          </div>
+        </div>
+        <div>
+          <h2 className="mb-3 text-sm font-bold">Guides</h2>
+          <div className="grid gap-2 text-sm text-[#647068]">
+            <Link href="/articles">All name guides</Link>
+            <Link href="/articles/most-popular-japanese-names">Most popular names</Link>
+            <Link href="/articles/most-common-japanese-surnames">Most common surnames</Link>
+            <Link href="/articles/how-japanese-names-work">How Japanese names work</Link>
+            <Link href="/articles/unisex-japanese-names">Unisex names</Link>
           </div>
         </div>
         <div>

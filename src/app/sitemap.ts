@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { getIndexableFirstNames, getIndexableSurnames } from "@/lib/names";
 import { siteUrl } from "@/lib/seo";
+import { articles } from "@/data/articles";
 
 // Sitemap membership follows the publish gate in src/data/publish-policy.ts:
 // every record that passes verification and data-sufficiency checks gets a
@@ -12,6 +13,7 @@ const staticPagePaths = [
   "/japanese-girl-names",
   "/japanese-boy-names",
   "/japanese-last-names",
+  "/articles",
   "/about",
   "/privacy",
   "/terms",
@@ -20,7 +22,7 @@ const staticPagePaths = [
 
 // Dates reflect when page content last changed materially. Bump the detail
 // page date when a new data batch is published or the templates change.
-const detailPagesUpdated = new Date("2026-10-28");
+const detailPagesUpdated = new Date("2026-10-29");
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticPages = staticPagePaths.map((path) => ({
@@ -44,5 +46,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     changeFrequency: "monthly" as const,
     priority: 0.7,
   }));
-  return [...staticPages, ...surnamePages, ...firstNamePages];
+  const articlePages = articles.map((article) => ({
+    url: `${siteUrl}/articles/${article.slug}`,
+    lastModified: new Date(article.updatedAt),
+    changeFrequency: "weekly" as const,
+    priority: 0.8,
+  }));
+  return [...staticPages, ...articlePages, ...surnamePages, ...firstNamePages];
 }

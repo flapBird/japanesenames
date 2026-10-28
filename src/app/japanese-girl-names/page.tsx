@@ -4,7 +4,9 @@ import { notFound, permanentRedirect } from "next/navigation";
 import { BROWSE_PAGE_SIZE, browseHref, parseBrowsePage, compareBrowseNames, toBrowseName } from "@/lib/browse";
 import { FirstNameExplorer } from "@/components/names/FirstNameExplorer";
 import { JsonLd } from "@/components/shared/JsonLd";
+import { TopPicksSection } from "@/components/shared/TopPicksSection";
 import { firstNames } from "@/data";
+import { topGirlPicks } from "@/data/top-picks";
 
 import { siteUrl } from "@/lib/seo";
 
@@ -24,6 +26,29 @@ const baseMetadata: Metadata = {
     description: "Explore structured Japanese girl-name readings and kanji spellings.",
   },
 };
+
+const girlFaq = [
+  {
+    question: "What are the most popular Japanese girl names right now?",
+    answer:
+      "Recent national surveys of newborns put Himari (陽葵), Rin (凛), Aoi (葵), Hina (陽菜), Yuna (結菜), and Sakura (咲良/桜) at the top for girls. The explorer below covers the full collection; the most-popular-names guide explains how Japan's rankings work.",
+  },
+  {
+    question: "Which Japanese girl names mean flower or beauty?",
+    answer:
+      "Hana (花) means flower, Sakura (桜) means cherry blossom, Momoka (桃花) means peach blossom, and Himari (陽葵) pairs the sun with the hollyhock. Names built on 美 (beauty) include Mika (美香) and Miyuki (美雪, beautiful snow).",
+  },
+  {
+    question: "Do Japanese girl names have fixed meanings?",
+    answer:
+      "No — the meaning attaches to the kanji spelling, not the sound. The reading Rin can be 凛 (dignified composure) or 琳 (beautiful jewel). Always compare written forms; every entry below shows the kanji next to the reading.",
+  },
+  {
+    question: "What Japanese girl names are easy to pronounce in English?",
+    answer:
+      "Hana, Mei, Mika, Rina, Emi, and Yuna all pronounce nearly identically in both languages. The bilingual-names guide covers the full list with pronunciation notes.",
+  },
+] as const;
 
 type Props = { params: Promise<{ page?: string }> };
 const basePath = "/japanese-girl-names";
@@ -46,6 +71,17 @@ export default async function GirlNamesPage({ params }: Props) {
   const detailPages = names.slice((page - 1) * BROWSE_PAGE_SIZE, page * BROWSE_PAGE_SIZE);
   return (
     <div className="container-page themed-page theme-sakura">
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          mainEntity: girlFaq.map((item) => ({
+            "@type": "Question",
+            name: item.question,
+            acceptedAnswer: { "@type": "Answer", text: item.answer },
+          })),
+        }}
+      />
       <JsonLd
         data={{
           "@context": "https://schema.org",
@@ -74,6 +110,11 @@ export default async function GirlNamesPage({ params }: Props) {
           Use a girl name in the Japanese Name Generator
         </Link>
       </header>
+      <TopPicksSection
+        title="Twelve Japanese girl names to start with"
+        intro="Hand-picked entries from this collection — each card links to a full detail page with kanji breakdowns, sources, and full-name pairings."
+        entries={topGirlPicks}
+      />
       <FirstNameExplorer key={page} initialPage={page} gender="girl" names={names.map(toBrowseName)} />
       <p className="mt-4 text-sm leading-6 text-[#647068]">Editorial selection is a browsing order, not a popularity ranking. Style and usage estimates are editorial guidance. Dictionary notes do not establish a name’s intended meaning.</p>
       <section className="mt-16 max-w-3xl">
@@ -90,6 +131,38 @@ export default async function GirlNamesPage({ params }: Props) {
           the character explanation changes with the spelling. Compare the
           displayed kanji as well as the sound before choosing.
         </p>
+      </section>
+      <section className="mt-14 max-w-3xl">
+        <h2 className="section-title !text-3xl">Japanese girl names: questions and answers</h2>
+        <div className="mt-6 grid gap-4">
+          {girlFaq.map((item) => (
+            <details className="surface p-5" key={item.question}>
+              <summary className="cursor-pointer font-semibold">{item.question}</summary>
+              <p className="mt-3 text-sm leading-6 text-[#59645d]">{item.answer}</p>
+            </details>
+          ))}
+        </div>
+      </section>
+      <section className="mt-14 max-w-3xl">
+        <h2 className="section-title !text-3xl">Keep exploring</h2>
+        <div className="mt-5 grid gap-4 sm:grid-cols-2">
+          <Link className="surface block p-5 transition hover:border-[#aac0b1]" href="/articles/most-popular-japanese-names">
+            <span className="block font-semibold">The most popular Japanese names</span>
+            <span className="mt-2 block text-sm leading-6 text-[#59645d]">The readings topping Japan’s recent newborn rankings, with kanji and meanings for each.</span>
+          </Link>
+          <Link className="surface block p-5 transition hover:border-[#aac0b1]" href="/articles/names-meaning-flower">
+            <span className="block font-semibold">Japanese names meaning flower</span>
+            <span className="mt-2 block text-sm leading-6 text-[#59645d]">Sakura, Hana, Momoka, Kaede, and 22 more floral names with their written forms.</span>
+          </Link>
+          <Link className="surface block p-5 transition hover:border-[#aac0b1]" href="/articles/japanese-names-that-work-in-english">
+            <span className="block font-semibold">Names that work in English</span>
+            <span className="mt-2 block text-sm leading-6 text-[#59645d]">24 bilingual-friendly names and how each one travels between the two languages.</span>
+          </Link>
+          <Link className="surface block p-5 transition hover:border-[#aac0b1]" href="/articles/unisex-japanese-names">
+            <span className="block font-semibold">Unisex Japanese names</span>
+            <span className="mt-2 block text-sm leading-6 text-[#59645d]">Ren, Aoi, Hikaru, and 21 more names that register for any gender.</span>
+          </Link>
+        </div>
       </section>
     </div>
   );

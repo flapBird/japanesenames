@@ -11,6 +11,7 @@ import { firstNames, sourceById, surnameById } from "@/data";
 import { getIndexableSurnames, getFirstNameBySlug } from "@/lib/names";
 import { nameNotes } from "@/data/name-notes";
 import { getMeaningPreview } from "@/lib/name-display";
+import { buildFirstNameFaqs, buildFirstNameIntro } from "@/lib/name-content";
 import { breadcrumbJsonLd } from "@/lib/seo";
 
 export function generateStaticParams() {
@@ -79,6 +80,17 @@ export default async function FirstNamePage({
   return (
     <div className={`container-page themed-page ${themeClass}`}>
       <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          mainEntity: buildFirstNameFaqs(name).map((item) => ({
+            "@type": "Question",
+            name: item.question,
+            acceptedAnswer: { "@type": "Answer", text: item.answer },
+          })),
+        }}
+      />
+      <JsonLd
         data={breadcrumbJsonLd([
           { name: "Home", path: "/" },
           { name: "First Names", path: name.genders.includes("girl") ? "/japanese-girl-names" : "/japanese-boy-names" },
@@ -142,13 +154,33 @@ export default async function FirstNamePage({
             <dt className="text-[#647068]">Stored reading</dt>
             <dd className="font-semibold">{name.hiragana} ({name.romaji})</dd>
           </div>
+          <div className="flex justify-between gap-4">
+            <dt className="text-[#647068]">Written forms recorded</dt>
+            <dd className="font-semibold">{name.variations.length}</dd>
+          </div>
+          <div className="flex justify-between gap-4">
+            <dt className="text-[#647068]">Style labels</dt>
+            <dd className="font-semibold capitalize">{name.styles.join(", ") || "—"}</dd>
+          </div>
+          <div className="flex justify-between gap-4">
+            <dt className="text-[#647068]">Popularity in this collection</dt>
+            <dd className="font-semibold capitalize">{name.popularityLevel.replace("_", " ")}</dd>
+          </div>
         </dl>
       </header>
 
-      {nameNotes[name.slug] && <section className="max-w-3xl py-8">
+      {nameNotes[name.slug] ? <section className="max-w-3xl py-8">
         <h2 className="text-2xl font-semibold">What does {name.romaji} mean in this spelling?</h2>
         <p className="mt-4 leading-7 text-[#59645d]">{nameNotes[name.slug]}</p>
         <p className="mt-3 text-sm leading-6 text-[#647068]">These are written-form explanations. Style and gender labels describe this collection; they are not a current usage survey or a guarantee of suitability.</p>
+      </section> : <section className="max-w-3xl py-8">
+        <h2 className="text-2xl font-semibold">About {name.romaji}</h2>
+        <p className="mt-4 leading-7 text-[#59645d]">{buildFirstNameIntro(name)}</p>
+        <p className="mt-3 text-sm leading-6 text-[#647068]">Written-form notes and labels above come from this collection’s records. They are not a current usage survey or a guarantee of suitability.</p>
+      </section>}
+      {nameNotes[name.slug] && <section className="max-w-3xl">
+        <h2 className="text-2xl font-semibold">About {name.romaji} in this collection</h2>
+        <p className="mt-4 leading-7 text-[#59645d]">{buildFirstNameIntro(name)}</p>
       </section>}
       <section className="py-12">
         <p className="eyebrow">Written forms</p>
@@ -248,6 +280,19 @@ export default async function FirstNamePage({
           </div>
         </section>
       )}
+
+      <section className="py-12">
+        <p className="eyebrow">Quick answers</p>
+        <h2 className="section-title mb-6 mt-2">{name.romaji}: questions and answers</h2>
+        <div className="max-w-3xl grid gap-4">
+          {buildFirstNameFaqs(name).map((item) => (
+            <details className="surface p-5" key={item.question}>
+              <summary className="cursor-pointer font-semibold">{item.question}</summary>
+              <p className="mt-3 text-sm leading-6 text-[#59645d]">{item.answer}</p>
+            </details>
+          ))}
+        </div>
+      </section>
 
       <section className="py-12">
         <p className="eyebrow">Evidence trail</p>

@@ -10,13 +10,25 @@ Important interpretation notes:
 - A given-name meaning belongs to a particular kanji spelling; the same reading may have multiple written forms and meanings.
 - Kanji glosses explain character components and do not prove a name bearer's intended meaning.
 - A surname's literal kanji meaning does not prove one geographic origin, lineage, or shared ancestry.
-- Detail pages are published only for a small editorially reviewed set. The broader database remains available through the generators and browse hubs without creating thin standalone pages.
+- Detail pages are published for roughly 500 records (about 278 given-name readings and 220 surnames) that pass the site's verification and data-sufficiency checks; each cites its sources.
 - Generated full-name pairings can be plausible without being common or belonging to a known person. Important real-world naming decisions should be reviewed by a fluent Japanese speaker or qualified naming professional.
 
 ## Core tools
 
 - [Japanese Name Generator](https://japanesenames.site/): Generate complete male, female, or unisex Japanese names from stored surname and given-name records, with kanji, kana, romaji, meanings, filters, and Japanese or Western name order.
 - [Japanese Last Name Generator](https://japanesenames.site/japanese-last-name-generator): Generate one stored Japanese surname at a time and view its kanji, kana, romaji, literal meaning, and available commonness or origin labels.
+
+## Guides and articles
+
+- [All guides](https://japanesenames.site/articles): Long-form Japanese-name guides grouped by popularity, meaning themes, name lists, and naming culture.
+- [How Japanese Names Work](https://japanesenames.site/articles/how-japanese-names-work): Surname-first order, legal kanji lists, unregulated readings, gendered endings, and marriage-name rules.
+- [Most Popular Japanese Names](https://japanesenames.site/articles/most-popular-japanese-names): The readings topping recent newborn surveys (Haruto, Ao, Himari, Rin), with kanji and meanings.
+- [100 Most Common Japanese Surnames](https://japanesenames.site/articles/most-common-japanese-surnames): The top 100 family names in order with landscape meanings.
+- [Japanese Names Meaning Moon](https://japanesenames.site/articles/japanese-names-meaning-moon), [Light](https://japanesenames.site/articles/japanese-names-meaning-light), [Flower](https://japanesenames.site/articles/japanese-names-meaning-flower), [Snow](https://japanesenames.site/articles/japanese-names-meaning-snow), and [Love](https://japanesenames.site/articles/japanese-names-meaning-love): Names grouped by the imagery their kanji carries.
+- [Unisex Japanese Names](https://japanesenames.site/articles/unisex-japanese-names): Names that register for both genders, with each name's gender lean.
+- [Japanese Anime Names](https://japanesenames.site/articles/japanese-anime-names): Which anime character names are real, registerable names and which are fiction.
+- [Japanese Names That Work in English](https://japanesenames.site/articles/japanese-names-that-work-in-english): Bilingual-friendly names and pronunciation notes.
+- [Cool Japanese Last Names](https://japanesenames.site/articles/cool-japanese-last-names): Dark, rare, and dramatic surnames, plus the fictional ones to recognize.
 
 ## Browse and research
 

@@ -3,10 +3,10 @@ import { BrandMark } from "@/components/BrandMark";
 
 const navigation = [
   { href: "/#generator", label: "Name Generator" },
-  { href: "/japanese-last-name-generator", label: "Last Name Generator" },
   { href: "/japanese-girl-names", label: "Girl Names" },
   { href: "/japanese-boy-names", label: "Boy Names" },
   { href: "/japanese-last-names", label: "Last Names" },
+  { href: "/articles", label: "Guides" },
 ];
 
 export function Header() {

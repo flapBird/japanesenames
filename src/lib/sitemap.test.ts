@@ -1,21 +1,27 @@
 import { describe, expect, it } from "vitest";
 import sitemap from "@/app/sitemap";
 import { getIndexableFirstNames, getIndexableSurnames } from "@/lib/names";
+import { articles } from "@/data/articles";
 
 describe("SEO sitemap", () => {
-  const staticPageCount = 9;
+  const staticPageCount = 10;
 
   it("contains every static page and every published detail page", () => {
     const urls = sitemap().map((item) => item.url);
 
     expect(urls).toHaveLength(
       staticPageCount +
+        articles.length +
         getIndexableSurnames().length +
         getIndexableFirstNames().length,
     );
     expect(urls).toContain("https://japanesenames.site");
     expect(urls).toContain(
       "https://japanesenames.site/japanese-last-name-generator",
+    );
+    expect(urls).toContain("https://japanesenames.site/articles");
+    expect(urls).toContain(
+      "https://japanesenames.site/articles/how-japanese-names-work",
     );
     expect(urls).toContain("https://japanesenames.site/surname/sato");
     expect(urls).toContain("https://japanesenames.site/name/rin");

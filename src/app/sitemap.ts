@@ -2,8 +2,10 @@ import type { MetadataRoute } from "next";
 import { getIndexableFirstNames, getIndexableSurnames } from "@/lib/names";
 import { siteUrl } from "@/lib/seo";
 
-// Sitemap membership is intentionally editorial. Database growth must not
-// publish new SEO URLs without an explicit review and allowlist update here.
+// Sitemap membership follows the publish gate in src/data/publish-policy.ts:
+// every record that passes verification and data-sufficiency checks gets a
+// URL here. Records held back for editorial reasons keep isIndexable: false
+// and stay out of this file.
 const staticPagePaths = [
   "",
   "/japanese-last-name-generator",
@@ -16,59 +18,31 @@ const staticPagePaths = [
   "/contact",
 ] as const;
 
-const surnameSlugAllowlist = new Set([
-  "yamamoto",
-  "tanaka",
-  "sato",
-  "suzuki",
-  "kawaguchi",
-  "hayashi",
-  "takahashi",
-]);
-
-const firstNameSlugAllowlist = new Set([
-  "rin",
-  "akari",
-  "yui",
-  "hana",
-  "hikari",
-  "haruto",
-  "ren",
-  "sota",
-  "takumi",
-  "kenji",
-  "minato",
-  "aoi",
-  "kaede",
-  "hinata",
-]);
+// Dates reflect when page content last changed materially. Bump the detail
+// page date when a new data batch is published or the templates change.
+const detailPagesUpdated = new Date("2026-10-28");
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const now = new Date("2026-08-23");
   const staticPages = staticPagePaths.map((path) => ({
     url: `${siteUrl}${path}`,
     lastModified: ["/about", "/privacy", "/terms"].includes(path)
       ? new Date("2026-10-25")
       : ["", "/japanese-girl-names", "/japanese-boy-names", "/japanese-last-names"].includes(path)
-        ? new Date("2026-09-09") : now,
+        ? new Date("2026-09-09") : detailPagesUpdated,
     changeFrequency: "weekly" as const,
     priority: path === "" ? 1 : 0.8,
   }));
-  const surnamePages = getIndexableSurnames()
-    .filter((surname) => surnameSlugAllowlist.has(surname.slug))
-    .map((surname) => ({
+  const surnamePages = getIndexableSurnames().map((surname) => ({
     url: `${siteUrl}/surname/${surname.slug}`,
-    lastModified: now,
+    lastModified: detailPagesUpdated,
     changeFrequency: "monthly" as const,
     priority: 0.7,
-    }));
-  const firstNamePages = getIndexableFirstNames()
-    .filter((name) => firstNameSlugAllowlist.has(name.slug))
-    .map((name) => ({
+  }));
+  const firstNamePages = getIndexableFirstNames().map((name) => ({
     url: `${siteUrl}/name/${name.slug}`,
-    lastModified: new Date("2026-09-09"),
+    lastModified: detailPagesUpdated,
     changeFrequency: "monthly" as const,
     priority: 0.7,
-    }));
+  }));
   return [...staticPages, ...surnamePages, ...firstNamePages];
 }

@@ -15,7 +15,7 @@ import { PronunciationButton } from "@/components/shared/PronunciationButton";
 import { SourceList } from "@/components/shared/SourceList";
 import { firstNameById, sourceById, surnames } from "@/data";
 import { breadcrumbJsonLd } from "@/lib/seo";
-import { getSurnameBySlug } from "@/lib/names";
+import { getIndexableFirstNames, getSurnameBySlug } from "@/lib/names";
 
 export function generateStaticParams() {
   return surnames.filter((surname) => surname.isIndexable).map((surname) => ({ slug: surname.slug }));
@@ -29,8 +29,11 @@ export async function generateMetadata({
   const { slug } = await params;
   const surname = getSurnameBySlug(slug);
   if (!surname) return {};
+  const literalMeaning = surname.literalMeaning.trim();
   const title = `${surname.romaji} (${surname.kanji}) Surname Meaning and Origin`;
-  const description = `${surname.romaji} is written ${surname.kanji} (${surname.hiragana}). Explore its literal meaning, kanji breakdown, origin confidence, history, and sources.`;
+  const description = literalMeaning
+    ? `${surname.romaji} is written ${surname.kanji} (${surname.hiragana}). The characters read literally as ${literalMeaning.toLowerCase()}. See the kanji breakdown, related surnames, and pair it in a full name.`
+    : `${surname.romaji} is written ${surname.kanji} (${surname.hiragana}). Explore its literal meaning, kanji breakdown, origin confidence, history, and sources.`;
   return {
     title,
     description,
@@ -54,6 +57,16 @@ export default async function SurnamePage({
   const compatibleNames = surname.compatibleFirstNameIds
     .map((id) => firstNameById.get(id))
     .filter((item) => item !== undefined);
+  const usesExamplePairings = compatibleNames.length === 0;
+  const pairingNames = usesExamplePairings
+    ? getIndexableFirstNames().slice(0, 6)
+    : compatibleNames;
+  const surnameKanji = new Set([...surname.kanji]);
+  const relatedSurnames = surnames
+    .filter((item) => item.isIndexable && item.id !== surname.id)
+    .filter((item) => [...item.kanji].some((k) => surnameKanji.has(k)))
+    .sort((a, b) => a.romaji.localeCompare(b.romaji, "en"))
+    .slice(0, 8);
   const sourceList = surname.sourceIds
     .map((id) => sourceById.get(id))
     .filter((item) => item !== undefined);
@@ -192,7 +205,15 @@ export default async function SurnamePage({
       <section className="py-12">
         <p className="eyebrow">Natural pairings</p>
         <h2 className="section-title mb-6 mt-2">First names to pair with {surname.romaji}</h2>
-        <CompatibleNames names={compatibleNames} surname={surname} />
+        {usesExamplePairings && (
+          <p className="mb-6 max-w-3xl text-sm leading-6 text-[#647068]">
+            Reviewed surname-specific pairings are not yet recorded for
+            {" "}{surname.romaji}, so the examples below pair it with reviewed
+            given names from this collection. Any given name can follow a
+            Japanese family name.
+          </p>
+        )}
+        <CompatibleNames names={pairingNames} surname={surname} />
         <div className="mt-6 rounded-2xl border border-[#d9ddd6] bg-[#f3f4ef] p-5 sm:p-6">
           <h3 className="text-lg font-semibold">Use {surname.romaji} in a generated name</h3>
           <p className="mt-2 max-w-3xl text-sm leading-6 text-[#647068]">
@@ -210,6 +231,33 @@ export default async function SurnamePage({
           </div>
         </div>
       </section>
+
+      {relatedSurnames.length > 0 && (
+        <section className="py-12">
+          <p className="eyebrow">Related surnames</p>
+          <h2 className="section-title mb-6 mt-2">Surnames that share a kanji with {surname.romaji}</h2>
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            {relatedSurnames.map((item) => {
+              const sharedKanji = [...item.kanji]
+                .filter((k) => surnameKanji.has(k))
+                .join("");
+              return (
+                <Link
+                  className="surface p-4 transition hover:border-[#aac0b1]"
+                  href={`/surname/${item.slug}`}
+                  key={item.id}
+                >
+                  <span className="japanese-display block text-2xl font-semibold">{item.kanji}</span>
+                  <span className="mt-1 block text-sm text-[#647068]">{item.romaji}</span>
+                  <span className="mt-3 block text-xs font-bold text-[#315c4b]">
+                    Shares {sharedKanji} →
+                  </span>
+                </Link>
+              );
+            })}
+          </div>
+        </section>
+      )}
 
       <section className="py-12" aria-labelledby="sources-heading">
         <p className="eyebrow">Evidence trail</p>

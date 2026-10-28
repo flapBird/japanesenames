@@ -2,10 +2,18 @@ import { generatedFirstNames, generatedSurnames } from "./generated/curated/name
 import { firstNames as editorialFirstNames } from "./first-names";
 import { surnames as editorialSurnames } from "./surnames";
 import { editorialPairEvidence } from "./editorial-pair-evidence";
+import { firstNamePublishReady, surnamePublishReady } from "./publish-policy";
 
+// The generated module is produced by scripts/curate-name-data.ts and always
+// writes isIndexable: false, so the publish gate is applied here at merge
+// time instead of hand-editing generated output. Editorial records are
+// reviewed by hand and never pass through the gate.
 function mergeEditorialFirstNames() {
   const merged = new Map(
-    generatedFirstNames.map((item) => [item.hiragana, item]),
+    generatedFirstNames.map((item) => [
+      item.hiragana,
+      firstNamePublishReady(item) ? { ...item, isIndexable: true } : item,
+    ]),
   );
   // Editorial records intentionally win for an existing reading: they carry
   // reviewed meanings, stable slugs, styles, and detail-page source notes.
@@ -30,7 +38,12 @@ function mergeEditorialFirstNames() {
 function mergeEditorialSurnames() {
   const key = (item: { kanji: string; hiragana: string }) =>
     `${item.kanji}:${item.hiragana}`;
-  const merged = new Map(generatedSurnames.map((item) => [key(item), item]));
+  const merged = new Map(
+    generatedSurnames.map((item) => [
+      key(item),
+      surnamePublishReady(item) ? { ...item, isIndexable: true } : item,
+    ]),
+  );
   for (const item of editorialSurnames) merged.set(key(item), item);
   return [
     ...editorialSurnames,

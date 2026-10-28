@@ -8,7 +8,7 @@ import { JsonLd } from "@/components/shared/JsonLd";
 import { PronunciationButton } from "@/components/shared/PronunciationButton";
 import { SourceList } from "@/components/shared/SourceList";
 import { firstNames, sourceById, surnameById } from "@/data";
-import { getFirstNameBySlug } from "@/lib/names";
+import { getIndexableSurnames, getFirstNameBySlug } from "@/lib/names";
 import { nameNotes } from "@/data/name-notes";
 import { getMeaningPreview } from "@/lib/name-display";
 import { breadcrumbJsonLd } from "@/lib/seo";
@@ -47,10 +47,24 @@ export default async function FirstNamePage({
   const { slug } = await params;
   const name = getFirstNameBySlug(slug);
   if (!name) notFound();
-  const surnames = name.compatibleSurnameIds
+  const compatibleSurnames = name.compatibleSurnameIds
     .map((id) => surnameById.get(id))
     .filter((item) => item !== undefined)
     .slice(0, 6);
+  const usesExamplePairings = compatibleSurnames.length === 0;
+  const surnames = usesExamplePairings
+    ? getIndexableSurnames().slice(0, 6)
+    : compatibleSurnames;
+  const nameKanji = new Set(name.variations.flatMap((v) => [...v.kanji]));
+  const relatedNames = firstNames
+    .filter((item) => item.isIndexable && item.id !== name.id)
+    .filter((item) =>
+      item.variations.some((variation) =>
+        [...variation.kanji].some((k) => nameKanji.has(k)),
+      ),
+    )
+    .sort((a, b) => a.romaji.localeCompare(b.romaji, "en"))
+    .slice(0, 8);
   const sourceList = name.sourceIds
     .map((id) => sourceById.get(id))
     .filter((item) => item !== undefined);
@@ -180,6 +194,13 @@ export default async function FirstNamePage({
       <section className="py-12">
         <p className="eyebrow">Full-name pairings</p>
         <h2 className="section-title mb-6 mt-2">Surnames to pair with {name.romaji}</h2>
+        {usesExamplePairings && (
+          <p className="mb-6 max-w-3xl text-sm leading-6 text-[#647068]">
+            Reviewed pairings for {name.romaji} are not yet recorded, so the
+            examples below use frequently requested surnames from this
+            collection. Any given name can precede a Japanese family name.
+          </p>
+        )}
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {surnames.map((surname) => (
             <Link
@@ -198,6 +219,35 @@ export default async function FirstNamePage({
           ))}
         </div>
       </section>
+
+      {relatedNames.length > 0 && (
+        <section className="py-12">
+          <p className="eyebrow">Related names</p>
+          <h2 className="section-title mb-6 mt-2">Names that share a kanji with {name.romaji}</h2>
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            {relatedNames.map((item) => {
+              const sharedKanji = [...nameKanji]
+                .filter((k) => item.variations.some((variation) => variation.kanji.includes(k)))
+                .join("");
+              return (
+                <Link
+                  className="surface p-4 transition hover:border-[#aac0b1]"
+                  href={`/name/${item.slug}`}
+                  key={item.id}
+                >
+                  <span className="japanese-display block text-2xl font-semibold">
+                    {item.variations[0].kanji}
+                  </span>
+                  <span className="mt-1 block text-sm text-[#647068]">{item.romaji}</span>
+                  <span className="mt-3 block text-xs font-bold text-[#315c4b]">
+                    Shares {sharedKanji} →
+                  </span>
+                </Link>
+              );
+            })}
+          </div>
+        </section>
+      )}
 
       <section className="py-12">
         <p className="eyebrow">Evidence trail</p>

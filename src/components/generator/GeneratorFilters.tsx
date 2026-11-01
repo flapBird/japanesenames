@@ -1,19 +1,13 @@
 import type { ReactNode } from "react";
 import type { GeneratorFilters as Filters } from "@/types/names";
 
+// Gender lives in the segmented control on the generator control bar; the
+// disclosure keeps the secondary filters.
 const fields: Array<{
   key: keyof Filters;
   label: string;
   options: Array<{ value: string; label: string }>;
 }> = [
-  {
-    key: "gender",
-    label: "Gender",
-    options: ["Girl", "Boy", "Unisex", "Any"].map((label) => ({
-      label,
-      value: label.toLowerCase(),
-    })),
-  },
   {
     key: "style",
     label: "Style",
@@ -44,13 +38,11 @@ const fields: Array<{
 export function GeneratorFilters({
   value,
   onChange,
-  action,
   kanjiControl,
   popularKanji,
 }: {
   value: Filters;
   onChange: (value: Filters) => void;
-  action: ReactNode;
   kanjiControl: ReactNode;
   popularKanji: ReactNode;
 }) {
@@ -63,22 +55,30 @@ export function GeneratorFilters({
       </select>
     </label>
   );
-  const active = fields.slice(1).filter((field) => value[field.key] !== (field.key === "mode" ? "realistic" : "any"));
+  const active = fields.filter((field) => value[field.key] !== (field.key === "mode" ? "realistic" : "any"));
   return (
-    <div>
-      <div className="grid items-end gap-3 sm:grid-cols-[minmax(10rem,16rem)_auto]">
-        {renderField(fields[0])}
-        <div>{action}</div>
-      </div>
-      <details className="mt-4 border-t border-[#e5ddd8] pt-3">
-        <summary className="cursor-pointer text-sm font-semibold text-[#315c4b]">
-          More filters: style, meaning &amp; kanji{active.length ? ` (${active.length} selected)` : ""}
-        </summary>
-        <div className="mt-4 grid gap-3 sm:grid-cols-3">{fields.slice(1).map(renderField)}</div>
-        <p className="mt-2 text-xs leading-5 text-[#647068]">Style and name mode are editorial guidance. Meaning themes help explore characters; they do not establish a person’s naming intention.</p>
-        <div className="mt-3 border-t border-[#e5ddd8] pt-3">{kanjiControl}</div>
-        {popularKanji}
-      </details>
-    </div>
+    <details className="group">
+      <summary className="flex cursor-pointer list-none items-center gap-2 text-sm font-semibold text-[#315c4b] [&::-webkit-details-marker]:hidden">
+        More filters: style, meaning &amp; kanji{active.length ? ` (${active.length} selected)` : ""}
+        <svg
+          aria-hidden="true"
+          className="transition-transform group-open:rotate-180"
+          fill="none"
+          height="12"
+          stroke="currentColor"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="2.4"
+          viewBox="0 0 24 24"
+          width="12"
+        >
+          <path d="m6 9 6 6 6-6" />
+        </svg>
+      </summary>
+      <div className="mt-4 grid gap-3 sm:grid-cols-3">{fields.map(renderField)}</div>
+      <p className="mt-2 text-xs leading-5 text-[#647068]">Style and name mode are editorial guidance. Meaning themes help explore characters; they do not establish a person’s naming intention.</p>
+      <div className="mt-3 border-t border-[#e5ddd8] pt-3">{kanjiControl}</div>
+      {popularKanji}
+    </details>
   );
 }

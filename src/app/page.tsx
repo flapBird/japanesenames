@@ -117,11 +117,20 @@ export default function HomePage() {
           <h1 className="section-title !text-[clamp(2.2rem,6vw,3.8rem)]">
             Japanese Name Generator
           </h1>
-          <p className="mt-3 text-base leading-6 text-[#59645d] sm:leading-7">
-            Generate Japanese names with kanji, pronunciation, and meaning notes
-            for characters, stories, or personal inspiration. Keep the surname
-            or given name you like and explore new combinations. Free, with no sign-up.
+          <p className="mt-3.5 max-w-2xl text-base leading-7 text-[#59645d] sm:text-[1.05rem]">
+            Generate Japanese names with kanji, readings, and meaning notes.
+            Lock the part you like, explore the rest — free, no sign-up.
           </p>
+          <div className="mt-4 flex flex-wrap gap-2">
+            {["JMnedict records", "KANJIDIC2 glosses", "No invented readings"].map((chip) => (
+              <span
+                className="rounded-full border border-[#deddd5] bg-[#fffefb] px-3.5 py-1.5 text-xs font-semibold text-[#43504a]"
+                key={chip}
+              >
+                {chip}
+              </span>
+            ))}
+          </div>
         </div>
         <Suspense fallback={<div className="surface min-h-96 p-8">Loading the structured generator…</div>}>
           <NameGenerator />
@@ -142,15 +151,15 @@ export default function HomePage() {
             {[
               [
                 "Choose and generate",
-                "Choose Girl, Boy, Unisex, or Any, then narrow the results by style, meaning, name mode, or a specific kanji. Leave filters open for broader variety.",
+                "Pick a gender, then narrow by style, meaning, name mode, or one kanji.",
               ],
               [
                 "Lock one part",
-                "When one part feels right, lock the surname or first name. The next generation keeps your choice and changes the other part for easier comparison.",
+                "Keep the surname or first name you like while regenerating the other.",
               ],
               [
                 "Copy or explore",
-                "Compare both displayed name orders, copy the full name, save a favorite, or open a detail page to check pronunciation, meanings, and surname context.",
+                "Save a favorite, copy the name, or open a detail page for readings and meanings.",
               ],
             ].map(([title, text], index) => (
               <li className="flex gap-3" key={title}>

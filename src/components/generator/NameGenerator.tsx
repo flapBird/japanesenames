@@ -29,6 +29,13 @@ const defaultFilters: FilterState = {
   surnamePopularity: "any",
 };
 
+const genderOptions: Array<{ label: string; value: FilterState["gender"] }> = [
+  { label: "Any", value: "any" },
+  { label: "Girl", value: "girl" },
+  { label: "Boy", value: "boy" },
+  { label: "Unisex", value: "unisex" },
+];
+
 function kanjiResultTitle(kanji: string, target: KanjiTarget) {
   if (target === "given-name") return "Japanese given names with";
   if (target === "surname") return "Japanese surnames with";
@@ -217,44 +224,75 @@ export function NameGenerator() {
 
   return (
     <section className="scroll-mt-4" id="generator" aria-labelledby="generator-title">
-      <div className="surface overflow-hidden border-[#e4d6d8] shadow-[var(--shadow)]">
-        <div className="border-b border-[#ead6da] bg-[#f7ecee] px-4 py-2.5 sm:px-5 sm:py-3">
-          <div>
-            <h2 className="sr-only" id="generator-title">
-              Generate a Japanese full name
-            </h2>
-            <span aria-hidden="true" className="text-base font-semibold sm:text-lg">
-              Generate a Japanese full name
-            </span>
+      <div
+        className="surface overflow-hidden border-[#e4d6d8] shadow-[var(--shadow)]"
+        style={{ borderTop: "3px solid #c27684" }}
+      >
+        <div className="flex flex-wrap items-center gap-3 p-4 sm:gap-4 sm:p-5">
+          <h2 className="mr-auto text-base font-bold tracking-[-0.01em] sm:text-lg" id="generator-title">
+            Generate a Japanese full name
+          </h2>
+          <div
+            aria-label="Gender"
+            className="flex w-full rounded-full border border-[#deddd5] bg-[#faf9f5] p-[3px] sm:w-auto"
+            role="group"
+          >
+            {genderOptions.map((option) => (
+              <button
+                aria-pressed={draftFilters.gender === option.value}
+                className={`min-h-9 flex-1 whitespace-nowrap rounded-full px-3.5 text-[0.82rem] font-semibold transition-colors sm:flex-none sm:px-4 ${
+                  draftFilters.gender === option.value
+                    ? "bg-[#315c4b] text-white"
+                    : "text-[#59645d] hover:text-[#19241f]"
+                }`}
+                key={option.value}
+                onClick={() => setDraftFilters({ ...draftFilters, gender: option.value })}
+                type="button"
+              >
+                {option.label}
+              </button>
+            ))}
+          </div>
+          <div className="flex w-full items-center gap-2 sm:w-auto">
+            <button
+              aria-label={
+                hasPendingFilters
+                  ? "Apply filters and generate 6 names"
+                  : "Generate 6 new names"
+              }
+              className="button-primary flex-1 !min-h-[2.55rem] gap-2 !px-5 !text-sm sm:flex-none"
+              disabled={Boolean(lockedSurnameId && lockedFirstNameId)}
+              onClick={generate}
+              type="button"
+            >
+              <svg
+                aria-hidden="true"
+                fill="none"
+                height="14"
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2.4"
+                viewBox="0 0 24 24"
+                width="14"
+              >
+                <path d="M21 12a9 9 0 1 1-3-6.7" />
+                <path d="M21 3v6h-6" />
+              </svg>
+              Generate
+            </button>
+            <button
+              className="button-secondary flex-1 !min-h-[2.55rem] !px-4 !text-sm sm:flex-none"
+              disabled={!hasActiveSettings}
+              onClick={resetFilters}
+              type="button"
+            >
+              Reset
+            </button>
           </div>
         </div>
-        <div className="p-4 sm:p-5">
+        <div className="border-t border-[#efeee8] bg-[#faf9f5] px-4 py-3 sm:px-5">
           <GeneratorFilters
-            action={
-              <div className="flex w-full items-center gap-2 lg:w-auto">
-                <button
-                  aria-label={
-                    hasPendingFilters
-                      ? "Apply filters and generate 6 names"
-                      : "Generate 6 new names"
-                  }
-                  className="button-primary flex-1 !min-h-[2.55rem] !px-4 !text-sm lg:w-28 lg:flex-none"
-                  disabled={Boolean(lockedSurnameId && lockedFirstNameId)}
-                  onClick={generate}
-                  type="button"
-                >
-                  Generate
-                </button>
-                <button
-                  className="button-secondary flex-1 !min-h-[2.55rem] !px-3 !text-sm lg:flex-none"
-                  disabled={!hasActiveSettings}
-                  onClick={resetFilters}
-                  type="button"
-                >
-                  Reset
-                </button>
-              </div>
-            }
             kanjiControl={
               <KanjiFilterFields
                 error={kanjiError}
@@ -285,7 +323,7 @@ export function NameGenerator() {
             value={draftFilters}
           />
           {lockedSurnameId && lockedFirstNameId && (
-            <p className="mt-2 text-xs text-[#68726b]">
+            <p className="mt-3 text-xs text-[#68726b]">
               Unlock either part to generate alternatives.
             </p>
           )}

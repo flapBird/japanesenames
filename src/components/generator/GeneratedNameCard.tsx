@@ -47,86 +47,58 @@ export function GeneratedNameCard({
 
   return (
     <article className="surface name-result-card flex h-full flex-col p-5">
-      <div className="mb-3 flex items-center justify-between gap-3">
-        <p className="text-[0.65rem] font-bold uppercase tracking-[0.09em] text-[#747d77]">
-          Two name formats
-        </p>
-        <div className="flex shrink-0 items-center gap-2">
-          <PronunciationButton label={romaji} text={hiragana} />
-          <FavoriteButton
-            compact
-            item={{
-              id: `full:${item.key}`,
-              kind: "full_name",
-              label: japanese,
-              sublabel: romaji,
-              pronunciation: hiragana,
-            }}
-          />
-        </div>
+      {/* Pronounce and favorite sit in the card corner; the kanji spelling is
+          the visual anchor and the romanized form becomes a secondary line. */}
+      <div className="flex items-center justify-end gap-2">
+        <PronunciationButton label={romaji} text={hiragana} />
+        <FavoriteButton
+          compact
+          item={{
+            id: `full:${item.key}`,
+            kind: "full_name",
+            label: japanese,
+            sublabel: romaji,
+            pronunciation: hiragana,
+          }}
+        />
       </div>
-      <div className="mb-4 grid overflow-hidden rounded-xl border border-[#e3e2dc] sm:grid-cols-2">
-        <div className="bg-[#faf9f5] p-4">
-          <div className="flex flex-wrap items-center gap-2">
-            <p className="text-[0.65rem] font-bold uppercase tracking-[0.09em] text-[#747d77]">
-              Romanized name
-            </p>
-            <span className="rounded-full bg-[#e7eee9] px-2 py-0.5 text-[0.62rem] font-bold text-[#315c4b]">
-              Western order
-            </span>
-          </div>
-          <p className="mt-3 text-[1.7rem] font-semibold leading-tight tracking-[-0.025em]">
-            {romaji}
-          </p>
-          <p className="mt-2 text-xs text-[#747d77]">Given name · Family name</p>
-        </div>
-        <div className="border-t border-[#e3e2dc] p-4 sm:border-t-0 sm:border-l">
-          <div className="flex flex-wrap items-center gap-2">
-            <p className="text-[0.65rem] font-bold uppercase tracking-[0.09em] text-[#747d77]">
-              Japanese name
-            </p>
-            <span className="rounded-full bg-[#f7e8eb] px-2 py-0.5 text-[0.62rem] font-bold text-[#914b59]">
-              Japanese order
-            </span>
-          </div>
-          <p className="japanese-display mt-3 text-[2rem] font-medium leading-tight">
-            <HighlightedKanji kanji={highlightKanji} value={japanese} />
-          </p>
-          <p className="japanese-display mt-1 text-sm text-[#6a746d]">{hiragana}</p>
-          <p className="mt-2 text-xs text-[#747d77]">Family name · Given name</p>
-        </div>
+      <p className="japanese-display -mt-1 text-[1.9rem] font-bold leading-[1.25]">
+        <HighlightedKanji kanji={highlightKanji} value={japanese} />
+      </p>
+      <p className="japanese-display mt-1 text-sm text-[#6a746d]">{hiragana}</p>
+      <div className="mt-2.5 flex flex-wrap items-center gap-2">
+        <span className="rounded-full bg-[#e7eee9] px-2.5 py-0.5 text-[0.62rem] font-extrabold uppercase tracking-[0.06em] text-[#315c4b]">
+          Western order
+        </span>
+        <span className="text-[1.05rem] font-semibold tracking-[-0.01em]">{romaji}</span>
       </div>
-      <dl className="mb-5 grid gap-2 border-t border-[#e3e2dc] pt-4 text-sm">
-        <div className="flex justify-between gap-4">
-          <dt className="text-[#707970]">{dictionaryListed ? "Evidence" : "Editorial assessment"}</dt>
-          <dd
-            className={`rounded-full px-2 py-0.5 text-xs font-bold ${naturalnessTone[item.naturalness]}`}
-          >
-            {dictionaryListed ? "Dictionary-listed" : naturalnessLabel[item.naturalness]}
-          </dd>
-        </div>
-        <div className="flex justify-between gap-4">
-          <dt className="text-[#707970]">Gender</dt>
-          <dd className="font-semibold capitalize">
-            {item.firstName.genders.join(" / ")}
-          </dd>
-        </div>
-        <div className="flex justify-between gap-4">
-          <dt className="text-[#707970]">Meaning</dt>
-          <dd
-            className="max-w-[65%] text-right font-semibold"
-            title={
-              usesDictionaryGlosses
-                ? "A concise guide based on the dictionary gloss for each kanji."
-                : undefined
-            }
-          >
-            {meaning}
-          </dd>
-        </div>
-      </dl>
+      <div className="mt-3.5 flex flex-wrap items-center gap-2">
+        <span
+          className={`rounded-full px-2.5 py-0.5 text-xs font-bold ${naturalnessTone[item.naturalness]}`}
+        >
+          {dictionaryListed ? "Dictionary-listed" : naturalnessLabel[item.naturalness]}
+        </span>
+        <span className="rounded-full bg-[#f7e8ec] px-2.5 py-0.5 text-xs font-bold capitalize text-[#8c3a52]">
+          {item.firstName.genders.join(" / ")}
+        </span>
+        {dictionaryListed && (
+          <span className="rounded-full bg-[#f7eddc] px-2.5 py-0.5 text-xs font-bold text-[#795a24]">
+            {naturalnessLabel[item.naturalness]} naturalness
+          </span>
+        )}
+      </div>
+      <p
+        className="mt-2.5 text-[0.8rem] leading-5 text-[#707970]"
+        title={
+          usesDictionaryGlosses
+            ? "A concise guide based on the dictionary gloss for each kanji."
+            : undefined
+        }
+      >
+        {meaning}
+      </p>
       {usesDictionaryGlosses && <CharacterNotes parts={item.variation.kanjiBreakdown} />}
-      <div className="mt-auto grid grid-cols-[minmax(0,1fr)_minmax(0,1fr)_auto] items-center gap-1 border-t border-[#e3e2dc] pt-3">
+      <div className="mt-auto grid grid-cols-3 gap-2 border-t border-[#e3e2dc] pt-3">
         <button
           aria-label={`Lock surname ${item.surname.romaji} and generate different first names`}
           aria-pressed={surnameLocked}

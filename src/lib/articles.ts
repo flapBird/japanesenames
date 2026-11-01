@@ -57,13 +57,57 @@ export function estimateReadingMinutes(article: Article) {
         case "callout":
           return [block.text];
         case "nameEntries":
-          return block.entries.map((entry) => entry.note);
+          return [
+            ...(block.title ? [block.title] : []),
+            ...block.entries.map((entry) => `${entry.romaji} ${entry.kanji} ${entry.kana} ${entry.note}`),
+          ];
+        case "figure":
+          return [
+            block.label,
+            block.caption,
+            ...(block.source ? [block.source] : []),
+            ...block.bars.map((bar) => `${bar.label} ${bar.value}`),
+            ...(block.chips ?? []),
+          ];
+        case "quoteCard":
+          return [block.text, ...(block.tag ? [block.tag] : []), ...(block.note ? [block.note] : [])];
+        case "table":
+          return [...block.columns, ...block.rows.flat()];
       }
     }),
     ...article.faq.flatMap((item) => [item.question, item.answer]),
   ].join(" ");
   const words = text.split(/\s+/).filter(Boolean).length;
   return Math.max(4, Math.round(words / 200));
+}
+
+export interface ArticleTocEntry {
+  id: string;
+  number: string;
+  label: string;
+}
+
+export function articleHeadingAnchor(headingIndex: number) {
+  return `section-${headingIndex}`;
+}
+
+// TOC entries mirror the anchors ArticleRenderer assigns to headings; both
+// number headings in block order, so the ids always line up. The FAQ section
+// on the article page anchors at a fixed id appended by the page.
+export function articleToc(article: Article): ArticleTocEntry[] {
+  const entries: ArticleTocEntry[] = [];
+  let headingIndex = 0;
+  for (const block of article.blocks) {
+    if (block.type !== "heading") continue;
+    const match = block.text.match(/^(\d+)\.\s+(.*)$/);
+    entries.push({
+      id: articleHeadingAnchor(headingIndex),
+      number: match ? match[1].padStart(2, "0") : "·",
+      label: match ? match[2] : block.text,
+    });
+    headingIndex += 1;
+  }
+  return entries;
 }
 
 export function articleHref(slug: string) {

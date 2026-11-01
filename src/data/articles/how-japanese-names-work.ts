@@ -36,6 +36,35 @@ export const howJapaneseNamesWork: Article = {
       text: "This is why Japanese name discussions always start from the kanji. Two cousins both called Rin are not necessarily named after the same thing at all: one might be 凛 (dignified composure), another 琳 (a beautiful jewel). Any meaning list that attaches one gloss to a sound alone is flattening this system.",
     },
     {
+      type: "nameEntries",
+      title: "Names in this section",
+      linkLabel: "All girl names",
+      linkHref: "/japanese-girl-names",
+      entries: [
+        {
+          romaji: "Rin",
+          kanji: "凛",
+          kana: "りん",
+          gender: "girl",
+          note: "Dignified composure — a modern favorite whose meaning lives in the written form.",
+        },
+        {
+          romaji: "Rin",
+          kanji: "琳",
+          kana: "りん",
+          gender: "girl",
+          note: "A beautiful jewel — the same sound with a different image entirely.",
+        },
+        {
+          romaji: "Haruto",
+          kanji: "陽翔",
+          kana: "はると",
+          gender: "boy",
+          note: "Sun + soar — one of several legal spellings for the most common boy reading right now.",
+        },
+      ],
+    },
+    {
       type: "callout",
       title: "Practical upshot",
       text: "If you are choosing a Japanese name, choose the kanji and the reading together. Our [name generator](/) always shows the written form next to the sound for exactly this reason.",
@@ -46,13 +75,37 @@ export const howJapaneseNamesWork: Article = {
       text: "You cannot write a Japanese name in any character you like. The Family Register Act limits name kanji to two official lists: the jōyō kanji — the 2,136 characters taught through high school — and the jinmeiyō kanji, an extra set of roughly 860 characters approved for personal names (things like 峻, 凛, and 葵). Hiragana, katakana, and long-vowel marks are also allowed, which is why purely kana names like さくら or メイ exist.",
     },
     {
+      type: "figure",
+      label: "Figure · The legal kanji toolbox",
+      caption:
+        "Name kanji must come from the two official lists; kana-only spellings like さくら are also legal.",
+      source: "Source: Family Register Act; Ministry of Justice kanji lists.",
+      bars: [
+        { label: "Jōyō kanji — taught through high school", value: "2,136", ratio: 1, tone: "moss" },
+        {
+          label: "Jinmeiyō kanji — extra personal-name characters",
+          value: "~860",
+          ratio: 0.4,
+          tone: "clay",
+        },
+      ],
+      chipsLabel: "Also legal:",
+      chips: ["ひらがな", "カタカナ", "長音符 ー"],
+    },
+    {
       type: "paragraph",
       text: "The list changes occasionally. Until a 2022 reform, kanji that denote numbers or positions (一, 二, 三, 今) were banned in names; the Ministry of Justice relaxed the rule, which is why you now occasionally meet a child named 三月 or 一翔. Characters considered violent or inappropriate — 汚 (filthy), 死 (death), 性 (sex) — remain off-limits, and a registrar can reject a written form outright.",
     },
     { type: "heading", text: "4. Readings, however, are the wild west" },
     {
       type: "paragraph",
-      text: "Kanji choices are regulated; how you read them is not. Parents must register a reading (in kana) alongside the kanji, but the pairing can be remarkably creative. The famous example reported across Japanese media is a boy registered as 光宙 — \"glow\" plus \"cosmos\" — with the reading Pikachu. Nicknamed kirakira (sparkly) names, these stretch the system: the law constrains the characters, not the sound attached to them.",
+      text: "Kanji choices are regulated; how you read them is not. Parents must register a reading (in kana) alongside the kanji, but the pairing can be remarkably creative.",
+    },
+    {
+      type: "quoteCard",
+      text: "A boy registered as 光宙 — \"glow\" plus \"cosmos\" — with the reading Pikachu.",
+      tag: "kirakira names",
+      note: "Reported across Japanese media. These sparkly names stretch the system: the law constrains the characters, not the sound attached to them.",
     },
     {
       type: "paragraph",
@@ -62,6 +115,17 @@ export const howJapaneseNamesWork: Article = {
     {
       type: "paragraph",
       text: "Nothing in the law marks a name as male or female, but phonetic patterns are strong. Names ending in -ko (花子 Hanako, 恵子 Keiko), -mi (愛美 Manami), -ka (花華 Hana-ka), or -na (結菜 Yuna) read as feminine; names ending in -rō (太郎 Tarō), -ta (颯太 Sōta), -hiko (明彦 Akihiko), or -suke (助/佑輔) read as masculine. A shared stock of unisex names — Ren, Aoi, Hikaru, Yuki, Hinata — sits in the middle, and their gender balance drifts by decade.",
+    },
+    {
+      type: "table",
+      columns: ["Ending", "Reads as", "Examples"],
+      rows: [
+        ["子 -ko", "Feminine", "花子 Hanako · 恵子 Keiko"],
+        ["美 -mi", "Feminine", "愛美 Manami"],
+        ["菜 -na", "Feminine", "結菜 Yuna"],
+        ["郎 -rō", "Masculine", "太郎 Tarō"],
+        ["助 -suke", "Masculine", "佑輔 Yūsuke"],
+      ],
     },
     {
       type: "paragraph",
@@ -85,6 +149,35 @@ export const howJapaneseNamesWork: Article = {
     {
       type: "paragraph",
       text: "Most Japanese surnames are small landscape maps: 高橋 (high bridge), 山本 (mountain base), 田中 (middle of the rice field), 清水 (clear water). Commoners needed permission to bear surnames through the Edo period, and when the Meiji government required every household to register one in 1875, villagers simply named themselves after what they could see. The result is one of the densest surname stocks on earth — well over 100,000 distinct spellings — dominated by a top ten that covers roughly a tenth of the population.",
+    },
+    {
+      type: "nameEntries",
+      title: "Surnames in this section",
+      linkLabel: "Browse all surnames",
+      linkHref: "/japanese-last-names",
+      entries: [
+        {
+          romaji: "Yamamoto",
+          kanji: "山本",
+          kana: "やまもと",
+          kind: "surname",
+          note: "Base of the mountain — one of the landscape names villagers registered in 1875.",
+        },
+        {
+          romaji: "Tanaka",
+          kanji: "田中",
+          kana: "たなか",
+          kind: "surname",
+          note: "Middle of the rice field — among the most common surnames nationwide.",
+        },
+        {
+          romaji: "Takahashi",
+          kanji: "高橋",
+          kana: "たかはし",
+          kind: "surname",
+          note: "High bridge — bridges crossed sacred boundaries, so bridge names often mark shrine villages.",
+        },
+      ],
     },
     {
       type: "paragraph",

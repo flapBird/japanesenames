@@ -25,7 +25,26 @@ export type ArticleBlock =
   | { type: "heading"; text: string }
   | { type: "list"; items: string[] }
   | { type: "callout"; title?: string; text: string }
-  | { type: "nameEntries"; entries: ArticleNameEntry[] };
+  | {
+      type: "nameEntries";
+      entries: ArticleNameEntry[];
+      /** Optional panel header shown above the card grid. */
+      title?: string;
+      linkLabel?: string;
+      linkHref?: string;
+    }
+  | {
+      type: "figure";
+      label: string;
+      caption: string;
+      source?: string;
+      /** Bars are drawn full-width for ratio 1 and proportional otherwise. */
+      bars: { label: string; value: string; ratio: number; tone: "moss" | "clay" }[];
+      chipsLabel?: string;
+      chips?: string[];
+    }
+  | { type: "quoteCard"; text: string; tag?: string; note?: string }
+  | { type: "table"; columns: string[]; rows: string[][] };
 
 export interface ArticleFaq {
   question: string;

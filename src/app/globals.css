@@ -181,6 +181,23 @@ select {
   line-height: 1.12;
 }
 
+/* Article template: serif headings and a drop cap on the first intro
+   paragraph, matching the section-title typography of the rest of the site. */
+.article-heading {
+  font-family: Georgia, "Yu Mincho", serif;
+  letter-spacing: -0.01em;
+}
+
+.article-dropcap::first-letter {
+  float: left;
+  font-family: Georgia, "Yu Mincho", serif;
+  font-size: 3.4em;
+  font-weight: 700;
+  line-height: 0.82;
+  padding: 0.08em 0.12em 0 0;
+  color: var(--moss);
+}
+
 .button-primary,
 .button-secondary,
 .button-quiet {

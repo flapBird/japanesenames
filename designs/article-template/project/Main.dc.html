@@ -1,0 +1,447 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Article Template — Desktop</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#315c4b;text-decoration:none}
+a:hover{color:#244638}
+</style>
+</helmet>
+
+<div style="background-color:#f7f5ef;background-image:linear-gradient(rgba(49,92,75,0.025) 1px,transparent 1px);background-size:100% 32px;font-family:Inter,'Noto Sans JP',-apple-system,'Hiragino Kaku Gothic ProN','Yu Gothic',sans-serif;color:#19241f;">
+
+  <!-- ======================= Header (site-consistent) ======================= -->
+  <header style="background:rgba(255,254,251,0.92);border-bottom:1px solid #deddd5;">
+    <div style="width:min(1120px,100% - 48px);margin-inline:auto;display:flex;align-items:center;justify-content:space-between;height:64px;">
+      <a href="https://japanesenames.site/" style="display:flex;align-items:center;gap:10px;">
+        <span aria-hidden="true" style="display:inline-grid;place-items:center;width:28px;height:28px;border-radius:8px;background:#315c4b;color:#fffefb;">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fffefb" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6c-2-1.6-4.5-2-7-2v14c2.5 0 5 .4 7 2 2-1.6 4.5-2 7-2V4c-2.5 0-5 .4-7 2z"/><path d="M12 6v14"/></svg>
+        </span>
+        <span style="font-size:16.5px;font-weight:700;letter-spacing:-0.01em;">Japanese Names</span>
+      </a>
+      <nav style="display:flex;align-items:center;gap:26px;font-size:14px;font-weight:500;color:#59645d;" aria-label="Primary">
+        <a href="https://japanesenames.site/">Name Generator</a>
+        <a href="https://japanesenames.site/japanese-girl-names">Girl Names</a>
+        <a href="https://japanesenames.site/japanese-boy-names">Boy Names</a>
+        <a href="https://japanesenames.site/japanese-last-names">Last Names</a>
+        <a href="https://japanesenames.site/articles">Guides</a>
+        <a href="https://japanesenames.site/favorites" style="border:1px solid #deddd5;background:#fffefb;border-radius:999px;padding:8px 18px;font-weight:600;color:#19241f;">Favorites</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ======================= Breadcrumb ======================= -->
+  <div style="width:min(1120px,100% - 48px);margin-inline:auto;padding-top:18px;">
+    <p style="margin:0;font-size:13px;color:#647068;">
+      <a href="https://japanesenames.site/">Home</a>
+      <span aria-hidden="true" style="margin:0 8px;color:#b9c4bc;">/</span>
+      <a href="https://japanesenames.site/articles">Articles</a>
+      <span aria-hidden="true" style="margin:0 8px;color:#b9c4bc;">/</span>
+      <span style="color:#3f4b44;">How Japanese Names Work</span>
+    </p>
+  </div>
+
+  <!-- ======================= Hero ======================= -->
+  <div style="width:min(1120px,100% - 48px);margin-inline:auto;position:relative;">
+    <div aria-hidden="true" style="position:absolute;right:8px;top:6px;width:104px;height:104px;border:1.5px solid rgba(194,118,132,0.45);border-radius:14px;display:grid;place-items:center;transform:rotate(3deg);">
+      <span style="font-family:Georgia,'Yu Mincho','Noto Sans JP',serif;font-size:56px;color:rgba(194,118,132,0.55);line-height:1;">名</span>
+    </div>
+    <div style="padding-top:34px;max-width:860px;">
+      <p style="margin:0;font-size:12px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:#a34837;">Naming culture</p>
+      <h1 style="margin:14px 0 0;font-family:Georgia,'Yu Mincho','Noto Sans JP',serif;font-weight:700;font-size:52px;line-height:1.12;letter-spacing:-0.01em;">How Japanese Names Work: Order, Kanji Rules, and Naming Customs</h1>
+      <div style="display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:22px;font-size:13.5px;color:#59645d;">
+        <span>Published October 29, 2026</span>
+        <span aria-hidden="true" style="width:3px;height:3px;border-radius:999px;background:#b9c4bc;"></span>
+        <span>7 min read</span>
+        <span aria-hidden="true" style="width:3px;height:3px;border-radius:999px;background:#b9c4bc;"></span>
+        <span>Updated October 29, 2026</span>
+      </div>
+    </div>
+    <div style="margin-top:30px;border-bottom:1px solid #deddd5;"></div>
+  </div>
+
+  <!-- ======================= Body grid: TOC rail + article ======================= -->
+  <div style="width:min(1120px,100% - 48px);margin-inline:auto;display:grid;grid-template-columns:272px minmax(0,1fr);gap:52px;align-items:start;padding:44px 0 8px;">
+
+    <!-- ---------- TOC rail ---------- -->
+    <aside style="display:flex;flex-direction:column;gap:18px;">
+      <div style="border:1px solid #deddd5;border-radius:16px;background:rgba(255,254,251,0.96);padding:20px;box-shadow:0 1px 0 rgba(255,255,255,0.8) inset;">
+        <div style="display:flex;align-items:baseline;justify-content:space-between;">
+          <p style="margin:0;font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#59645d;">On this page</p>
+          <p style="margin:0;font-size:11.5px;font-weight:600;color:#a34837;">7 min</p>
+        </div>
+        <nav style="margin-top:14px;display:flex;flex-direction:column;" aria-label="Table of contents">
+          <a href="#s1" style="display:flex;gap:10px;align-items:flex-start;padding:7px 10px;margin-left:-10px;border-radius:10px;background:#e7eee9;">
+            <span style="font-size:10.5px;font-weight:800;color:#315c4b;padding-top:2.5px;">01</span>
+            <span style="font-size:13px;font-weight:600;color:#244638;line-height:1.45;">The surname comes first</span>
+          </a>
+          <a href="#s2" style="display:flex;gap:10px;align-items:flex-start;padding:7px 10px;margin-left:-10px;border-radius:10px;">
+            <span style="font-size:10.5px;font-weight:700;color:#a34837;padding-top:2.5px;">02</span>
+            <span style="font-size:13px;color:#43504a;line-height:1.45;">The given name is where the meaning lives</span>
+          </a>
+          <a href="#s3" style="display:flex;gap:10px;align-items:flex-start;padding:7px 10px;margin-left:-10px;border-radius:10px;">
+            <span style="font-size:10.5px;font-weight:700;color:#a34837;padding-top:2.5px;">03</span>
+            <span style="font-size:13px;color:#43504a;line-height:1.45;">Which kanji are legal?</span>
+          </a>
+          <a href="#s4" style="display:flex;gap:10px;align-items:flex-start;padding:7px 10px;margin-left:-10px;border-radius:10px;">
+            <span style="font-size:10.5px;font-weight:700;color:#a34837;padding-top:2.5px;">04</span>
+            <span style="font-size:13px;color:#43504a;line-height:1.45;">Readings, however, are the wild west</span>
+          </a>
+          <a href="#s5" style="display:flex;gap:10px;align-items:flex-start;padding:7px 10px;margin-left:-10px;border-radius:10px;">
+            <span style="font-size:10.5px;font-weight:700;color:#a34837;padding-top:2.5px;">05</span>
+            <span style="font-size:13px;color:#43504a;line-height:1.45;">Gendered endings — soft patterns, not rules</span>
+          </a>
+          <a href="#s6" style="display:flex;gap:10px;align-items:flex-start;padding:7px 10px;margin-left:-10px;border-radius:10px;">
+            <span style="font-size:10.5px;font-weight:700;color:#a34837;padding-top:2.5px;">06</span>
+            <span style="font-size:13px;color:#43504a;line-height:1.45;">Families reuse characters across generations</span>
+          </a>
+          <a href="#s7" style="display:flex;gap:10px;align-items:flex-start;padding:7px 10px;margin-left:-10px;border-radius:10px;">
+            <span style="font-size:10.5px;font-weight:700;color:#a34837;padding-top:2.5px;">07</span>
+            <span style="font-size:13px;color:#43504a;line-height:1.45;">No middle names — one surname per household</span>
+          </a>
+          <a href="#s8" style="display:flex;gap:10px;align-items:flex-start;padding:7px 10px;margin-left:-10px;border-radius:10px;">
+            <span style="font-size:10.5px;font-weight:700;color:#a34837;padding-top:2.5px;">08</span>
+            <span style="font-size:13px;color:#43504a;line-height:1.45;">Why there are so many surnames</span>
+          </a>
+          <a href="#s9" style="display:flex;gap:10px;align-items:flex-start;padding:7px 10px;margin-left:-10px;border-radius:10px;">
+            <span style="font-size:10.5px;font-weight:700;color:#a34837;padding-top:2.5px;">09</span>
+            <span style="font-size:13px;color:#43504a;line-height:1.45;">Stroke-count fortune telling</span>
+          </a>
+          <a href="#s10" style="display:flex;gap:10px;align-items:flex-start;padding:7px 10px;margin-left:-10px;border-radius:10px;">
+            <span style="font-size:10.5px;font-weight:700;color:#a34837;padding-top:2.5px;">10</span>
+            <span style="font-size:13px;color:#43504a;line-height:1.45;">What is trending right now</span>
+          </a>
+          <a href="#faq" style="display:flex;gap:10px;align-items:flex-start;padding:7px 10px;margin-left:-10px;border-radius:10px;">
+            <span style="font-size:10.5px;font-weight:700;color:#a34837;padding-top:2.5px;">FAQ</span>
+            <span style="font-size:13px;color:#43504a;line-height:1.45;">Questions and answers</span>
+          </a>
+        </nav>
+      </div>
+
+      <div style="border:1px solid #d9ddd6;border-radius:16px;background:#e7eee9;padding:18px;">
+        <p style="margin:0;font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#315c4b;">Our data method</p>
+        <p style="margin:8px 0 0;font-size:13px;line-height:1.6;color:#334740;">Every reading and spelling on this site comes from structured dictionary records.</p>
+        <a href="https://japanesenames.site/about" style="display:inline-flex;align-items:center;gap:6px;margin-top:10px;font-size:12.5px;font-weight:700;color:#315c4b;">How we research names
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#315c4b" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+        </a>
+      </div>
+    </aside>
+
+    <!-- ---------- Article column ---------- -->
+    <article style="max-width:688px;">
+
+      <p style="margin:0;font-size:17.5px;line-height:1.75;color:#3f4b44;">
+        <span aria-hidden="true" style="float:left;font-family:Georgia,'Yu Mincho',serif;font-weight:700;font-size:64px;line-height:0.85;padding:7px 10px 0 0;color:#315c4b;">J</span>
+        apanese names look simple in a textbook — a surname, a given name, a few kanji. In practice they are shaped by a family register law, an official kanji list, reading customs that are mostly free-form, and habits that go back to village life before the Meiji era.
+      </p>
+      <p style="margin:18px 0 0;font-size:17.5px;line-height:1.75;color:#3f4b44;">This guide walks through the rules and the customs in plain English, so you can read any Japanese name — or choose one — with a clear picture of what is actually allowed and what is merely tradition.</p>
+
+      <!-- Section 1 -->
+      <h2 id="s1" style="margin:52px 0 0;font-family:Georgia,'Yu Mincho','Noto Sans JP',serif;font-weight:700;font-size:29px;line-height:1.25;"><span style="color:#a34837;">1.</span> The surname comes first</h2>
+      <p style="margin:16px 0 0;font-size:16.5px;line-height:1.75;color:#3f4b44;">In Japanese, the family name (姓, sei) precedes the given name (名, mei). Tanaka Yuki is Ms. Tanaka, named Yuki — the reverse of the English order. Japanese documents, news media, and everyday speech all follow this order, and official Latin-alphabet passports have followed suit since 2020, when the government began recommending TANAKA YUKI over Yuki TANAKA in the machine-readable convention.</p>
+      <p style="margin:14px 0 0;font-size:16.5px;line-height:1.75;color:#3f4b44;">In Western contexts — business cards aimed at overseas partners, international bylines — many Japanese people simply reverse the order and accept the ambiguity. When you see a single name like "Sakura Suzuki," the safe reading is: Suzuki is the surname, Sakura the given name.</p>
+
+      <!-- Section 2 + name widget -->
+      <h2 id="s2" style="margin:52px 0 0;font-family:Georgia,'Yu Mincho','Noto Sans JP',serif;font-weight:700;font-size:29px;line-height:1.25;"><span style="color:#a34837;">2.</span> The given name is where the meaning lives</h2>
+      <p style="margin:16px 0 0;font-size:16.5px;line-height:1.75;color:#3f4b44;">A Japanese given name is not a word with one fixed meaning. The sound — Haruto, Yui, Ren — is paired with a written form, and the written form carries the meaning. Haruto can be written 陽翔 (sun + soar), 悠斗 (leisurely + Big Dipper), or with dozens of other character pairs; each spelling is a different name with a different image.</p>
+      <p style="margin:14px 0 0;font-size:16.5px;line-height:1.75;color:#3f4b44;">This is why Japanese name discussions always start from the kanji. Two cousins both called Rin are not necessarily named after the same thing at all: one might be 凛 (dignified composure), another 琳 (a beautiful jewel).</p>
+
+      <!-- Widget: names in this section -->
+      <div style="margin-top:26px;border:1px solid #deddd5;border-radius:16px;background:rgba(255,254,251,0.96);padding:20px 22px;">
+        <div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px;">
+          <p style="margin:0;font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#315c4b;">Names in this section</p>
+          <a href="https://japanesenames.site/japanese-girl-names" style="font-size:12.5px;font-weight:700;color:#315c4b;">All girl names →</a>
+        </div>
+        <div style="margin-top:14px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;">
+          <a href="https://japanesenames.site/name/rin" style="display:block;border:1px solid #e3e2dc;border-radius:12px;background:#faf9f5;padding:14px 16px;">
+            <span style="display:block;font-family:'Noto Sans JP','Hiragino Kaku Gothic ProN',sans-serif;font-weight:700;font-size:26px;line-height:1;">凛</span>
+            <span style="display:block;margin-top:8px;font-size:14px;font-weight:700;">Rin</span>
+            <span style="display:block;margin-top:2px;font-size:12px;color:#647068;">りん · Rin</span>
+            <span style="display:block;margin-top:8px;font-size:12.5px;line-height:1.5;color:#59645d;">Dignified composure</span>
+            <span style="display:block;margin-top:8px;font-size:11.5px;font-weight:700;color:#315c4b;">View name page →</span>
+          </a>
+          <a href="https://japanesenames.site/name/rin" style="display:block;border:1px solid #e3e2dc;border-radius:12px;background:#faf9f5;padding:14px 16px;">
+            <span style="display:block;font-family:'Noto Sans JP','Hiragino Kaku Gothic ProN',sans-serif;font-weight:700;font-size:26px;line-height:1;">琳</span>
+            <span style="display:block;margin-top:8px;font-size:14px;font-weight:700;">Rin</span>
+            <span style="display:block;margin-top:2px;font-size:12px;color:#647068;">りん · Rin</span>
+            <span style="display:block;margin-top:8px;font-size:12.5px;line-height:1.5;color:#59645d;">A beautiful jewel</span>
+            <span style="display:block;margin-top:8px;font-size:11.5px;font-weight:700;color:#315c4b;">View name page →</span>
+          </a>
+          <a href="https://japanesenames.site/name/haruto" style="display:block;border:1px solid #e3e2dc;border-radius:12px;background:#faf9f5;padding:14px 16px;">
+            <span style="display:block;font-family:'Noto Sans JP','Hiragino Kaku Gothic ProN',sans-serif;font-weight:700;font-size:26px;line-height:1;">陽翔</span>
+            <span style="display:block;margin-top:8px;font-size:14px;font-weight:700;">Haruto</span>
+            <span style="display:block;margin-top:2px;font-size:12px;color:#647068;">はると · Haruto</span>
+            <span style="display:block;margin-top:8px;font-size:12.5px;line-height:1.5;color:#59645d;">Sun + soar</span>
+            <span style="display:block;margin-top:8px;font-size:11.5px;font-weight:700;color:#315c4b;">View name page →</span>
+          </a>
+        </div>
+        <p style="margin:12px 0 0;font-size:12px;color:#747d77;">Meanings describe the written form, not the sound. Links open the full record with sources.</p>
+      </div>
+
+      <!-- Callout -->
+      <div style="margin-top:26px;border-radius:14px;background:#e7eee9;padding:20px 22px;display:flex;gap:14px;align-items:flex-start;">
+        <span aria-hidden="true" style="flex:none;display:grid;place-items:center;width:34px;height:34px;border-radius:999px;background:#315c4b;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fffefb" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.2 1 2V17h6v-.3c0-.8.4-1.5 1-2A7 7 0 0 0 12 2z"/></svg>
+        </span>
+        <div>
+          <p style="margin:0;font-size:15px;font-weight:700;">Practical upshot</p>
+          <p style="margin:6px 0 0;font-size:14.5px;line-height:1.65;color:#334740;">If you are choosing a Japanese name, choose the kanji and the reading together. Our <a href="https://japanesenames.site/" style="font-weight:700;text-decoration:underline;text-underline-offset:3px;">name generator</a> always shows the written form next to the sound for exactly this reason.</p>
+        </div>
+      </div>
+
+      <!-- Section 3 + figure -->
+      <h2 id="s3" style="margin:52px 0 0;font-family:Georgia,'Yu Mincho','Noto Sans JP',serif;font-weight:700;font-size:29px;line-height:1.25;"><span style="color:#a34837;">3.</span> Which kanji are legal?</h2>
+      <p style="margin:16px 0 0;font-size:16.5px;line-height:1.75;color:#3f4b44;">You cannot write a Japanese name in any character you like. The Family Register Act limits name kanji to two official lists: the jōyō kanji — the 2,136 characters taught through high school — and the jinmeiyō kanji, an extra set of roughly 860 characters approved for personal names (things like 峻, 凛, and 葵). Hiragana, katakana, and long-vowel marks are also allowed, which is why purely kana names like さくら or メイ exist.</p>
+
+      <figure style="margin:26px 0 0;">
+        <div style="border:1px solid #deddd5;border-radius:16px;background:rgba(255,254,251,0.96);padding:22px 24px;">
+          <figcaption style="margin:0;font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#59645d;">Figure · The legal kanji toolbox</figcaption>
+          <div style="margin-top:16px;display:flex;flex-direction:column;gap:16px;">
+            <div>
+              <div style="display:flex;align-items:baseline;justify-content:space-between;">
+                <p style="margin:0;font-size:13.5px;font-weight:600;color:#334740;">Jōyō kanji — taught through high school</p>
+                <p style="margin:0;font-family:Georgia,serif;font-weight:700;font-size:20px;color:#315c4b;">2,136</p>
+              </div>
+              <div style="margin-top:7px;height:12px;border-radius:999px;background:#e7eee9;overflow:hidden;">
+                <div style="width:100%;height:100%;border-radius:999px;background:#315c4b;"></div>
+              </div>
+            </div>
+            <div>
+              <div style="display:flex;align-items:baseline;justify-content:space-between;">
+                <p style="margin:0;font-size:13.5px;font-weight:600;color:#334740;">Jinmeiyō kanji — extra personal-name characters</p>
+                <p style="margin:0;font-family:Georgia,serif;font-weight:700;font-size:20px;color:#a34837;">~860</p>
+              </div>
+              <div style="margin-top:7px;height:12px;border-radius:999px;background:#f4e9e5;overflow:hidden;">
+                <div style="width:40%;height:100%;border-radius:999px;background:#a34837;"></div>
+              </div>
+            </div>
+            <div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding-top:2px;">
+              <span style="font-size:12.5px;color:#59645d;">Also legal:</span>
+              <span style="border:1px solid #deddd5;border-radius:999px;background:#faf9f5;padding:4px 12px;font-size:12.5px;font-weight:600;">ひらがな</span>
+              <span style="border:1px solid #deddd5;border-radius:999px;background:#faf9f5;padding:4px 12px;font-size:12.5px;font-weight:600;">カタカナ</span>
+              <span style="border:1px solid #deddd5;border-radius:999px;background:#faf9f5;padding:4px 12px;font-size:12.5px;font-weight:600;">長音符 ー</span>
+            </div>
+          </div>
+        </div>
+        <figcaption style="margin-top:10px;font-size:12.5px;line-height:1.55;color:#747d77;">Name kanji must come from the two official lists; kana-only spellings like さくら are also legal. Source: Family Register Act; Ministry of Justice kanji lists.</figcaption>
+      </figure>
+
+      <p style="margin:20px 0 0;font-size:16.5px;line-height:1.75;color:#3f4b44;">The list changes occasionally. Until a 2022 reform, kanji that denote numbers or positions (一, 二, 三, 今) were banned in names; the Ministry of Justice relaxed the rule. Characters considered violent or inappropriate — 汚 (filthy), 死 (death), 性 (sex) — remain off-limits, and a registrar can reject a written form outright.</p>
+
+      <!-- Section 4 + story card -->
+      <h2 id="s4" style="margin:52px 0 0;font-family:Georgia,'Yu Mincho','Noto Sans JP',serif;font-weight:700;font-size:29px;line-height:1.25;"><span style="color:#a34837;">4.</span> Readings, however, are the wild west</h2>
+      <p style="margin:16px 0 0;font-size:16.5px;line-height:1.75;color:#3f4b44;">Kanji choices are regulated; how you read them is not. Parents must register a reading (in kana) alongside the kanji, but the pairing can be remarkably creative.</p>
+
+      <figure style="margin:26px 0 0;">
+        <div style="border-radius:16px;background:#eaf0f2;padding:26px 28px;position:relative;">
+          <span aria-hidden="true" style="position:absolute;left:22px;top:2px;font-family:Georgia,serif;font-size:64px;line-height:1;color:rgba(102,121,132,0.4);">“</span>
+          <blockquote style="margin:0;padding:18px 0 0;">
+            <p style="margin:0;font-family:Georgia,'Yu Mincho','Noto Sans JP',serif;font-size:22px;line-height:1.45;color:#33454f;">A boy registered as <span style="font-family:'Noto Sans JP',sans-serif;font-weight:700;">光宙</span> — "glow" plus "cosmos" — with the reading <span style="font-weight:700;color:#667984;">Pikachu</span>.</p>
+          </blockquote>
+          <figcaption style="margin-top:14px;display:flex;align-items:center;gap:10px;">
+            <span style="border:1px solid rgba(102,121,132,0.45);border-radius:999px;padding:4px 12px;font-size:12px;font-weight:700;color:#4d606b;">kirakira names</span>
+            <span style="font-size:12.5px;color:#59645d;">Reported across Japanese media — the law constrains the characters, not the sound.</span>
+          </figcaption>
+        </div>
+      </figure>
+
+      <p style="margin:20px 0 0;font-size:16.5px;line-height:1.75;color:#3f4b44;">Most parents stay conventional, but the loophole explains two things at once: why Japanese names resist automated guessing, and why a name should always be checked with the reading before you assume how it is pronounced.</p>
+
+      <!-- Section 5 + table -->
+      <h2 id="s5" style="margin:52px 0 0;font-family:Georgia,'Yu Mincho','Noto Sans JP',serif;font-weight:700;font-size:29px;line-height:1.25;"><span style="color:#a34837;">5.</span> Gendered endings — soft patterns, not rules</h2>
+      <p style="margin:16px 0 0;font-size:16.5px;line-height:1.75;color:#3f4b44;">Nothing in the law marks a name as male or female, but phonetic patterns are strong. The recurring endings below read as feminine or masculine; a shared stock of unisex names sits in the middle, and its balance drifts by decade.</p>
+
+      <div style="margin-top:24px;border:1px solid #deddd5;border-radius:16px;overflow:hidden;background:rgba(255,254,251,0.96);">
+        <table style="width:100%;border-collapse:collapse;font-size:14.5px;">
+          <thead>
+            <tr style="background:#f3f4ef;">
+              <th style="text-align:left;padding:12px 18px;font-size:11.5px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#59645d;">Ending</th>
+              <th style="text-align:left;padding:12px 18px;font-size:11.5px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#59645d;">Reads as</th>
+              <th style="text-align:left;padding:12px 18px;font-size:11.5px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#59645d;">Examples</th>
+            </tr>
+          </thead>
+          <tbody style="color:#334740;">
+            <tr style="border-top:1px solid #e3e2dc;">
+              <td style="padding:13px 18px;font-weight:700;">子 <span style="font-weight:500;color:#647068;">-ko</span></td>
+              <td style="padding:13px 18px;"><span style="color:#a35564;font-weight:600;">Feminine</span></td>
+              <td style="padding:13px 18px;color:#59645d;">花子 Hanako · 恵子 Keiko</td>
+            </tr>
+            <tr style="border-top:1px solid #e3e2dc;">
+              <td style="padding:13px 18px;font-weight:700;">美 <span style="font-weight:500;color:#647068;">-mi</span></td>
+              <td style="padding:13px 18px;"><span style="color:#a35564;font-weight:600;">Feminine</span></td>
+              <td style="padding:13px 18px;color:#59645d;">愛美 Manami</td>
+            </tr>
+            <tr style="border-top:1px solid #e3e2dc;">
+              <td style="padding:13px 18px;font-weight:700;">菜 <span style="font-weight:500;color:#647068;">-na</span></td>
+              <td style="padding:13px 18px;"><span style="color:#a35564;font-weight:600;">Feminine</span></td>
+              <td style="padding:13px 18px;color:#59645d;">結菜 Yuna</td>
+            </tr>
+            <tr style="border-top:1px solid #e3e2dc;">
+              <td style="padding:13px 18px;font-weight:700;">郎 <span style="font-weight:500;color:#647068;">-rō</span></td>
+              <td style="padding:13px 18px;"><span style="color:#315c4b;font-weight:600;">Masculine</span></td>
+              <td style="padding:13px 18px;color:#59645d;">太郎 Tarō</td>
+            </tr>
+            <tr style="border-top:1px solid #e3e2dc;">
+              <td style="padding:13px 18px;font-weight:700;">助 <span style="font-weight:500;color:#647068;">-suke</span></td>
+              <td style="padding:13px 18px;"><span style="color:#315c4b;font-weight:600;">Masculine</span></td>
+              <td style="padding:13px 18px;color:#59645d;">佑輔 Yūsuke</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="margin:12px 0 0;font-size:13.5px;line-height:1.6;color:#747d77;">Treat these as strong conventions, not laws. The <a href="https://japanesenames.site/articles/unisex-japanese-names" style="font-weight:700;color:#315c4b;text-decoration:underline;text-underline-offset:3px;">Unisex Japanese Names</a> guide covers the gray zone in detail.</p>
+
+      <!-- Sections 6–7 condensed -->
+      <h2 id="s6" style="margin:52px 0 0;font-family:Georgia,'Yu Mincho','Noto Sans JP',serif;font-weight:700;font-size:29px;line-height:1.25;"><span style="color:#a34837;">6.</span> Families reuse characters across generations</h2>
+      <p style="margin:16px 0 0;font-size:16.5px;line-height:1.75;color:#3f4b44;">Many families pass a single character through siblings or across generations, the way Western families reuse middle names. A first son might be 健太 (Kenta), his brothers 健吾 (Kengo) and 健二 (Kenji) — all sharing 健, the strong-and-healthy character. The character is called a 通字 (tsūji), and spotting it explains why some families' names feel rhymed.</p>
+
+      <h2 id="s7" style="margin:52px 0 0;font-family:Georgia,'Yu Mincho','Noto Sans JP',serif;font-weight:700;font-size:29px;line-height:1.25;"><span style="color:#a34837;">7.</span> No middle names — and one surname per household</h2>
+      <ul style="margin:16px 0 0;padding:0 0 0 22px;font-size:16.5px;line-height:1.75;color:#3f4b44;display:flex;flex-direction:column;gap:10px;">
+        <li>Japan has no middle names. The register records exactly one surname and one given name.</li>
+        <li>The Civil Code requires a married couple to share a single registered surname; in practice roughly 95% of couples register under the husband's surname, though many women keep a maiden name in daily professional use (通称, tsūshō).</li>
+        <li>Foreigners who naturalize take a Japanese-registerable name; permanent residents keep their legal foreign name but often adopt a Japanese alias (通名) for local convenience.</li>
+      </ul>
+
+      <!-- Section 8 + surname cards -->
+      <h2 id="s8" style="margin:52px 0 0;font-family:Georgia,'Yu Mincho','Noto Sans JP',serif;font-weight:700;font-size:29px;line-height:1.25;"><span style="color:#a34837;">8.</span> Why there are so many surnames</h2>
+      <p style="margin:16px 0 0;font-size:16.5px;line-height:1.75;color:#3f4b44;">Most Japanese surnames are small landscape maps: 高橋 (high bridge), 山本 (mountain base), 田中 (middle of the rice field), 清水 (clear water). Commoners needed permission to bear surnames through the Edo period, and when the Meiji government required every household to register one in 1875, villagers simply named themselves after what they could see.</p>
+
+      <div style="margin-top:24px;border:1px solid #deddd5;border-radius:16px;background:rgba(255,254,251,0.96);padding:20px 22px;">
+        <div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px;">
+          <p style="margin:0;font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#315c4b;">Surnames in this section</p>
+          <a href="https://japanesenames.site/japanese-last-names" style="font-size:12.5px;font-weight:700;color:#315c4b;">Browse all surnames →</a>
+        </div>
+        <div style="margin-top:14px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;">
+          <a href="https://japanesenames.site/surname/yamamoto" style="display:block;border:1px solid #e3e2dc;border-radius:12px;background:#faf9f5;padding:14px 16px;">
+            <span style="display:block;font-family:'Noto Sans JP','Hiragino Kaku Gothic ProN',sans-serif;font-weight:700;font-size:24px;line-height:1;">山本</span>
+            <span style="display:block;margin-top:8px;font-size:14px;font-weight:700;">Yamamoto</span>
+            <span style="display:block;margin-top:2px;font-size:12px;color:#647068;">やまもと</span>
+            <span style="display:block;margin-top:8px;font-size:12.5px;line-height:1.5;color:#59645d;">Base of the mountain</span>
+            <span style="display:block;margin-top:8px;font-size:11.5px;font-weight:700;color:#315c4b;">View name page →</span>
+          </a>
+          <a href="https://japanesenames.site/surname/tanaka" style="display:block;border:1px solid #e3e2dc;border-radius:12px;background:#faf9f5;padding:14px 16px;">
+            <span style="display:block;font-family:'Noto Sans JP','Hiragino Kaku Gothic ProN',sans-serif;font-weight:700;font-size:24px;line-height:1;">田中</span>
+            <span style="display:block;margin-top:8px;font-size:14px;font-weight:700;">Tanaka</span>
+            <span style="display:block;margin-top:2px;font-size:12px;color:#647068;">たなか</span>
+            <span style="display:block;margin-top:8px;font-size:12.5px;line-height:1.5;color:#59645d;">Middle of the rice field</span>
+            <span style="display:block;margin-top:8px;font-size:11.5px;font-weight:700;color:#315c4b;">View name page →</span>
+          </a>
+          <a href="https://japanesenames.site/surname/takahashi" style="display:block;border:1px solid #e3e2dc;border-radius:12px;background:#faf9f5;padding:14px 16px;">
+            <span style="display:block;font-family:'Noto Sans JP','Hiragino Kaku Gothic ProN',sans-serif;font-weight:700;font-size:24px;line-height:1;">高橋</span>
+            <span style="display:block;margin-top:8px;font-size:14px;font-weight:700;">Takahashi</span>
+            <span style="display:block;margin-top:2px;font-size:12px;color:#647068;">たかはし</span>
+            <span style="display:block;margin-top:8px;font-size:12.5px;line-height:1.5;color:#59645d;">High bridge</span>
+            <span style="display:block;margin-top:8px;font-size:11.5px;font-weight:700;color:#315c4b;">View name page →</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Sections 9–10 condensed -->
+      <h2 id="s9" style="margin:52px 0 0;font-family:Georgia,'Yu Mincho','Noto Sans JP',serif;font-weight:700;font-size:29px;line-height:1.25;"><span style="color:#a34837;">9.</span> Stroke-count fortune telling</h2>
+      <p style="margin:16px 0 0;font-size:16.5px;line-height:1.75;color:#3f4b44;">A purely Japanese habit worth knowing: 姓名判断 (seimeihandan) scores a full name by the stroke count of its kanji, scoring combinations for fortune. It has no legal standing and no scientific basis, but it still influences real choices — some parents ask for the tally before registering.</p>
+
+      <h2 id="s10" style="margin:52px 0 0;font-family:Georgia,'Yu Mincho','Noto Sans JP',serif;font-weight:700;font-size:29px;line-height:1.25;"><span style="color:#a34837;">10.</span> What is trending right now</h2>
+      <p style="margin:16px 0 0;font-size:16.5px;line-height:1.75;color:#3f4b44;">Recent annual surveys of newborn names show a consistent pattern: short, bright-sounding names with sun, light, or nature kanji top the lists — readings like Haruto, Ao, Himari, and Rin, each spread across several legal spellings. The specifics shift every year; our <a href="https://japanesenames.site/articles/most-popular-japanese-names" style="font-weight:700;text-decoration:underline;text-underline-offset:3px;">most popular Japanese names</a> guide rounds up the recent front-runners.</p>
+
+      <!-- FAQ -->
+      <h2 id="faq" style="margin:56px 0 0;font-family:Georgia,'Yu Mincho','Noto Sans JP',serif;font-weight:700;font-size:29px;line-height:1.25;">Questions and answers</h2>
+      <div style="margin-top:20px;display:flex;flex-direction:column;gap:12px;">
+        <details open style="border:1px solid #deddd5;border-radius:14px;background:rgba(255,254,251,0.96);padding:18px 22px;">
+          <summary style="display:flex;align-items:center;justify-content:space-between;gap:14px;cursor:pointer;list-style:none;font-size:15.5px;font-weight:700;">Do Japanese names really come surname first?<span aria-hidden="true" style="flex:none;color:#a34837;font-size:20px;line-height:1;">−</span></summary>
+          <p style="margin:12px 0 0;font-size:14.5px;line-height:1.7;color:#59645d;">Yes. The family name precedes the given name in all Japanese-language contexts: Tanaka Yuki is surname Tanaka, given name Yuki. English-language contexts often reverse it, which is why international media show Yuki Tanaka.</p>
+        </details>
+        <details style="border:1px solid #deddd5;border-radius:14px;background:rgba(255,254,251,0.96);padding:18px 22px;">
+          <summary style="display:flex;align-items:center;justify-content:space-between;gap:14px;cursor:pointer;list-style:none;font-size:15.5px;font-weight:700;">Can any kanji be used in a Japanese name?<span aria-hidden="true" style="flex:none;color:#a34837;font-size:20px;line-height:1;">+</span></summary>
+          <p style="margin:12px 0 0;font-size:14.5px;line-height:1.7;color:#59645d;">No. Name kanji must come from the jōyō kanji (2,136 characters) plus the jinmeiyō kanji list of roughly 860 personal-name characters. Hiragana and katakana are also permitted. Registrars can reject written forms deemed inappropriate.</p>
+        </details>
+        <details style="border:1px solid #deddd5;border-radius:14px;background:rgba(255,254,251,0.96);padding:18px 22px;">
+          <summary style="display:flex;align-items:center;justify-content:space-between;gap:14px;cursor:pointer;list-style:none;font-size:15.5px;font-weight:700;">Is a name's meaning fixed by the sound?<span aria-hidden="true" style="flex:none;color:#a34837;font-size:20px;line-height:1;">+</span></summary>
+          <p style="margin:12px 0 0;font-size:14.5px;line-height:1.7;color:#59645d;">No. The meaning attaches to the kanji spelling, not the sound. Haruto written 陽翔 (sun + soar) and Haruto written 悠斗 are different names with different imagery that merely share a pronunciation.</p>
+        </details>
+      </div>
+
+      <!-- Method strip -->
+      <div style="margin-top:44px;border-radius:18px;background:#244638;padding:26px 30px;display:flex;align-items:center;justify-content:space-between;gap:24px;">
+        <div style="max-width:520px;">
+          <p style="margin:0;font-size:11px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:#a7c4b5;">Our data method</p>
+          <p style="margin:10px 0 0;font-family:Georgia,'Yu Mincho','Noto Sans JP',serif;font-weight:700;font-size:23px;line-height:1.3;color:#fffefb;">Evidence before interpretation</p>
+          <p style="margin:8px 0 0;font-size:13.5px;line-height:1.6;color:rgba(255,254,251,0.82);">Every name page shows its recorded spelling, reading, and entry ID — never an invented meaning.</p>
+        </div>
+        <a href="https://japanesenames.site/about" style="flex:none;border-radius:999px;background:#fffefb;color:#244638;padding:12px 22px;font-size:13.5px;font-weight:700;">Read the full data method</a>
+      </div>
+
+    </article>
+  </div>
+
+  <!-- ======================= Related guides ======================= -->
+  <section style="border-top:1px solid #deddd5;background:#efeee8;padding:56px 0 64px;" aria-labelledby="related-title">
+    <div style="width:min(1120px,100% - 48px);margin-inline:auto;">
+      <div style="display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:16px;">
+        <div>
+          <p style="margin:0;font-size:11px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:#a34837;">Related guides</p>
+          <h2 id="related-title" style="margin:8px 0 0;font-family:Georgia,'Yu Mincho','Noto Sans JP',serif;font-weight:700;font-size:32px;">Keep reading</h2>
+        </div>
+        <a href="https://japanesenames.site/articles" style="font-size:14px;font-weight:700;color:#315c4b;text-decoration:underline;text-underline-offset:4px;">All 12 guides →</a>
+      </div>
+      <div style="margin-top:28px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;">
+        <a href="https://japanesenames.site/articles/most-popular-japanese-names" style="display:flex;flex-direction:column;gap:10px;border:1px solid #deddd5;border-radius:16px;background:rgba(255,254,251,0.96);padding:22px;">
+          <span style="align-self:flex-start;border-radius:999px;background:#f7e8eb;color:#a35564;padding:4px 12px;font-size:11px;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;">Popular names</span>
+          <span style="font-family:Georgia,'Yu Mincho','Noto Sans JP',serif;font-weight:700;font-size:19px;line-height:1.35;color:#19241f;">Most Popular Japanese Names, Year by Year</span>
+          <span style="font-size:13.5px;line-height:1.6;color:#59645d;">The recent front-runners, the kanji behind them, and why short bright readings dominate.</span>
+          <span style="margin-top:auto;padding-top:8px;font-size:12.5px;font-weight:700;color:#315c4b;">Read the guide →</span>
+        </a>
+        <a href="https://japanesenames.site/articles/most-common-japanese-surnames" style="display:flex;flex-direction:column;gap:10px;border:1px solid #deddd5;border-radius:16px;background:rgba(255,254,251,0.96);padding:22px;">
+          <span style="align-self:flex-start;border-radius:999px;background:#e8f0eb;color:#315c4b;padding:4px 12px;font-size:11px;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;">Surnames</span>
+          <span style="font-family:Georgia,'Yu Mincho','Noto Sans JP',serif;font-weight:700;font-size:19px;line-height:1.35;color:#19241f;">The 100 Most Common Japanese Surnames</span>
+          <span style="font-size:13.5px;line-height:1.6;color:#59645d;">Sato to Kimura: who bears them, where, and what the characters literally say.</span>
+          <span style="margin-top:auto;padding-top:8px;font-size:12.5px;font-weight:700;color:#315c4b;">Read the guide →</span>
+        </a>
+        <a href="https://japanesenames.site/articles/unisex-japanese-names" style="display:flex;flex-direction:column;gap:10px;border:1px solid #deddd5;border-radius:16px;background:rgba(255,254,251,0.96);padding:22px;">
+          <span style="align-self:flex-start;border-radius:999px;background:#eaf0f2;color:#4d606b;padding:4px 12px;font-size:11px;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;">Unisex</span>
+          <span style="font-family:Georgia,'Yu Mincho','Noto Sans JP',serif;font-weight:700;font-size:19px;line-height:1.35;color:#19241f;">Unisex Japanese Names and the Gray Zone</span>
+          <span style="font-size:13.5px;line-height:1.6;color:#59645d;">Ren, Aoi, Hikaru, Yuki, Hinata — and how gender balance drifts by decade.</span>
+          <span style="margin-top:auto;padding-top:8px;font-size:12.5px;font-weight:700;color:#315c4b;">Read the guide →</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================= Footer ======================= -->
+  <footer style="border-top:1px solid #deddd5;background:#f7f5ef;padding:28px 0;">
+    <div style="width:min(1120px,100% - 48px);margin-inline:auto;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px;">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <span aria-hidden="true" style="display:inline-grid;place-items:center;width:24px;height:24px;border-radius:7px;background:#315c4b;">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#fffefb" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6c-2-1.6-4.5-2-7-2v14c2.5 0 5 .4 7 2 2-1.6 4.5-2 7-2V4c-2.5 0-5 .4-7 2z"/><path d="M12 6v14"/></svg>
+        </span>
+        <span style="font-size:14px;font-weight:700;">Japanese Names</span>
+      </div>
+      <nav style="display:flex;gap:20px;font-size:13px;color:#59645d;" aria-label="Footer">
+        <a href="https://japanesenames.site/about">About</a>
+        <a href="https://japanesenames.site/contact">Contact</a>
+        <a href="https://japanesenames.site/privacy">Privacy</a>
+        <a href="https://japanesenames.site/terms">Terms</a>
+      </nav>
+      <p style="margin:0;font-size:12.5px;color:#747d77;">© 2026 Japanese Names</p>
+    </div>
+  </footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":4600}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+</script>
+</body>
+</html>

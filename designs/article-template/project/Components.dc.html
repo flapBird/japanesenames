@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Article Template — New Components</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#315c4b;text-decoration:none}
+a:hover{color:#244638}
+</style>
+</helmet>
+
+<div style="width:880px;height:2380px;box-sizing:border-box;padding:56px;background:#f7f5ef;background-image:linear-gradient(rgba(49,92,75,0.025) 1px,transparent 1px);background-size:100% 32px;font-family:Inter,'Noto Sans JP',-apple-system,'Hiragino Kaku Gothic ProN','Yu Gothic',sans-serif;color:#19241f;display:flex;flex-direction:column;gap:34px;">
+
+  <div>
+    <h1 style="margin:0;font-family:Georgia,'Yu Mincho','Noto Sans JP',serif;font-weight:700;font-size:34px;">New components · article template</h1>
+    <p style="margin:10px 0 0;font-size:14px;color:#59645d;">Specimens of the five additions, at review scale.</p>
+  </div>
+
+  <!-- 01 TOC rail -->
+  <section style="display:flex;flex-direction:column;gap:12px;">
+    <p style="margin:0;font-size:11px;font-weight:800;letter-spacing:0.16em;text-transform:uppercase;color:#a34837;">01 · On this page rail</p>
+    <div style="width:272px;border:1px solid #deddd5;border-radius:16px;background:rgba(255,254,251,0.96);padding:20px;box-shadow:0 1px 0 rgba(255,255,255,0.8) inset;">
+      <div style="display:flex;align-items:baseline;justify-content:space-between;">
+        <p style="margin:0;font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#59645d;">On this page</p>
+        <p style="margin:0;font-size:11.5px;font-weight:600;color:#a34837;">7 min</p>
+      </div>
+      <div style="margin-top:14px;display:flex;flex-direction:column;">
+        <a href="#a" style="display:flex;gap:10px;align-items:flex-start;padding:7px 10px;margin-left:-10px;border-radius:10px;background:#e7eee9;">
+          <span style="font-size:10.5px;font-weight:800;color:#315c4b;padding-top:2.5px;">01</span>
+          <span style="font-size:13px;font-weight:600;color:#244638;line-height:1.45;">The surname comes first</span>
+        </a>
+        <a href="#b" style="display:flex;gap:10px;align-items:flex-start;padding:7px 10px;margin-left:-10px;border-radius:10px;">
+          <span style="font-size:10.5px;font-weight:700;color:#a34837;padding-top:2.5px;">02</span>
+          <span style="font-size:13px;color:#43504a;line-height:1.45;">The given name is where the meaning lives</span>
+        </a>
+        <a href="#c" style="display:flex;gap:10px;align-items:flex-start;padding:7px 10px;margin-left:-10px;border-radius:10px;">
+          <span style="font-size:10.5px;font-weight:700;color:#a34837;padding-top:2.5px;">03</span>
+          <span style="font-size:13px;color:#43504a;line-height:1.45;">Which kanji are legal?</span>
+        </a>
+        <a href="#d" style="display:flex;gap:10px;align-items:flex-start;padding:7px 10px;margin-left:-10px;border-radius:10px;">
+          <span style="font-size:10.5px;font-weight:700;color:#a34837;padding-top:2.5px;">FAQ</span>
+          <span style="font-size:13px;color:#43504a;line-height:1.45;">Questions and answers</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 Names in this section -->
+  <section style="display:flex;flex-direction:column;gap:12px;">
+    <p style="margin:0;font-size:11px;font-weight:800;letter-spacing:0.16em;text-transform:uppercase;color:#a34837;">02 · Names in this section — in-article internal links</p>
+    <div style="border:1px solid #deddd5;border-radius:16px;background:rgba(255,254,251,0.96);padding:20px 22px;">
+      <div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px;">
+        <p style="margin:0;font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#315c4b;">Names in this section</p>
+        <a href="https://japanesenames.site/japanese-girl-names" style="font-size:12.5px;font-weight:700;color:#315c4b;">All girl names →</a>
+      </div>
+      <div style="margin-top:14px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;">
+        <a href="https://japanesenames.site/name/rin" style="display:block;border:1px solid #e3e2dc;border-radius:12px;background:#faf9f5;padding:14px 16px;">
+          <span style="display:block;font-family:'Noto Sans JP','Hiragino Kaku Gothic ProN',sans-serif;font-weight:700;font-size:26px;line-height:1;">凛</span>
+          <span style="display:block;margin-top:8px;font-size:14px;font-weight:700;">Rin</span>
+          <span style="display:block;margin-top:2px;font-size:12px;color:#647068;">りん · Rin</span>
+          <span style="display:block;margin-top:8px;font-size:12.5px;line-height:1.5;color:#59645d;">Dignified composure</span>
+          <span style="display:block;margin-top:8px;font-size:11.5px;font-weight:700;color:#315c4b;">View name page →</span>
+        </a>
+        <a href="https://japanesenames.site/name/rin" style="display:block;border:1px solid #e3e2dc;border-radius:12px;background:#faf9f5;padding:14px 16px;">
+          <span style="display:block;font-family:'Noto Sans JP','Hiragino Kaku Gothic ProN',sans-serif;font-weight:700;font-size:26px;line-height:1;">琳</span>
+          <span style="display:block;margin-top:8px;font-size:14px;font-weight:700;">Rin</span>
+          <span style="display:block;margin-top:2px;font-size:12px;color:#647068;">りん · Rin</span>
+          <span style="display:block;margin-top:8px;font-size:12.5px;line-height:1.5;color:#59645d;">A beautiful jewel</span>
+          <span style="display:block;margin-top:8px;font-size:11.5px;font-weight:700;color:#315c4b;">View name page →</span>
+        </a>
+        <a href="https://japanesenames.site/name/haruto" style="display:block;border:1px solid #e3e2dc;border-radius:12px;background:#faf9f5;padding:14px 16px;">
+          <span style="display:block;font-family:'Noto Sans JP','Hiragino Kaku Gothic ProN',sans-serif;font-weight:700;font-size:26px;line-height:1;">陽翔</span>
+          <span style="display:block;margin-top:8px;font-size:14px;font-weight:700;">Haruto</span>
+          <span style="display:block;margin-top:2px;font-size:12px;color:#647068;">はると · Haruto</span>
+          <span style="display:block;margin-top:8px;font-size:12.5px;line-height:1.5;color:#59645d;">Sun + soar</span>
+          <span style="display:block;margin-top:8px;font-size:11.5px;font-weight:700;color:#315c4b;">View name page →</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 Figure -->
+  <section style="display:flex;flex-direction:column;gap:12px;">
+    <p style="margin:0;font-size:11px;font-weight:800;letter-spacing:0.16em;text-transform:uppercase;color:#a34837;">03 · Data figure</p>
+    <figure style="margin:0;">
+      <div style="border:1px solid #deddd5;border-radius:16px;background:rgba(255,254,251,0.96);padding:22px 24px;">
+        <figcaption style="margin:0;font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#59645d;">Figure · The legal kanji toolbox</figcaption>
+        <div style="margin-top:16px;display:flex;flex-direction:column;gap:16px;">
+          <div>
+            <div style="display:flex;align-items:baseline;justify-content:space-between;">
+              <p style="margin:0;font-size:13.5px;font-weight:600;color:#334740;">Jōyō kanji — taught through high school</p>
+              <p style="margin:0;font-family:Georgia,serif;font-weight:700;font-size:20px;color:#315c4b;">2,136</p>
+            </div>
+            <div style="margin-top:7px;height:12px;border-radius:999px;background:#e7eee9;overflow:hidden;">
+              <div style="width:100%;height:100%;border-radius:999px;background:#315c4b;"></div>
+            </div>
+          </div>
+          <div>
+            <div style="display:flex;align-items:baseline;justify-content:space-between;">
+              <p style="margin:0;font-size:13.5px;font-weight:600;color:#334740;">Jinmeiyō kanji — extra personal-name characters</p>
+              <p style="margin:0;font-family:Georgia,serif;font-weight:700;font-size:20px;color:#a34837;">~860</p>
+            </div>
+            <div style="margin-top:7px;height:12px;border-radius:999px;background:#f4e9e5;overflow:hidden;">
+              <div style="width:40%;height:100%;border-radius:999px;background:#a34837;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <figcaption style="margin-top:10px;font-size:12.5px;color:#747d77;">Source: Family Register Act; Ministry of Justice kanji lists.</figcaption>
+    </figure>
+  </section>
+
+  <!-- 04 Table -->
+  <section style="display:flex;flex-direction:column;gap:12px;">
+    <p style="margin:0;font-size:11px;font-weight:800;letter-spacing:0.16em;text-transform:uppercase;color:#a34837;">04 · Pattern table</p>
+    <div style="border:1px solid #deddd5;border-radius:16px;overflow:hidden;background:rgba(255,254,251,0.96);">
+      <table style="width:100%;border-collapse:collapse;font-size:14.5px;">
+        <thead>
+          <tr style="background:#f3f4ef;">
+            <th style="text-align:left;padding:12px 18px;font-size:11.5px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#59645d;">Ending</th>
+            <th style="text-align:left;padding:12px 18px;font-size:11.5px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#59645d;">Reads as</th>
+            <th style="text-align:left;padding:12px 18px;font-size:11.5px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#59645d;">Examples</th>
+          </tr>
+        </thead>
+        <tbody style="color:#334740;">
+          <tr style="border-top:1px solid #e3e2dc;">
+            <td style="padding:13px 18px;font-weight:700;">子 <span style="font-weight:500;color:#647068;">-ko</span></td>
+            <td style="padding:13px 18px;"><span style="color:#a35564;font-weight:600;">Feminine</span></td>
+            <td style="padding:13px 18px;color:#59645d;">花子 Hanako · 恵子 Keiko</td>
+          </tr>
+          <tr style="border-top:1px solid #e3e2dc;">
+            <td style="padding:13px 18px;font-weight:700;">郎 <span style="font-weight:500;color:#647068;">-rō</span></td>
+            <td style="padding:13px 18px;"><span style="color:#315c4b;font-weight:600;">Masculine</span></td>
+            <td style="padding:13px 18px;color:#59645d;">太郎 Tarō</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 05 FAQ + method strip -->
+  <section style="display:flex;flex-direction:column;gap:12px;">
+    <p style="margin:0;font-size:11px;font-weight:800;letter-spacing:0.16em;text-transform:uppercase;color:#a34837;">05 · FAQ accordion &amp; method strip</p>
+    <div style="display:flex;flex-direction:column;gap:12px;">
+      <details open style="border:1px solid #deddd5;border-radius:14px;background:rgba(255,254,251,0.96);padding:18px 22px;">
+        <summary style="display:flex;align-items:center;justify-content:space-between;gap:14px;cursor:pointer;list-style:none;font-size:15.5px;font-weight:700;">Do Japanese names really come surname first?<span aria-hidden="true" style="flex:none;color:#a34837;font-size:20px;line-height:1;">−</span></summary>
+        <p style="margin:12px 0 0;font-size:14.5px;line-height:1.7;color:#59645d;">Yes. The family name precedes the given name in all Japanese-language contexts: Tanaka Yuki is surname Tanaka, given name Yuki.</p>
+      </details>
+      <div style="border-radius:18px;background:#244638;padding:26px 30px;display:flex;align-items:center;justify-content:space-between;gap:24px;">
+        <div>
+          <p style="margin:0;font-size:11px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:#a7c4b5;">Our data method</p>
+          <p style="margin:10px 0 0;font-family:Georgia,'Yu Mincho','Noto Sans JP',serif;font-weight:700;font-size:23px;line-height:1.3;color:#fffefb;">Evidence before interpretation</p>
+        </div>
+        <span style="flex:none;border-radius:999px;background:#fffefb;color:#244638;padding:12px 22px;font-size:13.5px;font-weight:700;">Read the full data method</span>
+      </div>
+    </div>
+  </section>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":880,"height":2380}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+</script>
+</body>
+</html>

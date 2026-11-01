@@ -23,16 +23,24 @@ export function JapanPrefectureMap({
   regions: PrefectureDistribution[];
 }) {
   if (regions.length === 0) {
+    // Compact empty state: the map and its legend return when source-reviewed
+    // distribution data lands; never a tall placeholder on every page.
     return (
-      <div className="surface grid min-h-64 place-items-center p-8 text-center">
+      <div className="surface flex items-start gap-3.5 p-4 sm:p-5">
+        <span aria-hidden="true" className="mt-0.5 grid size-9 shrink-0 place-items-center rounded-full bg-(--clay-soft)">
+          <svg fill="none" height="15" stroke="#a34837" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" width="15">
+            <circle cx="12" cy="12" r="9" />
+            <path d="M12 8v4" />
+            <path d="M12 16h.01" />
+          </svg>
+        </span>
         <div>
-          <span className="seal mx-auto mb-4" aria-hidden="true">未</span>
-          <p className="font-semibold">
-            Reliable regional distribution data is not yet available for this surname.
+          <p className="text-[0.9rem] font-semibold">
+            Reliable distribution data is not yet available for this surname.
           </p>
-          <p className="mx-auto mt-2 max-w-lg text-sm leading-6 text-(--muted)">
-            We do not infer modern population distribution from the kanji, a
-            general origin story, or an unverified historical claim.
+          <p className="mt-1 text-[0.82rem] leading-relaxed text-(--muted)">
+            A prefecture map appears here once source-reviewed data is added.
+            Distribution is never inferred from the kanji alone.
           </p>
         </div>
       </div>

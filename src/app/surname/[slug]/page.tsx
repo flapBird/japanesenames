@@ -147,12 +147,18 @@ export default async function SurnamePage({
             </Link>
           </div>
         </div>
-        <dl className="surface grid gap-3 p-5 text-sm">
-          <div className="flex justify-between gap-4">
+        <dl className="surface grid divide-y divide-(--line-soft) p-5 text-sm">
+          <div className="flex justify-between gap-4 py-2.5">
             <dt className="text-(--muted)">Meaning</dt>
             <dd className="text-right font-semibold">{surname.literalMeaning}</dd>
           </div>
-          <div className="flex justify-between gap-4">
+          {surname.popularityLevel !== "unranked" && (
+            <div className="flex justify-between gap-4 py-2.5">
+              <dt className="text-(--muted)">Popularity</dt>
+              <dd className="font-semibold capitalize">{surname.popularityLevel.replace("_", " ")}</dd>
+            </div>
+          )}
+          <div className="flex justify-between gap-4 py-2.5">
             <dt className="text-(--muted)">Data status</dt>
             <dd className="font-semibold capitalize">{surname.verificationStatus.replace("_", " ")}</dd>
           </div>
@@ -189,11 +195,13 @@ export default async function SurnamePage({
         <p className="eyebrow">Regional evidence</p>
         <h2 className="section-title mb-6 mt-2">Distribution across Japan</h2>
         <JapanPrefectureMap regions={surname.regions} />
-        <div className="mt-4 flex flex-wrap gap-3 text-xs text-(--muted)">
-          <span className="chip">Green · modern population distribution</span>
-          <span className="chip">Red · possible historical origin</span>
-          <span className="chip">Literal inference is never mapped</span>
-        </div>
+        {surname.regions.length > 0 && (
+          <div className="mt-4 flex flex-wrap gap-3 text-xs text-(--muted)">
+            <span className="chip">Green · modern population distribution</span>
+            <span className="chip">Red · possible historical origin</span>
+            <span className="chip">Literal inference is never mapped</span>
+          </div>
+        )}
       </section>
 
       <section className="py-12">

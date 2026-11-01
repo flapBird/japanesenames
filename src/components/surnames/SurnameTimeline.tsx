@@ -9,9 +9,9 @@ export function SurnameTimeline({
   return (
     <div className="surface p-6">
       {!hasSpecific && (
-        <p className="mb-6 rounded-xl bg-[#f1f2ed] p-4 text-sm leading-6 text-(--muted-strong)">
-          No surname-specific dated event has completed source review. The
-          timeline below provides historical context for Japanese surname systems.
+        <p className="mb-5 text-[0.82rem] leading-relaxed text-(--muted-soft)">
+          General context for Japanese surname systems — no surname-specific
+          dated event has completed source review yet.
         </p>
       )}
       {timeline.length > 0 && (

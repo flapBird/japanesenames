@@ -19,8 +19,8 @@ export const metadata: Metadata = {
 };
 
 const headingClass = "text-xl font-semibold text-[#2f4238]";
-const copyClass = "mt-3 leading-7 text-[#59645d]";
-const listClass = "mt-3 list-disc space-y-2 pl-5 leading-7 text-[#59645d]";
+const copyClass = "mt-3 leading-7 text-(--muted-strong)";
+const listClass = "mt-3 list-disc space-y-2 pl-5 leading-7 text-(--muted-strong)";
 
 export default function TermsPage() {
   return (
@@ -28,11 +28,11 @@ export default function TermsPage() {
       <header className="page-intro my-6">
         <p className="eyebrow">Using this website</p>
         <h1 className="section-title mt-2">Terms of Use</h1>
-        <p className="mt-5 max-w-3xl text-lg leading-8 text-[#59645d]">
+        <p className="mt-5 max-w-3xl text-lg leading-8 text-(--muted-strong)">
           These terms explain the conditions for using japanesenames.site and
           its Japanese-name reference and generation tools.
         </p>
-        <p className="mt-3 text-sm text-[#647068]">Effective: October 25, 2026</p>
+        <p className="mt-3 text-sm text-(--muted)">Effective: October 25, 2026</p>
       </header>
 
       <article className="surface my-10 space-y-10 p-6 sm:p-9">
@@ -42,7 +42,7 @@ export default function TermsPage() {
             By accessing or using Japanese Names, you agree to these Terms of
             Use and our{
             " "}
-            <Link className="font-semibold text-[#315c4b] underline underline-offset-4" href="/privacy">
+            <Link className="font-semibold text-(--moss) underline underline-offset-4" href="/privacy">
               Privacy Policy
             </Link>
             . If you do not agree, please do not use the website. These terms
@@ -100,7 +100,7 @@ export default function TermsPage() {
             or public sources and remains subject to its original terms and licenses.
             Sources and important limitations are described on the{
             " "}
-            <Link className="font-semibold text-[#315c4b] underline underline-offset-4" href="/about">
+            <Link className="font-semibold text-(--moss) underline underline-offset-4" href="/about">
               About our data
             </Link>
             {
@@ -129,7 +129,7 @@ export default function TermsPage() {
             Advertising does not constitute our
             endorsement of an advertiser, product, or claim. See our{
             " "}
-            <Link className="font-semibold text-[#315c4b] underline underline-offset-4" href="/privacy">
+            <Link className="font-semibold text-(--moss) underline underline-offset-4" href="/privacy">
               Privacy Policy
             </Link>
             {
@@ -186,7 +186,7 @@ export default function TermsPage() {
           <p className={copyClass}>
             Questions about these terms may be sent using the details on our{
             " "}
-            <Link className="font-semibold text-[#315c4b] underline underline-offset-4" href="/contact">
+            <Link className="font-semibold text-(--moss) underline underline-offset-4" href="/contact">
               Contact page
             </Link>
             .

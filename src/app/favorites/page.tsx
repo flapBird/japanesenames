@@ -13,7 +13,7 @@ export default function FavoritesPage() {
     <div className="container-page themed-page theme-clay">
       <header className="page-intro my-6">
         <h1 className="section-title">Your saved names</h1>
-        <p className="mt-3 leading-7 text-[#59645d]">
+        <p className="mt-3 leading-7 text-(--muted-strong)">
           A personal collection of full names, first names, and surnames saved
           on this device. No account is required.
         </p>

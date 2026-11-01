@@ -22,11 +22,11 @@ export function CompatibleNames({
               <span className="japanese-display block text-xl font-semibold">
                 {surname.kanji} {variation.kanji}
               </span>
-              <span className="mt-1 block text-sm text-[#647068]">
+              <span className="mt-1 block text-sm text-(--muted)">
                 {surname.romaji} {name.romaji}
               </span>
             </span>
-            <span className="text-sm font-bold text-[#315c4b]">Use →</span>
+            <span className="text-sm font-bold text-(--moss)">Use →</span>
           </Link>
         );
       })}

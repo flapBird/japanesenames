@@ -25,7 +25,7 @@ export default function AboutPage() {
       <header className="page-intro my-6">
         <p className="eyebrow">Method and limits</p>
         <h1 className="section-title mt-2">How to read our name records</h1>
-        <p className="mt-5 max-w-3xl text-lg leading-8 text-[#59645d]">
+        <p className="mt-5 max-w-3xl text-lg leading-8 text-(--muted-strong)">
           Japanese Names is a structured reference and generation tool. It
           combines only stored surname records, given-name readings, and kanji
           variations from the local dataset.
@@ -39,7 +39,7 @@ export default function AboutPage() {
         ].map(([title, text]) => (
           <article className="surface p-6" key={title}>
             <h2 className="text-lg font-semibold">{title}</h2>
-            <p className="mt-3 text-sm leading-6 text-[#647068]">{text}</p>
+            <p className="mt-3 text-sm leading-6 text-(--muted)">{text}</p>
           </article>
         ))}
       </section>
@@ -48,7 +48,7 @@ export default function AboutPage() {
         <div className="mt-6 grid gap-4 md:grid-cols-2">
           <article className="surface p-6">
             <h3 className="font-semibold">JMnedict</h3>
-            <p className="mt-3 text-sm leading-6 text-[#647068]">
+            <p className="mt-3 text-sm leading-6 text-(--muted)">
               Supports the recorded kanji spelling, reading, and source
               classification. Each imported production record preserves its
               upstream entry ID.
@@ -56,14 +56,14 @@ export default function AboutPage() {
           </article>
           <article className="surface p-6">
             <h3 className="font-semibold">KANJIDIC2</h3>
-            <p className="mt-3 text-sm leading-6 text-[#647068]">
+            <p className="mt-3 text-sm leading-6 text-(--muted)">
               Supports individual character glosses. These glosses are shown as
               components, not as proof of a person&apos;s intended name meaning,
               popularity, style, or family history.
             </p>
           </article>
         </div>
-        <p className="mt-5 text-sm leading-6 text-[#647068]">
+        <p className="mt-5 text-sm leading-6 text-(--muted)">
           Source-backed dictionary records remain outside the sitemap until a
           detail page has enough editorial context to stand on its own. They can
           still support generator breadth because their spelling and reading are
@@ -72,13 +72,13 @@ export default function AboutPage() {
       </section>
       <section className="mt-16 max-w-4xl">
         <h2 className="section-title !text-3xl">Editorial guidance and evidence</h2>
-        <p className="mt-4 leading-7 text-[#59645d]">Editorial selection describes our browsing order, not a popularity ranking. Style, naturalness, and usage estimates are editorial guidance unless a specific supporting source is given. The general Jōyō Kanji table does not verify every personal-name reading, gender association, or frequency of use.</p>
-        <p className="mt-4 leading-7 text-[#59645d]">Dictionary glosses can include senses used in abbreviations or unrelated contexts. We keep those senses in character notes rather than joining them into an asserted name meaning. A spelling-and-reading record is evidence that a dictionary records the pair, not evidence of a particular person’s naming intention.</p>
-        <p className="mt-4 text-sm text-[#647068]">Display method updated September 9, 2026: separated general character glosses from name meanings and labeled editorial usage estimates.</p>
+        <p className="mt-4 leading-7 text-(--muted-strong)">Editorial selection describes our browsing order, not a popularity ranking. Style, naturalness, and usage estimates are editorial guidance unless a specific supporting source is given. The general Jōyō Kanji table does not verify every personal-name reading, gender association, or frequency of use.</p>
+        <p className="mt-4 leading-7 text-(--muted-strong)">Dictionary glosses can include senses used in abbreviations or unrelated contexts. We keep those senses in character notes rather than joining them into an asserted name meaning. A spelling-and-reading record is evidence that a dictionary records the pair, not evidence of a particular person’s naming intention.</p>
+        <p className="mt-4 text-sm text-(--muted)">Display method updated September 9, 2026: separated general character glosses from name meanings and labeled editorial usage estimates.</p>
       </section>
       <section className="mt-16 max-w-4xl">
         <h2 className="section-title !text-3xl">What confidence labels mean</h2>
-        <p className="mt-4 leading-7 text-[#59645d]">
+        <p className="mt-4 leading-7 text-(--muted-strong)">
           A literal kanji interpretation is not automatically an origin story.
           We separately label well-documented material, common interpretations,
           multiple possible origins, literal-only readings, and uncertainty.
@@ -87,7 +87,7 @@ export default function AboutPage() {
       </section>
       <section className="mt-16">
         <h2 className="section-title !text-3xl">Reference starting points</h2>
-        <p className="mb-6 mt-4 max-w-3xl text-sm leading-6 text-[#647068]">
+        <p className="mb-6 mt-4 max-w-3xl text-sm leading-6 text-(--muted)">
           These references establish recorded name pairs, character glosses,
           system history, research method, or standard character readings.
           Individual surname histories need additional surname-specific sources

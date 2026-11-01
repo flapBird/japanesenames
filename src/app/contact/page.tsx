@@ -28,7 +28,7 @@ export default function ContactPage() {
       <header className="page-intro my-6">
         <p className="eyebrow">Questions and corrections</p>
         <h1 className="section-title mt-2">Contact Japanese Names</h1>
-        <p className="mt-5 max-w-3xl text-lg leading-8 text-[#59645d]">
+        <p className="mt-5 max-w-3xl text-lg leading-8 text-(--muted-strong)">
           Get in touch about a name entry, source, privacy request, copyright
           concern, technical problem, or general question.
         </p>
@@ -38,11 +38,11 @@ export default function ContactPage() {
         <article className="surface p-6 sm:p-8">
           <p className="eyebrow">Email</p>
           <h2 className="mt-2 text-2xl font-semibold text-[#2f4238]">Send us a message</h2>
-          <p className="mt-4 leading-7 text-[#59645d]">
+          <p className="mt-4 leading-7 text-(--muted-strong)">
             Email{
             " "}
             <a
-              className="font-semibold text-[#315c4b] underline underline-offset-4"
+              className="font-semibold text-(--moss) underline underline-offset-4"
               href={`mailto:${contactEmail}`}
             >
               {contactEmail}
@@ -59,7 +59,7 @@ export default function ContactPage() {
         <article className="surface p-6 sm:p-8">
           <p className="eyebrow">Helpful details</p>
           <h2 className="mt-2 text-2xl font-semibold text-[#2f4238]">What to include</h2>
-          <ul className="mt-4 list-disc space-y-3 pl-5 leading-7 text-[#59645d]">
+          <ul className="mt-4 list-disc space-y-3 pl-5 leading-7 text-(--muted-strong)">
             <li>
               <strong>Data correction:</strong> the name, spelling, page URL,
               suggested correction, and a reliable source where possible.
@@ -82,10 +82,10 @@ export default function ContactPage() {
 
       <section className="surface mb-16 p-6 sm:p-8">
         <h2 className="text-xl font-semibold text-[#2f4238]">Before contacting us</h2>
-        <p className="mt-3 leading-7 text-[#59645d]">
+        <p className="mt-3 leading-7 text-(--muted-strong)">
           Our{
           " "}
-          <Link className="font-semibold text-[#315c4b] underline underline-offset-4" href="/about">
+          <Link className="font-semibold text-(--moss) underline underline-offset-4" href="/about">
             About our data
           </Link>
           {
@@ -93,7 +93,7 @@ export default function ContactPage() {
           }
           page explains evidence labels and the limits of literal meanings. Our{
           " "}
-          <Link className="font-semibold text-[#315c4b] underline underline-offset-4" href="/privacy">
+          <Link className="font-semibold text-(--moss) underline underline-offset-4" href="/privacy">
             Privacy Policy
           </Link>
           {

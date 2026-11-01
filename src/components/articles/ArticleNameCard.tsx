@@ -2,7 +2,7 @@ import Link from "next/link";
 import type { ArticleNameEntry } from "@/types/articles";
 
 const genderChip: Record<NonNullable<ArticleNameEntry["gender"]>, string> = {
-  girl: "bg-[#f7e8ec] text-[#8c3a52]",
+  girl: "bg-(--sakura-soft) text-[#8c3a52]",
   boy: "bg-[#e3ecf5] text-[#2d5b86]",
   unisex: "bg-[#efe9f4] text-[#6a4d86]",
 };
@@ -20,16 +20,16 @@ export function ArticleNameCard({ entry }: { entry: ArticleNameEntry & { detailH
       </div>
       <p className="mt-2.5 text-sm font-bold">
         {entry.romaji}
-        <span className="japanese-display ml-1.5 text-xs font-normal text-[#647068]">{entry.kana}</span>
+        <span className="japanese-display ml-1.5 text-xs font-normal text-(--muted)">{entry.kana}</span>
       </p>
-      <p className="mt-1.5 text-[0.8rem] leading-5 text-[#59645d]">{entry.note}</p>
+      <p className="mt-1.5 text-[0.8rem] leading-5 text-(--muted-strong)">{entry.note}</p>
       {entry.detailHref && (
-        <p className="mt-2.5 text-[0.72rem] font-bold text-[#315c4b]">View name page →</p>
+        <p className="mt-2.5 text-[0.72rem] font-bold text-(--moss)">View name page →</p>
       )}
     </>
   );
   const className =
-    "block h-full rounded-xl border border-[#e3e2dc] bg-[#faf9f5] p-4 transition hover:border-[#aac0b1]";
+    "block h-full rounded-xl border border-(--line-soft) bg-(--paper-raised) p-4 transition hover:border-(--sage)";
   return entry.detailHref ? (
     <Link href={entry.detailHref} className={className}>
       {body}

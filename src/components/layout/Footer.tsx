@@ -3,21 +3,21 @@ import { BrandMark } from "@/components/BrandMark";
 
 export function Footer() {
   return (
-    <footer className="mt-24 border-t border-[#deddd5] bg-[#f1f0ea]">
+    <footer className="mt-24 border-t border-(--line) bg-[#f1f0ea]">
       <div className="container-page grid gap-10 py-12 md:grid-cols-[1.4fr_0.8fr_1fr_0.8fr]">
         <div className="max-w-md">
           <div className="mb-4 flex items-center gap-3 font-semibold">
             <BrandMark className="size-8" />
             Japanese Names
           </div>
-          <p className="text-sm leading-6 text-[#647068]">
+          <p className="text-sm leading-6 text-(--muted)">
             A careful starting point for Japanese names, kanji meanings, and
             surname stories. Interpretations are labeled by evidence level.
           </p>
         </div>
         <div>
           <h2 className="mb-3 text-sm font-bold">Explore</h2>
-          <div className="grid gap-2 text-sm text-[#647068]">
+          <div className="grid gap-2 text-sm text-(--muted)">
             <Link href="/#generator">Japanese Name Generator</Link>
             <Link href="/japanese-last-name-generator">Last name generator</Link>
             <Link href="/japanese-girl-names">Girl names</Link>
@@ -27,7 +27,7 @@ export function Footer() {
         </div>
         <div>
           <h2 className="mb-3 text-sm font-bold">Guides</h2>
-          <div className="grid gap-2 text-sm text-[#647068]">
+          <div className="grid gap-2 text-sm text-(--muted)">
             <Link href="/articles">All name guides</Link>
             <Link href="/articles/most-popular-japanese-names">Most popular names</Link>
             <Link href="/articles/most-common-japanese-surnames">Most common surnames</Link>
@@ -37,7 +37,7 @@ export function Footer() {
         </div>
         <div>
           <h2 className="mb-3 text-sm font-bold">Site</h2>
-          <div className="grid gap-2 text-sm text-[#647068]">
+          <div className="grid gap-2 text-sm text-(--muted)">
             <Link href="/about">About our data</Link>
             <Link href="/privacy">Privacy Policy</Link>
             <Link href="/terms">Terms of Use</Link>
@@ -45,7 +45,7 @@ export function Footer() {
           </div>
         </div>
       </div>
-      <div className="border-t border-[#deddd5] py-5 text-center text-xs text-[#6f7872]">
+      <div className="border-t border-(--line) py-5 text-center text-xs text-[#6f7872]">
         © {new Date().getFullYear()} Japanese Names. Meanings are guidance, not
         proof of personal ancestry.
       </div>

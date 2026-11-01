@@ -27,7 +27,7 @@ export function OriginConfidenceBadge({
   confidence: OriginConfidence;
 }) {
   return (
-    <div className="rounded-xl border border-[#d9c4bd] bg-[#f4e9e5] p-5">
+    <div className="rounded-xl border border-[#d9c4bd] bg-(--clay-soft) p-5">
       <p className="eyebrow">Origin confidence</p>
       <p className="mt-2 text-lg font-semibold">{labels[confidence]}</p>
       <p className="mt-2 text-sm leading-6 text-[#665d59]">{explanations[confidence]}</p>

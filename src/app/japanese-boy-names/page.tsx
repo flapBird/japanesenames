@@ -98,13 +98,13 @@ export default async function BoyNamesPage({ params }: Props) {
       />
       <header className="page-intro my-6">
         <h1 className="section-title">Japanese Boy Names with Meanings and Kanji</h1>
-        <p className="mt-3 text-base leading-7 text-[#59645d]">
+        <p className="mt-3 text-base leading-7 text-(--muted-strong)">
           Browse source-backed Japanese boy names with recommended kanji,
           hiragana readings, romaji, meaning notes, style labels, and
           transparent commonness information.
         </p>
         <Link
-          className="mt-5 inline-flex font-bold text-[#315c4b] underline underline-offset-4"
+          className="mt-5 inline-flex font-bold text-(--moss) underline underline-offset-4"
           href="/?gender=boy#generator"
         >
           Use a boy name in the Japanese Name Generator
@@ -116,15 +116,15 @@ export default async function BoyNamesPage({ params }: Props) {
         entries={topBoyPicks}
       />
       <FirstNameExplorer key={page} initialPage={page} gender="boy" names={names.map(toBrowseName)} />
-      <p className="mt-4 text-sm leading-6 text-[#647068]">Editorial selection is a browsing order, not a popularity ranking. Style and usage estimates are editorial guidance. Dictionary notes do not establish a name’s intended meaning.</p>
+      <p className="mt-4 text-sm leading-6 text-(--muted)">Editorial selection is a browsing order, not a popularity ranking. Style and usage estimates are editorial guidance. Dictionary notes do not establish a name’s intended meaning.</p>
       <section className="mt-16 max-w-3xl">
         <h2 className="section-title !text-3xl">Readings and kanji variations</h2>
-        <p className="mt-4 leading-7 text-[#59645d]">
+        <p className="mt-4 leading-7 text-(--muted-strong)">
           A familiar reading may have several written forms. We show a concise
           recommended form in the list and keep spelling-specific meanings on
           the detail page so distinct variations are not flattened together.
         </p>
-        <p className="mt-4 leading-7 text-[#59645d]">
+        <p className="mt-4 leading-7 text-(--muted-strong)">
           Ren written 蓮 uses the character for lotus, while Takumi written 匠
           points to an artisan. Haruto written 陽翔 combines characters associated
           with sunlight and soaring. These written-form notes do not establish
@@ -138,7 +138,7 @@ export default async function BoyNamesPage({ params }: Props) {
           {boyFaq.map((item) => (
             <details className="surface p-5" key={item.question}>
               <summary className="cursor-pointer font-semibold">{item.question}</summary>
-              <p className="mt-3 text-sm leading-6 text-[#59645d]">{item.answer}</p>
+              <p className="mt-3 text-sm leading-6 text-(--muted-strong)">{item.answer}</p>
             </details>
           ))}
         </div>
@@ -146,21 +146,21 @@ export default async function BoyNamesPage({ params }: Props) {
       <section className="mt-14 max-w-3xl">
         <h2 className="section-title !text-3xl">Keep exploring</h2>
         <div className="mt-5 grid gap-4 sm:grid-cols-2">
-          <Link className="surface block p-5 transition hover:border-[#aac0b1]" href="/articles/most-popular-japanese-names">
+          <Link className="surface block p-5 transition hover:border-(--sage)" href="/articles/most-popular-japanese-names">
             <span className="block font-semibold">The most popular Japanese names</span>
-            <span className="mt-2 block text-sm leading-6 text-[#59645d]">The readings topping Japan’s recent newborn rankings, with kanji and meanings for each.</span>
+            <span className="mt-2 block text-sm leading-6 text-(--muted-strong)">The readings topping Japan’s recent newborn rankings, with kanji and meanings for each.</span>
           </Link>
-          <Link className="surface block p-5 transition hover:border-[#aac0b1]" href="/articles/names-meaning-light">
+          <Link className="surface block p-5 transition hover:border-(--sage)" href="/articles/names-meaning-light">
             <span className="block font-semibold">Japanese names meaning light</span>
-            <span className="mt-2 block text-sm leading-6 text-[#59645d]">Hikari, Akari, Haruto, Koki, and 18 more names built on light and sun kanji.</span>
+            <span className="mt-2 block text-sm leading-6 text-(--muted-strong)">Hikari, Akari, Haruto, Koki, and 18 more names built on light and sun kanji.</span>
           </Link>
-          <Link className="surface block p-5 transition hover:border-[#aac0b1]" href="/articles/japanese-anime-names">
+          <Link className="surface block p-5 transition hover:border-(--sage)" href="/articles/japanese-anime-names">
             <span className="block font-semibold">Japanese anime names</span>
-            <span className="mt-2 block text-sm leading-6 text-[#59645d]">Which anime character names are real, registerable names — and which exist only in fiction.</span>
+            <span className="mt-2 block text-sm leading-6 text-(--muted-strong)">Which anime character names are real, registerable names — and which exist only in fiction.</span>
           </Link>
-          <Link className="surface block p-5 transition hover:border-[#aac0b1]" href="/articles/how-japanese-names-work">
+          <Link className="surface block p-5 transition hover:border-(--sage)" href="/articles/how-japanese-names-work">
             <span className="block font-semibold">How Japanese names work</span>
-            <span className="mt-2 block text-sm leading-6 text-[#59645d]">Surname order, legal kanji, unregulated readings, and the customs behind it all.</span>
+            <span className="mt-2 block text-sm leading-6 text-(--muted-strong)">Surname order, legal kanji, unregulated readings, and the customs behind it all.</span>
           </Link>
         </div>
       </section>

@@ -180,15 +180,15 @@ export function FirstNameExplorer({
           </div>
         </div>
 
-        <div className="mt-3 flex items-center gap-2 overflow-x-auto border-t border-[#e3e2dc] pt-3 pb-1" aria-label="Browse by first letter">
-          <span className="shrink-0 text-[0.68rem] font-bold uppercase tracking-[0.08em] text-[#747d77]">
+        <div className="mt-3 flex items-center gap-2 overflow-x-auto border-t border-(--line-soft) pt-3 pb-1" aria-label="Browse by first letter">
+          <span className="shrink-0 text-[0.68rem] font-bold uppercase tracking-[0.08em] text-(--muted-soft)">
             Initial
           </span>
           {["All", ...availableLetters].map((item) => (
             <button
               aria-pressed={letter === item}
               className={`grid h-8 shrink-0 place-items-center rounded-full px-2.5 text-xs font-bold ${
-                letter === item ? "bg-[#315c4b] text-white" : "bg-[#efefe9] text-[#59645d]"
+                letter === item ? "bg-(--moss) text-white" : "bg-[#efefe9] text-(--muted-strong)"
               }`}
               key={item}
               onClick={() => {
@@ -207,7 +207,7 @@ export function FirstNameExplorer({
         <h2 className="section-title !text-2xl" id="browse-heading">
           {gender === "girl" ? "Japanese girl names" : "Japanese boy names"}
         </h2>
-        <span className="text-sm text-[#647068]">{filtered.length} matches</span>
+        <span className="text-sm text-(--muted)">{filtered.length} matches</span>
       </div>
       {filtered.length ? (
         <>
@@ -219,7 +219,7 @@ export function FirstNameExplorer({
               return (
                 <article className="surface flex flex-col p-5" key={name.id}>
                   <div className="mb-3 flex items-center justify-between gap-3">
-                    <p className="text-[0.65rem] font-bold uppercase tracking-[0.09em] text-[#747d77]">
+                    <p className="text-[0.65rem] font-bold uppercase tracking-[0.09em] text-(--muted-soft)">
                       Given name formats
                     </p>
                     <div className="flex shrink-0 items-center gap-2">
@@ -251,9 +251,9 @@ export function FirstNameExplorer({
                       />
                     </div>
                   </div>
-                  <div className="grid grid-cols-2 overflow-hidden rounded-xl border border-[#e3e2dc]">
-                    <div className="min-w-0 bg-[#faf9f5] p-3.5">
-                      <p className="text-[0.62rem] font-bold uppercase tracking-[0.08em] text-[#747d77]">
+                  <div className="grid grid-cols-2 overflow-hidden rounded-xl border border-(--line-soft)">
+                    <div className="min-w-0 bg-(--paper-raised) p-3.5">
+                      <p className="text-[0.62rem] font-bold uppercase tracking-[0.08em] text-(--muted-soft)">
                         Romanized form
                       </p>
                       {name.isIndexable ? (
@@ -269,8 +269,8 @@ export function FirstNameExplorer({
                         </p>
                       )}
                     </div>
-                    <div className="min-w-0 border-l border-[#e3e2dc] p-3.5">
-                      <p className="text-[0.62rem] font-bold uppercase tracking-[0.08em] text-[#747d77]">
+                    <div className="min-w-0 border-l border-(--line-soft) p-3.5">
+                      <p className="text-[0.62rem] font-bold uppercase tracking-[0.08em] text-(--muted-soft)">
                         Japanese form
                       </p>
                       {name.isIndexable ? (
@@ -285,13 +285,13 @@ export function FirstNameExplorer({
                           {variation.kanji}
                         </p>
                       )}
-                      <p className="japanese-display mt-1 text-sm text-[#647068]">
+                      <p className="japanese-display mt-1 text-sm text-(--muted)">
                         {name.hiragana}
                       </p>
                     </div>
                   </div>
                   <div className="mt-4">
-                    <p className="text-[0.68rem] font-bold uppercase tracking-[0.08em] text-[#747d77]">
+                    <p className="text-[0.68rem] font-bold uppercase tracking-[0.08em] text-(--muted-soft)">
                       Meaning
                     </p>
                     <p className="mt-1 text-sm leading-6 text-[#536058]">
@@ -303,10 +303,10 @@ export function FirstNameExplorer({
                     {name.styles.map((item) => <span className="chip capitalize" key={item}>{item}</span>)}
                     <span className="chip capitalize">{name.popularityLevel === "unranked" ? "Usage not ranked" : `Usage estimate: ${name.popularityLevel.replace("_", " ")}`}</span>
                   </div>
-                  <div className="mt-5 flex items-center gap-4 border-t border-[#e3e2dc] pt-4 text-xs font-bold text-[#315c4b]">
+                  <div className="mt-5 flex items-center gap-4 border-t border-(--line-soft) pt-4 text-xs font-bold text-(--moss)">
                     {name.isIndexable && <Link href={`/name/${name.slug}`}>View details</Link>}
                     {usesDictionaryGlosses && (
-                      <span className="font-medium text-[#747d77]">
+                      <span className="font-medium text-(--muted-soft)">
                         Source-backed
                       </span>
                     )}

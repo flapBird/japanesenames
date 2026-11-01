@@ -3,9 +3,14 @@
 :root {
   --ink: #19241f;
   --muted: #647068;
+  --muted-strong: #59645d;
+  --muted-soft: #747d77;
   --paper: #f7f5ef;
+  --paper-raised: #faf9f5;
   --surface: #fffefb;
   --line: #deddd5;
+  --line-soft: #e3e2dc;
+  --sage: #aac0b1;
   --moss: #315c4b;
   --moss-dark: #244638;
   --moss-soft: #e7eee9;

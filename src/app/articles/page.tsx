@@ -62,7 +62,7 @@ export default function ArticlesPage() {
       <header className="page-intro my-6 max-w-3xl">
         <p className="eyebrow">Guides</p>
         <h1 className="section-title">Japanese Name Guides &amp; Articles</h1>
-        <p className="mt-4 text-base leading-7 text-[#59645d]">
+        <p className="mt-4 text-base leading-7 text-(--muted-strong)">
           Long-form guides to Japanese names: what is popular in Japan right now,
           what the 100 most common surnames mean, names grouped by the images they
           carry — moon, light, flowers, snow, love — plus unisex names, anime
@@ -71,7 +71,7 @@ export default function ArticlesPage() {
       </header>
       {grouped.map((group) => (
         <section className="py-8" key={group.category}>
-          <h2 className="text-xl font-semibold text-[#315c4b]">
+          <h2 className="text-xl font-semibold text-(--moss)">
             {articleCategoryLabels[group.category]}
           </h2>
           <div className="mt-5 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
@@ -83,13 +83,13 @@ export default function ArticlesPage() {
       ))}
       <section className="mt-8 rounded-xl border border-[#d8e2d8] bg-[#f4f7f3] p-6">
         <h2 className="text-lg font-semibold">Prefer to explore the records?</h2>
-        <p className="mt-2 max-w-3xl text-sm leading-6 text-[#59645d]">
+        <p className="mt-2 max-w-3xl text-sm leading-6 text-(--muted-strong)">
           Every guide links into our browsable collection of{" "}
-          <a className="font-bold text-[#315c4b] underline underline-offset-4" href="/japanese-girl-names">girl names</a>,{" "}
-          <a className="font-bold text-[#315c4b] underline underline-offset-4" href="/japanese-boy-names">boy names</a>, and{" "}
-          <a className="font-bold text-[#315c4b] underline underline-offset-4" href="/japanese-last-names">surnames</a> —
+          <a className="font-bold text-(--moss) underline underline-offset-4" href="/japanese-girl-names">girl names</a>,{" "}
+          <a className="font-bold text-(--moss) underline underline-offset-4" href="/japanese-boy-names">boy names</a>, and{" "}
+          <a className="font-bold text-(--moss) underline underline-offset-4" href="/japanese-last-names">surnames</a> —
           or build a full name in the{" "}
-          <Link className="font-bold text-[#315c4b] underline underline-offset-4" href="/#generator">Japanese name generator</Link>.
+          <Link className="font-bold text-(--moss) underline underline-offset-4" href="/#generator">Japanese name generator</Link>.
         </p>
       </section>
     </div>

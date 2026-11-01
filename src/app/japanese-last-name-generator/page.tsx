@@ -68,7 +68,7 @@ export default function JapaneseLastNameGeneratorPage() {
       <header className="page-intro my-6">
         <p className="eyebrow">Surname-only tool</p>
         <h1 className="section-title mt-2">Japanese Last Name Generator</h1>
-        <p className="mt-4 max-w-3xl text-base leading-7 text-[#59645d]">
+        <p className="mt-4 max-w-3xl text-base leading-7 text-(--muted-strong)">
           Generate one Japanese surname at a time and compare its kanji, kana
           reading, romaji, and literal meaning. Filter by documented commonness
           or origin classification, then use the result in the complete Japanese
@@ -85,7 +85,7 @@ export default function JapaneseLastNameGeneratorPage() {
             Family name first in Japanese order
           </h2>
         </div>
-        <div className="space-y-4 leading-7 text-[#59645d]">
+        <div className="space-y-4 leading-7 text-(--muted-strong)">
           <p>
             A Japanese full name normally places the family name before the
             given name in Japanese order. For example, Satō is the surname in
@@ -116,16 +116,16 @@ export default function JapaneseLastNameGeneratorPage() {
           ["3", "Build a full name", "Send the surname to the complete generator and pair it with a given name."],
         ].map(([number, title, copy]) => (
           <article className="surface p-5" key={number}>
-            <span className="text-xs font-bold text-[#a34837]">0{number}</span>
+            <span className="text-xs font-bold text-(--clay)">0{number}</span>
             <h3 className="mt-2 font-semibold">{title}</h3>
-            <p className="mt-2 text-sm leading-6 text-[#647068]">{copy}</p>
+            <p className="mt-2 text-sm leading-6 text-(--muted)">{copy}</p>
           </article>
         ))}
       </section>
 
-      <section className="mt-14 rounded-2xl border border-[#d9ddd6] bg-[#f3f4ef] p-5 sm:p-6">
+      <section className="mt-14 rounded-2xl border border-(--line) bg-[#f3f4ef] p-5 sm:p-6">
         <h2 className="text-xl font-semibold">Generate or browse?</h2>
-        <p className="mt-3 max-w-3xl text-sm leading-6 text-[#647068]">
+        <p className="mt-3 max-w-3xl text-sm leading-6 text-(--muted)">
           Use this page when you want a random Japanese surname. To compare many
           family names in one place, search the browseable list of Japanese last
           names. To create both parts together, return to the full-name tool.

@@ -35,21 +35,21 @@ export function ArticleTocNav({ entries }: { entries: ArticleTocEntry[] }) {
         return (
           <a
             className={`-ml-2.5 flex items-start gap-2.5 rounded-lg px-2.5 py-1.5 ${
-              active ? "bg-[#e7eee9]" : ""
+              active ? "bg-(--moss-soft)" : ""
             }`}
             href={`#${entry.id}`}
             key={entry.id}
           >
             <span
               className={`pt-[3px] text-[0.66rem] font-extrabold ${
-                active ? "text-[#315c4b]" : "text-[#a34837]"
+                active ? "text-(--moss)" : "text-(--clay)"
               }`}
             >
               {entry.number}
             </span>
             <span
               className={`text-[0.82rem] leading-snug ${
-                active ? "font-semibold text-[#244638]" : "text-[#43504a]"
+                active ? "font-semibold text-(--moss-dark)" : "text-[#43504a]"
               }`}
             >
               {entry.label}

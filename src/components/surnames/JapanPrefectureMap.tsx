@@ -30,7 +30,7 @@ export function JapanPrefectureMap({
           <p className="font-semibold">
             Reliable regional distribution data is not yet available for this surname.
           </p>
-          <p className="mx-auto mt-2 max-w-lg text-sm leading-6 text-[#647068]">
+          <p className="mx-auto mt-2 max-w-lg text-sm leading-6 text-(--muted)">
             We do not infer modern population distribution from the kanji, a
             general origin story, or an unverified historical claim.
           </p>
@@ -69,12 +69,12 @@ export function JapanPrefectureMap({
         <p className="eyebrow">Strongest sourced signals</p>
         <ol className="mt-4 grid gap-3">
           {topRegions.map((region) => (
-            <li className="border-b border-[#e3e2dc] pb-3" key={`${region.prefectureCode}-${region.dataType}`}>
+            <li className="border-b border-(--line-soft) pb-3" key={`${region.prefectureCode}-${region.dataType}`}>
               <div className="flex justify-between gap-4 text-sm font-semibold">
                 <span>{region.prefectureName}</span>
                 <span>{region.relativePopularity}%</span>
               </div>
-              <p className="mt-1 text-xs capitalize text-[#647068]">{region.dataType.replaceAll("_", " ")}</p>
+              <p className="mt-1 text-xs capitalize text-(--muted)">{region.dataType.replaceAll("_", " ")}</p>
             </li>
           ))}
         </ol>

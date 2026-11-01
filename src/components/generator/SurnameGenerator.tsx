@@ -172,23 +172,23 @@ export function SurnameGenerator({
             </div>
           </div>
 
-          <div className="mt-6 grid overflow-hidden rounded-2xl border border-[#d9ddd6] bg-[#fffefb] sm:grid-cols-2">
-            <div className="bg-[#faf9f5] p-5 sm:p-6">
-              <p className="text-[0.68rem] font-bold uppercase tracking-[0.09em] text-[#747d77]">
+          <div className="mt-6 grid overflow-hidden rounded-2xl border border-(--line) bg-(--surface) sm:grid-cols-2">
+            <div className="bg-(--paper-raised) p-5 sm:p-6">
+              <p className="text-[0.68rem] font-bold uppercase tracking-[0.09em] text-(--muted-soft)">
                 Kanji
               </p>
               <p className="japanese-display mt-3 text-6xl font-medium leading-none">
                 {current.kanji}
               </p>
             </div>
-            <div className="border-t border-[#d9ddd6] p-5 sm:border-l sm:border-t-0 sm:p-6">
-              <p className="text-[0.68rem] font-bold uppercase tracking-[0.09em] text-[#747d77]">
+            <div className="border-t border-(--line) p-5 sm:border-l sm:border-t-0 sm:p-6">
+              <p className="text-[0.68rem] font-bold uppercase tracking-[0.09em] text-(--muted-soft)">
                 Kana and romaji
               </p>
               <p className="japanese-display mt-3 text-2xl font-medium">
                 {current.hiragana}
               </p>
-              <p className="japanese-display mt-1 text-sm text-[#647068]">
+              <p className="japanese-display mt-1 text-sm text-(--muted)">
                 {current.katakana}
               </p>
               <p className="mt-3 font-semibold">{current.romaji}</p>
@@ -197,29 +197,29 @@ export function SurnameGenerator({
 
           <div className="mt-6 grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
             <div>
-              <h3 className="text-sm font-bold uppercase tracking-[0.08em] text-[#647068]">
+              <h3 className="text-sm font-bold uppercase tracking-[0.08em] text-(--muted)">
                 Literal meaning
               </h3>
               <p className="mt-2 text-lg font-semibold">{current.literalMeaning}</p>
-              <dl className="mt-4 grid gap-2 border-t border-[#e3e2dc] pt-4">
+              <dl className="mt-4 grid gap-2 border-t border-(--line-soft) pt-4">
                 {current.kanjiBreakdown.map((part, index) => (
                   <div className="flex items-start justify-between gap-4 text-sm" key={`${part.kanji}-${index}`}>
                     <dt className="japanese-display text-lg font-semibold">{part.kanji}</dt>
-                    <dd className="text-right text-[#647068]">{part.meanings.join(", ")}</dd>
+                    <dd className="text-right text-(--muted)">{part.meanings.join(", ")}</dd>
                   </div>
                 ))}
               </dl>
             </div>
             <dl className="grid content-start gap-3 rounded-xl bg-[#f3f4ef] p-4 text-sm">
               <div className="flex justify-between gap-4">
-                <dt className="text-[#647068]">Commonness</dt>
+                <dt className="text-(--muted)">Commonness</dt>
                 <dd className="font-semibold capitalize">
                   {current.popularityLevel.replace("_", " ")}
                 </dd>
               </div>
               {current.originTypes.some((item) => item !== "uncertain") ? (
                 <div className="flex justify-between gap-4">
-                  <dt className="text-[#647068]">Origin classification</dt>
+                  <dt className="text-(--muted)">Origin classification</dt>
                   <dd className="text-right font-semibold capitalize">
                     {current.originTypes.filter((item) => item !== "uncertain").join(", ")}
                   </dd>
@@ -228,7 +228,7 @@ export function SurnameGenerator({
             </dl>
           </div>
 
-          <div className="mt-6 flex flex-wrap gap-3 border-t border-[#e3e2dc] pt-5">
+          <div className="mt-6 flex flex-wrap gap-3 border-t border-(--line-soft) pt-5">
             <Link className="button-primary" href={`/?surname=${current.id}#generator`}>
               Use in a complete Japanese name
             </Link>
@@ -238,14 +238,14 @@ export function SurnameGenerator({
               </Link>
             ) : null}
           </div>
-          <p className="mt-4 text-xs leading-5 text-[#747d77]">
+          <p className="mt-4 text-xs leading-5 text-(--muted-soft)">
             The meaning describes the written kanji. It does not prove one family origin or ancestry.
           </p>
         </article>
       ) : (
         <div className="surface mt-5 p-8 text-center">
           <p className="font-semibold">No reviewed surnames match these filters.</p>
-          <p className="mt-2 text-sm text-[#647068]">Choose a broader commonness or origin filter.</p>
+          <p className="mt-2 text-sm text-(--muted)">Choose a broader commonness or origin filter.</p>
         </div>
       )}
     </section>

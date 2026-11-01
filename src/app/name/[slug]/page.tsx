@@ -109,7 +109,7 @@ export default async function FirstNamePage({
       <header className="page-intro my-6 grid gap-8 lg:grid-cols-[1fr_0.8fr] lg:items-end">
         <div>
           {name.verificationStatus === "needs_review" && (
-            <p className="mb-4 inline-flex rounded-full bg-[#f4e9e5] px-3 py-1 text-xs font-bold text-[#843c2f]">
+            <p className="mb-4 inline-flex rounded-full bg-(--clay-soft) px-3 py-1 text-xs font-bold text-[#843c2f]">
               This record still needs review
             </p>
           )}
@@ -124,7 +124,7 @@ export default async function FirstNamePage({
             <span className="seal mb-2" aria-hidden="true">名</span>
           </div>
           <p className="japanese-display mt-4 text-5xl">{preferred.kanji}</p>
-          <p className="japanese-display mt-1 text-base text-[#647068]">
+          <p className="japanese-display mt-1 text-base text-(--muted)">
             {name.hiragana}{name.katakana ? ` · ${name.katakana}` : ""}
           </p>
           <div className="mt-5 flex flex-wrap gap-2">
@@ -147,23 +147,23 @@ export default async function FirstNamePage({
         </div>
         <dl className="surface grid gap-3 p-5 text-sm">
           <div className="flex justify-between gap-4">
-            <dt className="text-[#647068]">Gender in this collection</dt>
+            <dt className="text-(--muted)">Gender in this collection</dt>
             <dd className="font-semibold capitalize">{name.genders.join(", ")}</dd>
           </div>
           <div className="flex justify-between gap-4">
-            <dt className="text-[#647068]">Stored reading</dt>
+            <dt className="text-(--muted)">Stored reading</dt>
             <dd className="font-semibold">{name.hiragana} ({name.romaji})</dd>
           </div>
           <div className="flex justify-between gap-4">
-            <dt className="text-[#647068]">Written forms recorded</dt>
+            <dt className="text-(--muted)">Written forms recorded</dt>
             <dd className="font-semibold">{name.variations.length}</dd>
           </div>
           <div className="flex justify-between gap-4">
-            <dt className="text-[#647068]">Style labels</dt>
+            <dt className="text-(--muted)">Style labels</dt>
             <dd className="font-semibold capitalize">{name.styles.join(", ") || "—"}</dd>
           </div>
           <div className="flex justify-between gap-4">
-            <dt className="text-[#647068]">Popularity in this collection</dt>
+            <dt className="text-(--muted)">Popularity in this collection</dt>
             <dd className="font-semibold capitalize">{name.popularityLevel.replace("_", " ")}</dd>
           </div>
         </dl>
@@ -171,16 +171,16 @@ export default async function FirstNamePage({
 
       {nameNotes[name.slug] ? <section className="max-w-3xl py-8">
         <h2 className="text-2xl font-semibold">What does {name.romaji} mean in this spelling?</h2>
-        <p className="mt-4 leading-7 text-[#59645d]">{nameNotes[name.slug]}</p>
-        <p className="mt-3 text-sm leading-6 text-[#647068]">These are written-form explanations. Style and gender labels describe this collection; they are not a current usage survey or a guarantee of suitability.</p>
+        <p className="mt-4 leading-7 text-(--muted-strong)">{nameNotes[name.slug]}</p>
+        <p className="mt-3 text-sm leading-6 text-(--muted)">These are written-form explanations. Style and gender labels describe this collection; they are not a current usage survey or a guarantee of suitability.</p>
       </section> : <section className="max-w-3xl py-8">
         <h2 className="text-2xl font-semibold">About {name.romaji}</h2>
-        <p className="mt-4 leading-7 text-[#59645d]">{buildFirstNameIntro(name)}</p>
-        <p className="mt-3 text-sm leading-6 text-[#647068]">Written-form notes and labels above come from this collection’s records. They are not a current usage survey or a guarantee of suitability.</p>
+        <p className="mt-4 leading-7 text-(--muted-strong)">{buildFirstNameIntro(name)}</p>
+        <p className="mt-3 text-sm leading-6 text-(--muted)">Written-form notes and labels above come from this collection’s records. They are not a current usage survey or a guarantee of suitability.</p>
       </section>}
       {nameNotes[name.slug] && <section className="max-w-3xl">
         <h2 className="text-2xl font-semibold">About {name.romaji} in this collection</h2>
-        <p className="mt-4 leading-7 text-[#59645d]">{buildFirstNameIntro(name)}</p>
+        <p className="mt-4 leading-7 text-(--muted-strong)">{buildFirstNameIntro(name)}</p>
       </section>}
       <section className="py-12">
         <p className="eyebrow">Written forms</p>
@@ -192,27 +192,27 @@ export default async function FirstNamePage({
                 <p className="japanese-display text-5xl">{variation.kanji}</p>
                 <span className="chip capitalize">{variation.meaningEvidence === "dictionary_glosses" ? "Dictionary record" : "Editorial selection"}</span>
               </div>
-              <p className="mt-5 text-[0.68rem] font-bold uppercase tracking-[0.08em] text-[#747d77]">
+              <p className="mt-5 text-[0.68rem] font-bold uppercase tracking-[0.08em] text-(--muted-soft)">
                 {variation.meaningEvidence === "dictionary_glosses"
                   ? "Kanji component glosses"
                   : "Written-form notes"}
               </p>
               <p className="mt-2 font-semibold">{getMeaningPreview(variation)}</p>
-              <p className="mt-3 text-xs leading-5 text-[#647068]">
+              <p className="mt-3 text-xs leading-5 text-(--muted)">
                 {variation.upstreamIds?.length
                   ? `Spelling and reading recorded in JMnedict (2026-08-01 snapshot), entry ${variation.upstreamIds.join(", ")}. This does not establish popularity or naming intention.`
                   : "No exact spelling-and-reading match was found in our JMnedict snapshot. This does not establish that the form is invalid; seek an additional name-specific reference before relying on it."}
               </p>
-              <dl className="mt-5 grid gap-2 border-t border-[#e3e2dc] pt-4">
+              <dl className="mt-5 grid gap-2 border-t border-(--line-soft) pt-4">
                 {variation.kanjiBreakdown.map((part) => (
                   <div className="flex items-center justify-between text-sm" key={part.kanji}>
                     <dt className="japanese-display text-lg font-semibold">{part.kanji}</dt>
-                    <dd className="text-right text-[#647068]">{part.meanings.join(", ")}</dd>
+                    <dd className="text-right text-(--muted)">{part.meanings.join(", ")}</dd>
                   </div>
                 ))}
               </dl>
               {variation.verificationStatus !== "verified" && (
-                <p className="mt-4 rounded-lg bg-[#f4e9e5] p-3 text-xs leading-5 text-[#6d5048]">
+                <p className="mt-4 rounded-lg bg-(--clay-soft) p-3 text-xs leading-5 text-[#6d5048]">
                   {variation.meaningEvidence === "dictionary_glosses"
                     ? "JMnedict documents this spelling-reading pair. KANJIDIC2 supplies the component glosses; they do not prove a combined meaning, popularity, or current naming style."
                     : `This variation is ${variation.verificationStatus.replace("_", " ")}. Confirm current real-world usage before choosing it.`}
@@ -227,7 +227,7 @@ export default async function FirstNamePage({
         <p className="eyebrow">Full-name pairings</p>
         <h2 className="section-title mb-6 mt-2">Surnames to pair with {name.romaji}</h2>
         {usesExamplePairings && (
-          <p className="mb-6 max-w-3xl text-sm leading-6 text-[#647068]">
+          <p className="mb-6 max-w-3xl text-sm leading-6 text-(--muted)">
             Reviewed pairings for {name.romaji} are not yet recorded, so the
             examples below use frequently requested surnames from this
             collection. Any given name can precede a Japanese family name.
@@ -243,10 +243,10 @@ export default async function FirstNamePage({
               <span className="japanese-display block text-xl font-semibold">
                 {surname.kanji} {preferred.kanji}
               </span>
-              <span className="mt-1 block text-sm text-[#647068]">
+              <span className="mt-1 block text-sm text-(--muted)">
                 {surname.romaji} {name.romaji}
               </span>
-              <span className="mt-3 block text-xs font-bold text-[#315c4b]">Use this pairing →</span>
+              <span className="mt-3 block text-xs font-bold text-(--moss)">Use this pairing →</span>
             </Link>
           ))}
         </div>
@@ -263,15 +263,15 @@ export default async function FirstNamePage({
                 .join("");
               return (
                 <Link
-                  className="surface p-4 transition hover:border-[#aac0b1]"
+                  className="surface p-4 transition hover:border-(--sage)"
                   href={`/name/${item.slug}`}
                   key={item.id}
                 >
                   <span className="japanese-display block text-2xl font-semibold">
                     {item.variations[0].kanji}
                   </span>
-                  <span className="mt-1 block text-sm text-[#647068]">{item.romaji}</span>
-                  <span className="mt-3 block text-xs font-bold text-[#315c4b]">
+                  <span className="mt-1 block text-sm text-(--muted)">{item.romaji}</span>
+                  <span className="mt-3 block text-xs font-bold text-(--moss)">
                     Shares {sharedKanji} →
                   </span>
                 </Link>
@@ -288,7 +288,7 @@ export default async function FirstNamePage({
           {buildFirstNameFaqs(name).map((item) => (
             <details className="surface p-5" key={item.question}>
               <summary className="cursor-pointer font-semibold">{item.question}</summary>
-              <p className="mt-3 text-sm leading-6 text-[#59645d]">{item.answer}</p>
+              <p className="mt-3 text-sm leading-6 text-(--muted-strong)">{item.answer}</p>
             </details>
           ))}
         </div>
@@ -297,7 +297,7 @@ export default async function FirstNamePage({
       <section className="py-12">
         <p className="eyebrow">Evidence trail</p>
         <h2 className="section-title mb-3 mt-2">Sources</h2>
-        <p className="mb-6 max-w-3xl text-sm leading-6 text-[#647068]">
+        <p className="mb-6 max-w-3xl text-sm leading-6 text-(--muted)">
           Kanji glosses help explain the written form. They are not a claim
           about the personality or destiny of a person who uses the name.
           The Jōyō Kanji reference is general character background; it does not

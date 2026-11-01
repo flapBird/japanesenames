@@ -120,16 +120,16 @@ export default async function ArticlePage({
       <header className="container-page relative pb-1 pt-5">
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute right-1 top-2 hidden h-24 w-24 rotate-3 place-items-center rounded-2xl border-[1.5px] border-[#c27684]/45 lg:grid"
+          className="pointer-events-none absolute right-1 top-2 hidden h-24 w-24 rotate-3 place-items-center rounded-2xl border-[1.5px] border-(--sakura)/45 lg:grid"
         >
-          <span className="japanese-display text-5xl text-[#c27684]/60">名</span>
+          <span className="japanese-display text-5xl text-(--sakura)/60">名</span>
         </div>
         <div className="max-w-3xl">
-          <p className="eyebrow !text-[#a34837]">{articleCategoryLabels[article.category]}</p>
+          <p className="eyebrow !text-(--clay)">{articleCategoryLabels[article.category]}</p>
           <h1 className="article-heading mt-3.5 text-[clamp(2rem,4.6vw,3.1rem)] font-bold leading-[1.14] tracking-[-0.01em]">
             {article.title}
           </h1>
-          <div className="mt-5 flex flex-wrap items-center gap-2.5 text-[0.85rem] text-[#59645d]">
+          <div className="mt-5 flex flex-wrap items-center gap-2.5 text-[0.85rem] text-(--muted-strong)">
             <span>Published {publishedLabel}</span>
             <span aria-hidden="true" className="size-[3px] rounded-full bg-[#b9c4bc]" />
             <span>{minutes} min read</span>
@@ -137,27 +137,27 @@ export default async function ArticlePage({
             <span>Updated {updatedLabel}</span>
           </div>
         </div>
-        <div className="mt-7 border-b border-[#deddd5]" />
+        <div className="mt-7 border-b border-(--line)" />
       </header>
 
       <div className="container-page grid gap-10 pb-6 pt-9 lg:grid-cols-[17rem_minmax(0,1fr)] lg:items-start">
         <aside className="hidden lg:sticky lg:top-6 lg:block">
           {toc.length > 0 && (
-            <div className="rounded-2xl border border-[#deddd5] bg-[#fffefb]/95 p-5 shadow-[inset_0_1px_0_rgb(255_255_255/0.8)]">
+            <div className="rounded-2xl border border-(--line) bg-(--surface)/95 p-5 shadow-[inset_0_1px_0_rgb(255_255_255/0.8)]">
               <div className="flex items-baseline justify-between">
-                <p className="eyebrow !text-[#59645d]">On this page</p>
-                <p className="text-[0.72rem] font-semibold text-[#a34837]">{minutes} min</p>
+                <p className="eyebrow !text-(--muted-strong)">On this page</p>
+                <p className="text-[0.72rem] font-semibold text-(--clay)">{minutes} min</p>
               </div>
               <ArticleTocNav entries={toc} />
             </div>
           )}
-          <div className="mt-4 rounded-2xl border border-[#d9ddd6] bg-[#e7eee9] p-5">
-            <p className="eyebrow !text-[#315c4b]">Our data method</p>
+          <div className="mt-4 rounded-2xl border border-(--line) bg-(--moss-soft) p-5">
+            <p className="eyebrow !text-(--moss)">Our data method</p>
             <p className="mt-2 text-[0.82rem] leading-relaxed text-[#334740]">
               Every reading and spelling on this site comes from structured dictionary records.
             </p>
             <Link
-              className="mt-2.5 inline-flex items-center gap-1.5 text-xs font-bold text-[#315c4b]"
+              className="mt-2.5 inline-flex items-center gap-1.5 text-xs font-bold text-(--moss)"
               href="/about"
             >
               How we research names
@@ -181,10 +181,10 @@ export default async function ArticlePage({
 
         <article className="min-w-0">
           {toc.length > 0 && (
-            <details className="mb-7 rounded-2xl border border-[#deddd5] bg-[#fffefb]/95 p-5 lg:hidden">
+            <details className="mb-7 rounded-2xl border border-(--line) bg-(--surface)/95 p-5 lg:hidden">
               <summary className="flex cursor-pointer list-none items-center justify-between gap-3 text-sm font-bold [&::-webkit-details-marker]:hidden">
                 On this page · {toc.length} sections
-                <span aria-hidden="true" className="text-xl leading-none text-[#a34837]">+</span>
+                <span aria-hidden="true" className="text-xl leading-none text-(--clay)">+</span>
               </summary>
               <nav aria-label="Table of contents" className="mt-3 grid">
                 {toc.map((entry) => (
@@ -193,7 +193,7 @@ export default async function ArticlePage({
                     href={`#${entry.id}`}
                     key={entry.id}
                   >
-                    <span className="pt-[2px] text-[0.66rem] font-extrabold text-[#a34837]">
+                    <span className="pt-[2px] text-[0.66rem] font-extrabold text-(--clay)">
                       {entry.number}
                     </span>
                     {entry.label}
@@ -228,7 +228,7 @@ export default async function ArticlePage({
               <div className="mt-5 grid gap-3">
                 {article.faq.map((item, index) => (
                   <details
-                    className="group rounded-2xl border border-[#deddd5] bg-[#fffefb]/95 p-5"
+                    className="group rounded-2xl border border-(--line) bg-(--surface)/95 p-5"
                     key={item.question}
                     open={index === 0}
                   >
@@ -236,49 +236,49 @@ export default async function ArticlePage({
                       {item.question}
                       <span
                         aria-hidden="true"
-                        className="text-xl leading-none text-[#a34837] transition-transform group-open:rotate-45"
+                        className="text-xl leading-none text-(--clay) transition-transform group-open:rotate-45"
                       >
                         +
                       </span>
                     </summary>
-                    <p className="mt-3 text-[0.92rem] leading-7 text-[#59645d]">{item.answer}</p>
+                    <p className="mt-3 text-[0.92rem] leading-7 text-(--muted-strong)">{item.answer}</p>
                   </details>
                 ))}
               </div>
             </section>
           )}
 
-          <section className="mt-11 max-w-3xl rounded-2xl bg-[#244638] p-6 sm:p-7">
+          <section className="mt-11 max-w-3xl rounded-2xl bg-(--moss-dark) p-6 sm:p-7">
             <p className="eyebrow !text-[#a7c4b5]">Our data method</p>
-            <p className="article-heading mt-2.5 text-[1.4rem] font-bold leading-snug text-[#fffefb]">
+            <p className="article-heading mt-2.5 text-[1.4rem] font-bold leading-snug text-(--surface)">
               Evidence before interpretation
             </p>
-            <p className="mt-2 max-w-xl text-[0.85rem] leading-6 text-[#fffefb]/80">
+            <p className="mt-2 max-w-xl text-[0.85rem] leading-6 text-(--surface)/80">
               Every name page shows its recorded spelling, reading, and entry ID — never an
               invented meaning.
             </p>
             <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-3">
               <Link
-                className="rounded-full bg-[#fffefb] px-5 py-2.5 text-[0.85rem] font-bold text-[#244638]"
+                className="rounded-full bg-(--surface) px-5 py-2.5 text-[0.85rem] font-bold text-(--moss-dark)"
                 href="/about"
               >
                 Read the full data method
               </Link>
-              <span className="text-[0.8rem] leading-6 text-[#fffefb]/75">
+              <span className="text-[0.8rem] leading-6 text-(--surface)/75">
                 Or explore the records:{" "}
-                <Link className="font-bold text-[#fffefb] underline underline-offset-4" href="/#generator">
+                <Link className="font-bold text-(--surface) underline underline-offset-4" href="/#generator">
                   name generator
                 </Link>
                 ,{" "}
-                <Link className="font-bold text-[#fffefb] underline underline-offset-4" href="/japanese-girl-names">
+                <Link className="font-bold text-(--surface) underline underline-offset-4" href="/japanese-girl-names">
                   girl names
                 </Link>
                 ,{" "}
-                <Link className="font-bold text-[#fffefb] underline underline-offset-4" href="/japanese-boy-names">
+                <Link className="font-bold text-(--surface) underline underline-offset-4" href="/japanese-boy-names">
                   boy names
                 </Link>
                 ,{" "}
-                <Link className="font-bold text-[#fffefb] underline underline-offset-4" href="/japanese-last-names">
+                <Link className="font-bold text-(--surface) underline underline-offset-4" href="/japanese-last-names">
                   surnames
                 </Link>
               </span>
@@ -288,14 +288,14 @@ export default async function ArticlePage({
       </div>
 
       {related.length > 0 && (
-        <section className="border-y border-[#deddd5] bg-[#efeee8] py-14">
+        <section className="border-y border-(--line) bg-[#efeee8] py-14">
           <div className="container-page">
             <div className="flex flex-wrap items-end justify-between gap-4">
               <div>
                 <p className="eyebrow">Related guides</p>
                 <h2 className="article-heading mt-2 text-3xl font-bold">Keep reading</h2>
               </div>
-              <Link className="text-sm font-bold text-[#315c4b] underline underline-offset-4" href="/articles">
+              <Link className="text-sm font-bold text-(--moss) underline underline-offset-4" href="/articles">
                 All guides →
               </Link>
             </div>

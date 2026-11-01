@@ -226,7 +226,7 @@ export function NameGenerator() {
     <section className="scroll-mt-4" id="generator" aria-labelledby="generator-title">
       <div
         className="surface overflow-hidden border-[#e4d6d8] shadow-[var(--shadow)]"
-        style={{ borderTop: "3px solid #c27684" }}
+        style={{ borderTop: "3px solid var(--sakura)" }}
       >
         <div className="flex flex-wrap items-center gap-3 p-4 sm:gap-4 sm:p-5">
           <h2 className="mr-auto text-base font-bold tracking-[-0.01em] sm:text-lg" id="generator-title">
@@ -234,7 +234,7 @@ export function NameGenerator() {
           </h2>
           <div
             aria-label="Gender"
-            className="flex w-full rounded-full border border-[#deddd5] bg-[#faf9f5] p-[3px] sm:w-auto"
+            className="flex w-full rounded-full border border-(--line) bg-(--paper-raised) p-[3px] sm:w-auto"
             role="group"
           >
             {genderOptions.map((option) => (
@@ -242,8 +242,8 @@ export function NameGenerator() {
                 aria-pressed={draftFilters.gender === option.value}
                 className={`min-h-9 flex-1 whitespace-nowrap rounded-full px-3.5 text-[0.82rem] font-semibold transition-colors sm:flex-none sm:px-4 ${
                   draftFilters.gender === option.value
-                    ? "bg-[#315c4b] text-white"
-                    : "text-[#59645d] hover:text-[#19241f]"
+                    ? "bg-(--moss) text-white"
+                    : "text-(--muted-strong) hover:text-(--ink)"
                 }`}
                 key={option.value}
                 onClick={() => setDraftFilters({ ...draftFilters, gender: option.value })}
@@ -291,7 +291,7 @@ export function NameGenerator() {
             </button>
           </div>
         </div>
-        <div className="border-t border-[#efeee8] bg-[#faf9f5] px-4 py-3 sm:px-5">
+        <div className="border-t border-[#efeee8] bg-(--paper-raised) px-4 py-3 sm:px-5">
           <GeneratorFilters
             kanjiControl={
               <KanjiFilterFields
@@ -351,7 +351,7 @@ export function NameGenerator() {
                 <div className="flex flex-wrap gap-2" aria-label="Kept name parts">
                   {lockedSurnameId && (
                     <button
-                      className="chip !border-[#aac0b1] !bg-[#e7eee9]"
+                      className="chip !border-(--sage) !bg-(--moss-soft)"
                       onClick={() => {
                         rememberCurrentResults();
                         setLockedSurnameId(undefined);
@@ -364,7 +364,7 @@ export function NameGenerator() {
                   )}
                   {lockedFirstNameId && (
                     <button
-                      className="chip !border-[#aac0b1] !bg-[#e7eee9]"
+                      className="chip !border-(--sage) !bg-(--moss-soft)"
                       onClick={() => {
                         rememberCurrentResults();
                         setLockedFirstNameId(undefined);
@@ -408,7 +408,7 @@ export function NameGenerator() {
             {batch.poolCount > 0 ? (
               <>
                 <p className="text-lg font-semibold">This exact pool has completed its cycle.</p>
-                <p className="mx-auto mt-2 max-w-lg text-sm leading-6 text-[#647068]">Start a new cycle to allow previously shown full names again. Your filters remain unchanged.</p>
+                <p className="mx-auto mt-2 max-w-lg text-sm leading-6 text-(--muted)">Start a new cycle to allow previously shown full names again. Your filters remain unchanged.</p>
                 <button className="button-secondary mt-5" onClick={startNewCycle} type="button">Start new cycle</button>
               </>
             ) : kanjiFilter.kanji ? (
@@ -416,7 +416,7 @@ export function NameGenerator() {
                 <p className="text-lg font-semibold">
                   {kanjiFilterCopy.noMatchingNames}
                 </p>
-                <p className="mx-auto mt-2 max-w-lg text-sm leading-6 text-[#647068]">
+                <p className="mx-auto mt-2 max-w-lg text-sm leading-6 text-(--muted)">
                   We couldn&apos;t find a name containing this kanji with the
                   selected filters. Try another kanji or change where it appears.
                 </p>
@@ -433,7 +433,7 @@ export function NameGenerator() {
             ) : (
               <>
                 <p className="text-lg font-semibold">Structured data unavailable</p>
-                <p className="mx-auto mt-2 max-w-lg text-sm leading-6 text-[#647068]">
+                <p className="mx-auto mt-2 max-w-lg text-sm leading-6 text-(--muted)">
                   No reviewed records are available for the locked name parts.
                   Remove a lock or clear the filters to continue.
                 </p>

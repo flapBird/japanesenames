@@ -37,8 +37,8 @@ export function CopyButton({
         compact
           ? `!size-10 !min-h-10 !shrink-0 !border !p-0 ${
               copied
-                ? "!border-[#9eb8a8] !bg-[#e7eee9] !text-[#315c4b]"
-                : "!border-[#deddd5] !bg-[#fffefb] !text-[#647068] hover:!border-[#315c4b]"
+                ? "!border-[#9eb8a8] !bg-(--moss-soft) !text-(--moss)"
+                : "!border-(--line) !bg-(--surface) !text-(--muted) hover:!border-(--moss)"
             }`
           : "!px-2.5"
       } ${className}`}

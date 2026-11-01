@@ -115,7 +115,7 @@ export function OriginIllustration({
         )}
         <path d="M0 318c158-24 246 14 367-3s176-10 273 3v42H0Z" fill="#d8ded3" />
       </svg>
-      <figcaption className="border-t border-[#deddd5] px-5 py-3 text-xs text-[#647068]">
+      <figcaption className="border-t border-(--line) px-5 py-3 text-xs text-(--muted)">
         Reusable origin illustration: {labels[illustrationKey]}. This is a
         conceptual aid, not evidence of a specific ancestral location.
       </figcaption>

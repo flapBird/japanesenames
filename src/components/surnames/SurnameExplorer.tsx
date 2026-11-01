@@ -129,7 +129,7 @@ export function SurnameExplorer({ surnames, initialPage = 1 }: { surnames: Brows
             <button
               aria-pressed={letter === item}
               className={`grid size-8 place-items-center rounded-full text-xs font-bold ${
-                letter === item ? "bg-[#315c4b] text-white" : "bg-[#efefe9] text-[#59645d]"
+                letter === item ? "bg-(--moss) text-white" : "bg-[#efefe9] text-(--muted-strong)"
               }`}
               key={item}
               onClick={() => {
@@ -146,7 +146,7 @@ export function SurnameExplorer({ surnames, initialPage = 1 }: { surnames: Brows
       </div>
       <div className="mt-5 flex items-center justify-between">
         <h2 className="section-title !text-2xl" id="surname-results">Japanese family names</h2>
-        <span className="text-sm text-[#647068]">{filtered.length} matches</span>
+        <span className="text-sm text-(--muted)">{filtered.length} matches</span>
       </div>
       {displayed.length ? (
         <>
@@ -154,7 +154,7 @@ export function SurnameExplorer({ surnames, initialPage = 1 }: { surnames: Brows
             {displayed.map((surname) => (
               <article className="surface flex flex-col p-5" key={surname.id}>
                 <div className="mb-3 flex items-center justify-between gap-3">
-                  <p className="text-[0.65rem] font-bold uppercase tracking-[0.09em] text-[#747d77]">
+                  <p className="text-[0.65rem] font-bold uppercase tracking-[0.09em] text-(--muted-soft)">
                     Surname formats
                   </p>
                   <div className="flex shrink-0 items-center gap-2">
@@ -181,9 +181,9 @@ export function SurnameExplorer({ surnames, initialPage = 1 }: { surnames: Brows
                     />
                   </div>
                 </div>
-                <div className="grid grid-cols-2 overflow-hidden rounded-xl border border-[#e3e2dc]">
-                  <div className="min-w-0 bg-[#faf9f5] p-3.5">
-                    <p className="text-[0.62rem] font-bold uppercase tracking-[0.08em] text-[#747d77]">
+                <div className="grid grid-cols-2 overflow-hidden rounded-xl border border-(--line-soft)">
+                  <div className="min-w-0 bg-(--paper-raised) p-3.5">
+                    <p className="text-[0.62rem] font-bold uppercase tracking-[0.08em] text-(--muted-soft)">
                       Romanized form
                     </p>
                     {surname.isIndexable ? (
@@ -200,8 +200,8 @@ export function SurnameExplorer({ surnames, initialPage = 1 }: { surnames: Brows
                       </p>
                     )}
                   </div>
-                  <div className="min-w-0 border-l border-[#e3e2dc] p-3.5">
-                    <p className="text-[0.62rem] font-bold uppercase tracking-[0.08em] text-[#747d77]">
+                  <div className="min-w-0 border-l border-(--line-soft) p-3.5">
+                    <p className="text-[0.62rem] font-bold uppercase tracking-[0.08em] text-(--muted-soft)">
                       Japanese form
                     </p>
                     {surname.isIndexable ? (
@@ -217,13 +217,13 @@ export function SurnameExplorer({ surnames, initialPage = 1 }: { surnames: Brows
                         {surname.kanji}
                       </p>
                     )}
-                    <p className="japanese-display mt-1 text-sm text-[#647068]">
+                    <p className="japanese-display mt-1 text-sm text-(--muted)">
                       {surname.hiragana}
                     </p>
                   </div>
                 </div>
                 <div className="mt-4">
-                  <p className="text-[0.68rem] font-bold uppercase tracking-[0.08em] text-[#747d77]">
+                  <p className="text-[0.68rem] font-bold uppercase tracking-[0.08em] text-(--muted-soft)">
                     Meaning
                   </p>
                   <p className="mt-1 text-sm leading-6 text-[#536058]">
@@ -231,20 +231,20 @@ export function SurnameExplorer({ surnames, initialPage = 1 }: { surnames: Brows
                   </p>
                 </div>
                 <div className="mt-4 flex flex-wrap gap-1.5">
-                  <span className={`chip ${surname.isIndexable ? "!border-[#aac0b1] !bg-[#e7eee9] !text-[#315c4b]" : "!bg-[#efeeea] !text-[#68726b]"}`}>
+                  <span className={`chip ${surname.isIndexable ? "!border-(--sage) !bg-(--moss-soft) !text-(--moss)" : "!bg-[#efeeea] !text-[#68726b]"}`}>
                     {surname.isIndexable ? "Origin story available" : "Source-backed record"}
                   </span>
                   <span className="chip capitalize">{surname.popularityLevel.replace("_", " ")}</span>
                   {surname.originTypes.slice(0, 2).map((item) => <span className="chip capitalize" key={item}>{item}</span>)}
                 </div>
-                <div className="mt-5 flex gap-4 border-t border-[#e3e2dc] pt-4 text-xs font-bold text-[#315c4b]">
+                <div className="mt-5 flex gap-4 border-t border-(--line-soft) pt-4 text-xs font-bold text-(--moss)">
                   {surname.isIndexable && (
                     <Link href={`/surname/${surname.slug}`} onClick={() => trackEvent("open_surname", { id: surname.id })}>
                       View surname story →
                     </Link>
                   )}
                   {!surname.isIndexable && (
-                    <span className="font-medium text-[#747d77]" title="The source record supports the spelling and reading; no family-origin claim is inferred from kanji alone.">
+                    <span className="font-medium text-(--muted-soft)" title="The source record supports the spelling and reading; no family-origin claim is inferred from kanji alone.">
                       Origin not inferred from kanji
                     </span>
                   )}

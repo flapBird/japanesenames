@@ -16,7 +16,7 @@ export function NameOrderToggle({
             aria-pressed={value === order}
             className={`rounded-full px-3 py-1.5 text-xs font-bold transition-colors ${
               value === order
-                ? "bg-[#fffefb] text-[#244638] shadow-sm"
+                ? "bg-(--surface) text-(--moss-dark) shadow-sm"
                 : "text-[#6b746e]"
             }`}
             key={order}

@@ -126,7 +126,7 @@ export function KanjiPopularShortcuts({
           {showSurname && <ShortcutGroup counts={surnameCounts} kanji={kanji} label="Popular Surname" onChange={onChange} options={surnamePopularKanji} target={target} />}
         </div>
       </div>
-      {isSingleKanji(kanji) && <p className="mt-2 text-xs text-[#647068]">Active filter: <span className="japanese-display font-semibold">{kanji}</span></p>}
+      {isSingleKanji(kanji) && <p className="mt-2 text-xs text-(--muted)">Active filter: <span className="japanese-display font-semibold">{kanji}</span></p>}
     </section>
   );
 }

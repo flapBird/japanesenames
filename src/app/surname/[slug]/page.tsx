@@ -89,7 +89,7 @@ export default async function SurnamePage({
       <header className="page-intro my-6 grid gap-8 lg:grid-cols-[1.25fr_0.75fr] lg:items-end">
         <div>
           {surname.verificationStatus === "needs_review" && (
-            <p className="mb-4 inline-flex rounded-full bg-[#f4e9e5] px-3 py-1 text-xs font-bold text-[#843c2f]">
+            <p className="mb-4 inline-flex rounded-full bg-(--clay-soft) px-3 py-1 text-xs font-bold text-[#843c2f]">
               Editorial review incomplete · not indexed
             </p>
           )}
@@ -102,23 +102,23 @@ export default async function SurnamePage({
             <p className="eyebrow">Japanese surname</p>
             <span className="seal" aria-hidden="true">姓</span>
           </div>
-          <div className="mt-4 grid overflow-hidden rounded-2xl border border-[#d9ddd6] bg-[#fffefb] sm:grid-cols-2">
-            <div className="min-w-0 bg-[#faf9f5] p-5 sm:p-6">
-              <p className="text-[0.68rem] font-bold uppercase tracking-[0.09em] text-[#747d77]">
+          <div className="mt-4 grid overflow-hidden rounded-2xl border border-(--line) bg-(--surface) sm:grid-cols-2">
+            <div className="min-w-0 bg-(--paper-raised) p-5 sm:p-6">
+              <p className="text-[0.68rem] font-bold uppercase tracking-[0.09em] text-(--muted-soft)">
                 Romanized surname
               </p>
               <h1 className="mt-3 text-4xl font-semibold leading-tight tracking-[-0.03em] sm:text-5xl">
                 {surname.romaji}
               </h1>
             </div>
-            <div className="min-w-0 border-t border-[#d9ddd6] p-5 sm:border-t-0 sm:border-l sm:p-6">
-              <p className="text-[0.68rem] font-bold uppercase tracking-[0.09em] text-[#747d77]">
+            <div className="min-w-0 border-t border-(--line) p-5 sm:border-t-0 sm:border-l sm:p-6">
+              <p className="text-[0.68rem] font-bold uppercase tracking-[0.09em] text-(--muted-soft)">
                 Japanese surname
               </p>
               <p className="japanese-display mt-3 text-5xl font-medium leading-tight sm:text-6xl">
                 {surname.kanji}
               </p>
-              <p className="japanese-display mt-2 text-sm text-[#647068] sm:text-base">
+              <p className="japanese-display mt-2 text-sm text-(--muted) sm:text-base">
                 {surname.hiragana} · {surname.katakana}
               </p>
             </div>
@@ -149,11 +149,11 @@ export default async function SurnamePage({
         </div>
         <dl className="surface grid gap-3 p-5 text-sm">
           <div className="flex justify-between gap-4">
-            <dt className="text-[#647068]">Meaning</dt>
+            <dt className="text-(--muted)">Meaning</dt>
             <dd className="text-right font-semibold">{surname.literalMeaning}</dd>
           </div>
           <div className="flex justify-between gap-4">
-            <dt className="text-[#647068]">Data status</dt>
+            <dt className="text-(--muted)">Data status</dt>
             <dd className="font-semibold capitalize">{surname.verificationStatus.replace("_", " ")}</dd>
           </div>
         </dl>
@@ -177,7 +177,7 @@ export default async function SurnamePage({
         </div>
         <div className="lg:pt-16">
           <OriginConfidenceBadge confidence={surname.originConfidence} />
-          <p className="mt-5 text-base leading-7 text-[#59645d]">{surname.summary}</p>
+          <p className="mt-5 text-base leading-7 text-(--muted-strong)">{surname.summary}</p>
           <p className="mt-3 text-sm leading-6 text-[#747b76]">
             This interpretation does not mean that everyone with this surname
             shares one ancestor or one place of origin.
@@ -189,7 +189,7 @@ export default async function SurnamePage({
         <p className="eyebrow">Regional evidence</p>
         <h2 className="section-title mb-6 mt-2">Distribution across Japan</h2>
         <JapanPrefectureMap regions={surname.regions} />
-        <div className="mt-4 flex flex-wrap gap-3 text-xs text-[#647068]">
+        <div className="mt-4 flex flex-wrap gap-3 text-xs text-(--muted)">
           <span className="chip">Green · modern population distribution</span>
           <span className="chip">Red · possible historical origin</span>
           <span className="chip">Literal inference is never mapped</span>
@@ -206,7 +206,7 @@ export default async function SurnamePage({
         <p className="eyebrow">Natural pairings</p>
         <h2 className="section-title mb-6 mt-2">First names to pair with {surname.romaji}</h2>
         {usesExamplePairings && (
-          <p className="mb-6 max-w-3xl text-sm leading-6 text-[#647068]">
+          <p className="mb-6 max-w-3xl text-sm leading-6 text-(--muted)">
             Reviewed surname-specific pairings are not yet recorded for
             {" "}{surname.romaji}, so the examples below pair it with reviewed
             given names from this collection. Any given name can follow a
@@ -214,9 +214,9 @@ export default async function SurnamePage({
           </p>
         )}
         <CompatibleNames names={pairingNames} surname={surname} />
-        <div className="mt-6 rounded-2xl border border-[#d9ddd6] bg-[#f3f4ef] p-5 sm:p-6">
+        <div className="mt-6 rounded-2xl border border-(--line) bg-[#f3f4ef] p-5 sm:p-6">
           <h3 className="text-lg font-semibold">Use {surname.romaji} in a generated name</h3>
-          <p className="mt-2 max-w-3xl text-sm leading-6 text-[#647068]">
+          <p className="mt-2 max-w-3xl text-sm leading-6 text-(--muted)">
             Want to use {surname.romaji} in a complete name? Keep this family
             name in the Japanese Name Generator and compare it with documented
             given-name readings, or generate another Japanese surname first.
@@ -243,13 +243,13 @@ export default async function SurnamePage({
                 .join("");
               return (
                 <Link
-                  className="surface p-4 transition hover:border-[#aac0b1]"
+                  className="surface p-4 transition hover:border-(--sage)"
                   href={`/surname/${item.slug}`}
                   key={item.id}
                 >
                   <span className="japanese-display block text-2xl font-semibold">{item.kanji}</span>
-                  <span className="mt-1 block text-sm text-[#647068]">{item.romaji}</span>
-                  <span className="mt-3 block text-xs font-bold text-[#315c4b]">
+                  <span className="mt-1 block text-sm text-(--muted)">{item.romaji}</span>
+                  <span className="mt-3 block text-xs font-bold text-(--moss)">
                     Shares {sharedKanji} →
                   </span>
                 </Link>
@@ -262,7 +262,7 @@ export default async function SurnamePage({
       <section className="py-12" aria-labelledby="sources-heading">
         <p className="eyebrow">Evidence trail</p>
         <h2 className="section-title mb-3 mt-2" id="sources-heading">Sources</h2>
-        <p className="mb-6 max-w-3xl text-sm leading-6 text-[#647068]">
+        <p className="mb-6 max-w-3xl text-sm leading-6 text-(--muted)">
           These references support general name-system history, kanji readings,
           or the research method. They do not all establish one family lineage.
         </p>

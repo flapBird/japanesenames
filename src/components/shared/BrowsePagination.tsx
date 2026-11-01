@@ -19,12 +19,12 @@ export function BrowsePagination({ basePath, page, count, filtered, onPageChange
         ) : (
           <Link key={number} href={browseHref(basePath, number)} prefetch={false}
             aria-label={`Page ${number}`} aria-current={number === page ? "page" : undefined}
-            className={`button-secondary !min-w-10 !px-3 ${number === page ? "!bg-[#315c4b] !text-white" : ""}`}>
+            className={`button-secondary !min-w-10 !px-3 ${number === page ? "!bg-(--moss) !text-white" : ""}`}>
             {number}
           </Link>
         ),
       )}
-      <span className="w-full text-center text-xs text-[#647068]">Page {page} of {pages}</span>
+      <span className="w-full text-center text-xs text-(--muted)">Page {page} of {pages}</span>
     </nav>
   );
 }

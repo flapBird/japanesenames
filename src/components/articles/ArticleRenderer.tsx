@@ -12,7 +12,7 @@ function renderInlineText(text: string, keyPrefix: string) {
     if (!match) return <span key={`${keyPrefix}-${index}`}>{part}</span>;
     return (
       <Link
-        className="font-semibold text-[#315c4b] underline underline-offset-4"
+        className="font-semibold text-(--moss) underline underline-offset-4"
         href={match[2]}
         key={`${keyPrefix}-${index}`}
       >
@@ -34,7 +34,7 @@ function renderTableCell(cell: string, keyPrefix: string) {
     return <span className="font-semibold text-[#a35564]">Feminine</span>;
   }
   if (cell === "Masculine") {
-    return <span className="font-semibold text-[#315c4b]">Masculine</span>;
+    return <span className="font-semibold text-(--moss)">Masculine</span>;
   }
   return renderInlineText(cell, keyPrefix);
 }
@@ -72,7 +72,7 @@ export function ArticleRenderer({ blocks }: { blocks: ArticleBlock[] }) {
               >
                 {parts ? (
                   <>
-                    <span className="text-[#a34837]">{parts.number}.</span> {parts.label}
+                    <span className="text-(--clay)">{parts.number}.</span> {parts.label}
                   </>
                 ) : (
                   block.text
@@ -94,12 +94,12 @@ export function ArticleRenderer({ blocks }: { blocks: ArticleBlock[] }) {
           case "callout":
             return (
               <aside
-                className="mt-8 flex max-w-3xl items-start gap-4 rounded-2xl bg-[#e7eee9] p-5"
+                className="mt-8 flex max-w-3xl items-start gap-4 rounded-2xl bg-(--moss-soft) p-5"
                 key={key}
               >
                 <span
                   aria-hidden="true"
-                  className="mt-0.5 grid size-9 shrink-0 place-items-center rounded-full bg-[#315c4b]"
+                  className="mt-0.5 grid size-9 shrink-0 place-items-center rounded-full bg-(--moss)"
                 >
                   <svg
                     fill="none"
@@ -144,14 +144,14 @@ export function ArticleRenderer({ blocks }: { blocks: ArticleBlock[] }) {
             }
             return (
               <div
-                className="mt-8 max-w-3xl rounded-2xl border border-[#deddd5] bg-[#fffefb]/95 p-5"
+                className="mt-8 max-w-3xl rounded-2xl border border-(--line) bg-(--surface)/95 p-5"
                 key={key}
               >
                 <div className="flex flex-wrap items-baseline justify-between gap-3">
-                  {block.title && <p className="eyebrow !text-[#315c4b]">{block.title}</p>}
+                  {block.title && <p className="eyebrow !text-(--moss)">{block.title}</p>}
                   {block.linkLabel && block.linkHref && (
                     <Link
-                      className="text-xs font-bold text-[#315c4b] underline-offset-4 hover:underline"
+                      className="text-xs font-bold text-(--moss) underline-offset-4 hover:underline"
                       href={block.linkHref}
                     >
                       {block.linkLabel} →
@@ -159,7 +159,7 @@ export function ArticleRenderer({ blocks }: { blocks: ArticleBlock[] }) {
                   )}
                 </div>
                 {grid}
-                <p className="mt-3 text-xs text-[#747d77]">
+                <p className="mt-3 text-xs text-(--muted-soft)">
                   Meanings describe the written form, not the sound. Links open the full record
                   with sources.
                 </p>
@@ -169,25 +169,25 @@ export function ArticleRenderer({ blocks }: { blocks: ArticleBlock[] }) {
           case "figure":
             return (
               <figure className="mt-8 max-w-3xl" key={key}>
-                <div className="rounded-2xl border border-[#deddd5] bg-[#fffefb]/95 p-5 sm:p-6">
+                <div className="rounded-2xl border border-(--line) bg-(--surface)/95 p-5 sm:p-6">
                   <p className="eyebrow">{block.label}</p>
                   <div className="mt-4 grid gap-4">
                     {block.bars.map((bar) => (
                       <div key={bar.label}>
                         <div className="flex flex-wrap items-baseline justify-between gap-2">
                           <p className="text-sm font-semibold text-[#334740]">{bar.label}</p>
-                          <p className="article-heading text-xl font-bold text-[#315c4b]">
+                          <p className="article-heading text-xl font-bold text-(--moss)">
                             {bar.value}
                           </p>
                         </div>
                         <div
                           className={`mt-1.5 h-3 overflow-hidden rounded-full ${
-                            bar.tone === "moss" ? "bg-[#e7eee9]" : "bg-[#f4e9e5]"
+                            bar.tone === "moss" ? "bg-(--moss-soft)" : "bg-(--clay-soft)"
                           }`}
                         >
                           <div
                             className={`h-full rounded-full ${
-                              bar.tone === "moss" ? "bg-[#315c4b]" : "bg-[#a34837]"
+                              bar.tone === "moss" ? "bg-(--moss)" : "bg-(--clay)"
                             }`}
                             style={{
                               width: `${Math.round(Math.min(Math.max(bar.ratio, 0), 1) * 100)}%`,
@@ -198,12 +198,12 @@ export function ArticleRenderer({ blocks }: { blocks: ArticleBlock[] }) {
                     ))}
                     {block.chips && block.chips.length > 0 && (
                       <div className="flex flex-wrap items-center gap-2 pt-0.5">
-                        <span className="text-xs text-[#59645d]">
+                        <span className="text-xs text-(--muted-strong)">
                           {block.chipsLabel ?? "Also legal:"}
                         </span>
                         {block.chips.map((chip) => (
                           <span
-                            className="rounded-full border border-[#deddd5] bg-[#faf9f5] px-3 py-1 text-xs font-semibold"
+                            className="rounded-full border border-(--line) bg-(--paper-raised) px-3 py-1 text-xs font-semibold"
                             key={chip}
                           >
                             {chip}
@@ -213,7 +213,7 @@ export function ArticleRenderer({ blocks }: { blocks: ArticleBlock[] }) {
                     )}
                   </div>
                 </div>
-                <figcaption className="mt-2.5 text-[0.8rem] leading-6 text-[#747d77]">
+                <figcaption className="mt-2.5 text-[0.8rem] leading-6 text-(--muted-soft)">
                   {block.caption}
                   {block.source ? ` ${block.source}` : ""}
                 </figcaption>
@@ -222,8 +222,8 @@ export function ArticleRenderer({ blocks }: { blocks: ArticleBlock[] }) {
           case "quoteCard":
             return (
               <figure className="mt-8 max-w-3xl" key={key}>
-                <div className="rounded-2xl bg-[#eaf0f2] p-6 sm:p-7">
-                  <span aria-hidden="true" className="block font-serif text-6xl leading-none text-[#667984]/40">
+                <div className="rounded-2xl bg-(--indigo-soft) p-6 sm:p-7">
+                  <span aria-hidden="true" className="block font-serif text-6xl leading-none text-(--indigo)/40">
                     “
                   </span>
                   <blockquote className="mt-1">
@@ -234,12 +234,12 @@ export function ArticleRenderer({ blocks }: { blocks: ArticleBlock[] }) {
                   {(block.tag || block.note) && (
                     <figcaption className="mt-4 flex flex-wrap items-center gap-3">
                       {block.tag && (
-                        <span className="rounded-full border border-[#667984]/45 px-3 py-1 text-xs font-bold text-[#4d606b]">
+                        <span className="rounded-full border border-(--indigo)/45 px-3 py-1 text-xs font-bold text-[#4d606b]">
                           {block.tag}
                         </span>
                       )}
                       {block.note && (
-                        <span className="text-[0.8rem] leading-5 text-[#59645d]">{block.note}</span>
+                        <span className="text-[0.8rem] leading-5 text-(--muted-strong)">{block.note}</span>
                       )}
                     </figcaption>
                   )}
@@ -249,7 +249,7 @@ export function ArticleRenderer({ blocks }: { blocks: ArticleBlock[] }) {
           case "table":
             return (
               <div
-                className="mt-8 max-w-3xl overflow-x-auto rounded-2xl border border-[#deddd5] bg-[#fffefb]/95"
+                className="mt-8 max-w-3xl overflow-x-auto rounded-2xl border border-(--line) bg-(--surface)/95"
                 key={key}
               >
                 <table className="w-full border-collapse text-[0.92rem]">
@@ -257,7 +257,7 @@ export function ArticleRenderer({ blocks }: { blocks: ArticleBlock[] }) {
                     <tr className="bg-[#f3f4ef]">
                       {block.columns.map((column) => (
                         <th
-                          className="px-4 py-3 text-left text-[0.72rem] font-bold uppercase tracking-[0.12em] text-[#59645d]"
+                          className="px-4 py-3 text-left text-[0.72rem] font-bold uppercase tracking-[0.12em] text-(--muted-strong)"
                           key={column}
                         >
                           {column}
@@ -267,7 +267,7 @@ export function ArticleRenderer({ blocks }: { blocks: ArticleBlock[] }) {
                   </thead>
                   <tbody className="text-[#334740]">
                     {block.rows.map((row, rowIndex) => (
-                      <tr className="border-t border-[#e3e2dc]" key={`${key}-${rowIndex}`}>
+                      <tr className="border-t border-(--line-soft)" key={`${key}-${rowIndex}`}>
                         {row.map((cell, cellIndex) => (
                           <td
                             className="px-4 py-3 align-top leading-6"

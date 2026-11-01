@@ -16,9 +16,9 @@ const naturalnessLabel = {
 };
 
 const naturalnessTone = {
-  high: "bg-[#e6efe9] text-[#315c4b]",
+  high: "bg-(--moss-soft) text-(--moss)",
   medium: "bg-[#f7eddc] text-[#795a24]",
-  fiction_friendly: "bg-[#f7e8eb] text-[#9f4f60]",
+  fiction_friendly: "bg-(--sakura-soft) text-[#9f4f60]",
   needs_review: "bg-[#efeeea] text-[#68726b]",
 };
 
@@ -67,7 +67,7 @@ export function GeneratedNameCard({
       </p>
       <p className="japanese-display mt-1 text-sm text-[#6a746d]">{hiragana}</p>
       <div className="mt-2.5 flex flex-wrap items-center gap-2">
-        <span className="rounded-full bg-[#e7eee9] px-2.5 py-0.5 text-[0.62rem] font-extrabold uppercase tracking-[0.06em] text-[#315c4b]">
+        <span className="rounded-full bg-(--moss-soft) px-2.5 py-0.5 text-[0.62rem] font-extrabold uppercase tracking-[0.06em] text-(--moss)">
           Western order
         </span>
         <span className="text-[1.05rem] font-semibold tracking-[-0.01em]">{romaji}</span>
@@ -78,7 +78,7 @@ export function GeneratedNameCard({
         >
           {dictionaryListed ? "Dictionary-listed" : naturalnessLabel[item.naturalness]}
         </span>
-        <span className="rounded-full bg-[#f7e8ec] px-2.5 py-0.5 text-xs font-bold capitalize text-[#8c3a52]">
+        <span className="rounded-full bg-(--sakura-soft) px-2.5 py-0.5 text-xs font-bold capitalize text-[#8c3a52]">
           {item.firstName.genders.join(" / ")}
         </span>
         {dictionaryListed && (
@@ -98,12 +98,12 @@ export function GeneratedNameCard({
         {meaning}
       </p>
       {usesDictionaryGlosses && <CharacterNotes parts={item.variation.kanjiBreakdown} />}
-      <div className="mt-auto grid grid-cols-3 gap-2 border-t border-[#e3e2dc] pt-3">
+      <div className="mt-auto grid grid-cols-3 gap-2 border-t border-(--line-soft) pt-3">
         <button
           aria-label={`Lock surname ${item.surname.romaji} and generate different first names`}
           aria-pressed={surnameLocked}
           className={`button-quiet !min-h-9 min-w-0 justify-center !px-1.5 !text-[0.68rem] whitespace-nowrap sm:!px-2 sm:!text-xs [&_svg]:hidden sm:[&_svg]:block ${
-            surnameLocked ? "!bg-[#e7eee9] !text-[#315c4b]" : ""
+            surnameLocked ? "!bg-(--moss-soft) !text-(--moss)" : ""
           }`}
           disabled={surnameLocked}
           onClick={onLockSurname}
@@ -117,7 +117,7 @@ export function GeneratedNameCard({
           aria-label={`Lock first name ${item.firstName.romaji} and generate different surnames`}
           aria-pressed={firstNameLocked}
           className={`button-quiet !min-h-9 min-w-0 justify-center !px-1.5 !text-[0.68rem] whitespace-nowrap sm:!px-2 sm:!text-xs [&_svg]:hidden sm:[&_svg]:block ${
-            firstNameLocked ? "!bg-[#e7eee9] !text-[#315c4b]" : ""
+            firstNameLocked ? "!bg-(--moss-soft) !text-(--moss)" : ""
           }`}
           disabled={firstNameLocked}
           onClick={onLockFirstName}
@@ -132,7 +132,7 @@ export function GeneratedNameCard({
           text={`${japanese} — ${romaji} — ${hiragana}`}
         />
       </div>
-      <div className="mt-3 flex gap-4 text-xs font-bold text-[#315c4b]">
+      <div className="mt-3 flex gap-4 text-xs font-bold text-(--moss)">
         {item.surname.isIndexable && <Link href={`/surname/${item.surname.slug}`}>Explore surname</Link>}
         {item.firstName.isIndexable && <Link href={`/name/${item.firstName.slug}`}>Explore first name</Link>}
       </div>

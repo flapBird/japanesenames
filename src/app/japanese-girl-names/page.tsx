@@ -98,13 +98,13 @@ export default async function GirlNamesPage({ params }: Props) {
       />
       <header className="page-intro my-6">
         <h1 className="section-title">Japanese Girl Names with Meanings and Kanji</h1>
-        <p className="mt-3 text-base leading-7 text-[#59645d]">
+        <p className="mt-3 text-base leading-7 text-(--muted-strong)">
           Explore Japanese girl names with kanji, hiragana, romaji, and meaning
           notes. Compare written forms, listen to the reading, or keep a name
           while finding a surname to pair with it.
         </p>
         <Link
-          className="mt-5 inline-flex font-bold text-[#315c4b] underline underline-offset-4"
+          className="mt-5 inline-flex font-bold text-(--moss) underline underline-offset-4"
           href="/?gender=girl#generator"
         >
           Use a girl name in the Japanese Name Generator
@@ -116,16 +116,16 @@ export default async function GirlNamesPage({ params }: Props) {
         entries={topGirlPicks}
       />
       <FirstNameExplorer key={page} initialPage={page} gender="girl" names={names.map(toBrowseName)} />
-      <p className="mt-4 text-sm leading-6 text-[#647068]">Editorial selection is a browsing order, not a popularity ranking. Style and usage estimates are editorial guidance. Dictionary notes do not establish a name’s intended meaning.</p>
+      <p className="mt-4 text-sm leading-6 text-(--muted)">Editorial selection is a browsing order, not a popularity ranking. Style and usage estimates are editorial guidance. Dictionary notes do not establish a name’s intended meaning.</p>
       <section className="mt-16 max-w-3xl">
         <h2 className="section-title !text-3xl">Choosing a spelling, not just a sound</h2>
-        <p className="mt-4 leading-7 text-[#59645d]">
+        <p className="mt-4 leading-7 text-(--muted-strong)">
           Japanese given names are often discussed by reading and written form.
           Two people called Rin may use different kanji, so a meaning belongs to
           a particular spelling rather than automatically to every person with
           that reading.
         </p>
-        <p className="mt-4 leading-7 text-[#59645d]">
+        <p className="mt-4 leading-7 text-(--muted-strong)">
           For example, Hana written 花 points to a flower, while Hikari written
           光 points to light. Akari can be written 明里 or 灯 in this collection;
           the character explanation changes with the spelling. Compare the
@@ -138,7 +138,7 @@ export default async function GirlNamesPage({ params }: Props) {
           {girlFaq.map((item) => (
             <details className="surface p-5" key={item.question}>
               <summary className="cursor-pointer font-semibold">{item.question}</summary>
-              <p className="mt-3 text-sm leading-6 text-[#59645d]">{item.answer}</p>
+              <p className="mt-3 text-sm leading-6 text-(--muted-strong)">{item.answer}</p>
             </details>
           ))}
         </div>
@@ -146,21 +146,21 @@ export default async function GirlNamesPage({ params }: Props) {
       <section className="mt-14 max-w-3xl">
         <h2 className="section-title !text-3xl">Keep exploring</h2>
         <div className="mt-5 grid gap-4 sm:grid-cols-2">
-          <Link className="surface block p-5 transition hover:border-[#aac0b1]" href="/articles/most-popular-japanese-names">
+          <Link className="surface block p-5 transition hover:border-(--sage)" href="/articles/most-popular-japanese-names">
             <span className="block font-semibold">The most popular Japanese names</span>
-            <span className="mt-2 block text-sm leading-6 text-[#59645d]">The readings topping Japan’s recent newborn rankings, with kanji and meanings for each.</span>
+            <span className="mt-2 block text-sm leading-6 text-(--muted-strong)">The readings topping Japan’s recent newborn rankings, with kanji and meanings for each.</span>
           </Link>
-          <Link className="surface block p-5 transition hover:border-[#aac0b1]" href="/articles/names-meaning-flower">
+          <Link className="surface block p-5 transition hover:border-(--sage)" href="/articles/names-meaning-flower">
             <span className="block font-semibold">Japanese names meaning flower</span>
-            <span className="mt-2 block text-sm leading-6 text-[#59645d]">Sakura, Hana, Momoka, Kaede, and 22 more floral names with their written forms.</span>
+            <span className="mt-2 block text-sm leading-6 text-(--muted-strong)">Sakura, Hana, Momoka, Kaede, and 22 more floral names with their written forms.</span>
           </Link>
-          <Link className="surface block p-5 transition hover:border-[#aac0b1]" href="/articles/japanese-names-that-work-in-english">
+          <Link className="surface block p-5 transition hover:border-(--sage)" href="/articles/japanese-names-that-work-in-english">
             <span className="block font-semibold">Names that work in English</span>
-            <span className="mt-2 block text-sm leading-6 text-[#59645d]">24 bilingual-friendly names and how each one travels between the two languages.</span>
+            <span className="mt-2 block text-sm leading-6 text-(--muted-strong)">24 bilingual-friendly names and how each one travels between the two languages.</span>
           </Link>
-          <Link className="surface block p-5 transition hover:border-[#aac0b1]" href="/articles/unisex-japanese-names">
+          <Link className="surface block p-5 transition hover:border-(--sage)" href="/articles/unisex-japanese-names">
             <span className="block font-semibold">Unisex Japanese names</span>
-            <span className="mt-2 block text-sm leading-6 text-[#59645d]">Ren, Aoi, Hikaru, and 21 more names that register for any gender.</span>
+            <span className="mt-2 block text-sm leading-6 text-(--muted-strong)">Ren, Aoi, Hikaru, and 21 more names that register for any gender.</span>
           </Link>
         </div>
       </section>

@@ -7,7 +7,7 @@ interface Crumb {
 
 export function Breadcrumbs({ items }: { items: Crumb[] }) {
   return (
-    <nav aria-label="Breadcrumb" className="py-5 text-xs text-[#647068]">
+    <nav aria-label="Breadcrumb" className="py-5 text-xs text-(--muted)">
       <ol className="flex flex-wrap items-center gap-2">
         <li><Link href="/">Home</Link></li>
         {items.map((item) => (

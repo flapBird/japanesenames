@@ -58,7 +58,7 @@ export function GeneratorFilters({
   const active = fields.filter((field) => value[field.key] !== (field.key === "mode" ? "realistic" : "any"));
   return (
     <details className="group">
-      <summary className="flex cursor-pointer list-none items-center gap-2 text-sm font-semibold text-[#315c4b] [&::-webkit-details-marker]:hidden">
+      <summary className="flex cursor-pointer list-none items-center gap-2 text-sm font-semibold text-(--moss) [&::-webkit-details-marker]:hidden">
         More filters: style, meaning &amp; kanji{active.length ? ` (${active.length} selected)` : ""}
         <svg
           aria-hidden="true"
@@ -76,7 +76,7 @@ export function GeneratorFilters({
         </svg>
       </summary>
       <div className="mt-4 grid gap-3 sm:grid-cols-3">{fields.map(renderField)}</div>
-      <p className="mt-2 text-xs leading-5 text-[#647068]">Style and name mode are editorial guidance. Meaning themes help explore characters; they do not establish a person’s naming intention.</p>
+      <p className="mt-2 text-xs leading-5 text-(--muted)">Style and name mode are editorial guidance. Meaning themes help explore characters; they do not establish a person’s naming intention.</p>
       <div className="mt-3 border-t border-[#e5ddd8] pt-3">{kanjiControl}</div>
       {popularKanji}
     </details>

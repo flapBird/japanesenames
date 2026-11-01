@@ -37,7 +37,7 @@ export function KanjiBreakdown({
           </span>
         ))}
       </span>
-      <span className="kanji-explanation mt-4 block text-center text-sm text-[#647068]">
+      <span className="kanji-explanation mt-4 block text-center text-sm text-(--muted)">
         Combined literal reading: <strong className="text-[#26352d]">{literalMeaning}</strong>
       </span>
     </button>

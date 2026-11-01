@@ -21,8 +21,8 @@ export const metadata: Metadata = {
 };
 
 const headingClass = "text-xl font-semibold text-[#2f4238]";
-const copyClass = "mt-3 leading-7 text-[#59645d]";
-const listClass = "mt-3 list-disc space-y-2 pl-5 leading-7 text-[#59645d]";
+const copyClass = "mt-3 leading-7 text-(--muted-strong)";
+const listClass = "mt-3 list-disc space-y-2 pl-5 leading-7 text-(--muted-strong)";
 
 export default function PrivacyPage() {
   return (
@@ -30,12 +30,12 @@ export default function PrivacyPage() {
       <header className="page-intro my-6">
         <p className="eyebrow">Your information</p>
         <h1 className="section-title mt-2">Privacy Policy</h1>
-        <p className="mt-5 max-w-3xl text-lg leading-8 text-[#59645d]">
+        <p className="mt-5 max-w-3xl text-lg leading-8 text-(--muted-strong)">
           This policy explains what information Japanese Names collects, why
           it is used, and the choices available to you when you visit
           japanesenames.site.
         </p>
-        <p className="mt-3 text-sm text-[#647068]">Last updated: October 25, 2026</p>
+        <p className="mt-3 text-sm text-(--muted)">Last updated: October 25, 2026</p>
       </header>
 
       <article className="surface my-10 space-y-10 p-6 sm:p-9">
@@ -108,7 +108,7 @@ export default function PrivacyPage() {
             measurement features from working. You can also use the{
             " "}
             <a
-              className="font-semibold text-[#315c4b] underline underline-offset-4"
+              className="font-semibold text-(--moss) underline underline-offset-4"
               href="https://tools.google.com/dlpage/gaoptout"
               rel="noreferrer"
               target="_blank"
@@ -136,7 +136,7 @@ export default function PrivacyPage() {
             may opt out of personalized advertising through{
             " "}
             <a
-              className="font-semibold text-[#315c4b] underline underline-offset-4"
+              className="font-semibold text-(--moss) underline underline-offset-4"
               href="https://adssettings.google.com/"
               rel="noreferrer"
               target="_blank"
@@ -146,7 +146,7 @@ export default function PrivacyPage() {
             . You may also review industry opt-out choices at{
             " "}
             <a
-              className="font-semibold text-[#315c4b] underline underline-offset-4"
+              className="font-semibold text-(--moss) underline underline-offset-4"
               href="https://optout.aboutads.info/"
               rel="noreferrer"
               target="_blank"
@@ -159,7 +159,7 @@ export default function PrivacyPage() {
             Learn more about{
             " "}
             <a
-              className="font-semibold text-[#315c4b] underline underline-offset-4"
+              className="font-semibold text-(--moss) underline underline-offset-4"
               href="https://policies.google.com/technologies/partner-sites"
               rel="noreferrer"
               target="_blank"
@@ -216,7 +216,7 @@ export default function PrivacyPage() {
             in your browser and manage cookies through browser or consent
             controls. To make a privacy request, use the address on our{
             " "}
-            <Link className="font-semibold text-[#315c4b] underline underline-offset-4" href="/contact">
+            <Link className="font-semibold text-(--moss) underline underline-offset-4" href="/contact">
               Contact page
             </Link>
             . We may need to verify a request before completing it.
@@ -242,7 +242,7 @@ export default function PrivacyPage() {
             date at the top will show the latest revision. Questions or requests
             can be sent through our{
             " "}
-            <Link className="font-semibold text-[#315c4b] underline underline-offset-4" href="/contact">
+            <Link className="font-semibold text-(--moss) underline underline-offset-4" href="/contact">
               Contact page
             </Link>
             .

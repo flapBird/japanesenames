@@ -29,12 +29,12 @@ export function FavoriteButton({
     <button
       aria-label={`${active ? "Remove from" : "Add to"} favorites: ${item.label}`}
       aria-pressed={active}
-      className={`button-quiet !min-h-9 ${active ? "!text-[#a34837]" : ""} ${
+      className={`button-quiet !min-h-9 ${active ? "!text-(--clay)" : ""} ${
         compact
           ? `!size-10 !min-h-10 !shrink-0 !p-0 !border ${
               active
-                ? "!border-[#d8afa6] !bg-[#f4e9e5]"
-                : "!border-[#deddd5] !bg-[#fffefb] hover:!border-[#a34837]"
+                ? "!border-[#d8afa6] !bg-(--clay-soft)"
+                : "!border-(--line) !bg-(--surface) hover:!border-(--clay)"
             }`
           : ""
       }`}
@@ -46,7 +46,7 @@ export function FavoriteButton({
       type="button"
     >
       <HeartIcon
-        className={active ? "text-[#a34837]" : "text-[#647068]"}
+        className={active ? "text-(--clay)" : "text-(--muted)"}
         filled={active}
       />
       {compact ? null : active ? "Saved" : "Favorite"}

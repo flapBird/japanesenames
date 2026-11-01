@@ -117,14 +117,14 @@ export default function HomePage() {
           <h1 className="section-title !text-[clamp(2.2rem,6vw,3.8rem)]">
             Japanese Name Generator
           </h1>
-          <p className="mt-3.5 max-w-2xl text-base leading-7 text-[#59645d] sm:text-[1.05rem]">
+          <p className="mt-3.5 max-w-2xl text-base leading-7 text-(--muted-strong) sm:text-[1.05rem]">
             Generate Japanese names with kanji, readings, and meaning notes.
             Lock the part you like, explore the rest — free, no sign-up.
           </p>
           <div className="mt-4 flex flex-wrap gap-2">
             {["JMnedict records", "KANJIDIC2 glosses", "No invented readings"].map((chip) => (
               <span
-                className="rounded-full border border-[#deddd5] bg-[#fffefb] px-3.5 py-1.5 text-xs font-semibold text-[#43504a]"
+                className="rounded-full border border-(--line) bg-(--surface) px-3.5 py-1.5 text-xs font-semibold text-[#43504a]"
                 key={chip}
               >
                 {chip}
@@ -137,13 +137,13 @@ export default function HomePage() {
         </Suspense>
         <section
           aria-labelledby="generator-help-title"
-          className="mt-8 grid gap-5 border-y border-[#deddd5] py-6 lg:grid-cols-[0.65fr_1.35fr] lg:items-start"
+          className="mt-8 grid gap-5 border-y border-(--line) py-6 lg:grid-cols-[0.65fr_1.35fr] lg:items-start"
         >
           <div>
             <h2 className="text-xl font-semibold" id="generator-help-title">
               How to use the generator
             </h2>
-            <p className="mt-2 max-w-md text-sm leading-6 text-[#647068]">
+            <p className="mt-2 max-w-md text-sm leading-6 text-(--muted)">
               Start broad, then keep the part you like while exploring alternatives.
             </p>
           </div>
@@ -165,13 +165,13 @@ export default function HomePage() {
               <li className="flex gap-3" key={title}>
                 <span
                   aria-hidden="true"
-                  className="grid size-7 shrink-0 place-items-center rounded-full bg-[#315c4b] text-xs font-bold text-white"
+                  className="grid size-7 shrink-0 place-items-center rounded-full bg-(--moss) text-xs font-bold text-white"
                 >
                   {index + 1}
                 </span>
                 <div>
                   <h3 className="text-sm font-semibold">{title}</h3>
-                  <p className="mt-1 text-xs leading-5 text-[#647068]">{text}</p>
+                  <p className="mt-1 text-xs leading-5 text-(--muted)">{text}</p>
                 </div>
               </li>
             ))}
@@ -179,7 +179,7 @@ export default function HomePage() {
         </section>
         <section
           aria-labelledby="verification-title"
-          className="mt-8 rounded-2xl border border-[#d9ddd6] bg-[#f3f4ef] p-5 sm:p-6"
+          className="mt-8 rounded-2xl border border-(--line) bg-[#f3f4ef] p-5 sm:p-6"
         >
           <div className="grid gap-5 lg:grid-cols-[0.7fr_1.3fr] lg:items-start">
             <div>
@@ -188,7 +188,7 @@ export default function HomePage() {
                 What the name records tell you
               </h2>
               <Link
-                className="mt-4 inline-flex text-sm font-bold text-[#315c4b] underline underline-offset-4"
+                className="mt-4 inline-flex text-sm font-bold text-(--moss) underline underline-offset-4"
                 href="/about"
               >
                 Read the full data method
@@ -211,7 +211,7 @@ export default function HomePage() {
               ].map(([title, text]) => (
                 <article key={title}>
                   <h3 className="text-sm font-semibold">{title}</h3>
-                  <p className="mt-2 text-xs leading-5 text-[#647068]">{text}</p>
+                  <p className="mt-2 text-xs leading-5 text-(--muted)">{text}</p>
                 </article>
               ))}
             </div>
@@ -273,8 +273,8 @@ export default function HomePage() {
                 {item.mark}
               </span>
               <h2 className="text-xl font-semibold">{item.title}</h2>
-              <p className="mt-2 text-sm leading-6 text-[#647068]">{item.text}</p>
-              <span className="mt-5 inline-flex items-center gap-2 text-sm font-bold text-[#315c4b]">
+              <p className="mt-2 text-sm leading-6 text-(--muted)">{item.text}</p>
+              <span className="mt-5 inline-flex items-center gap-2 text-sm font-bold text-(--moss)">
                 Explore <ArrowIcon className="transition-transform group-hover:translate-x-1" />
               </span>
             </Link>
@@ -283,14 +283,14 @@ export default function HomePage() {
       </section>
 
       <section className="container-page pb-14">
-        <div className="grid gap-5 border-t border-[#deddd5] pt-8 lg:grid-cols-[0.7fr_1.3fr]">
+        <div className="grid gap-5 border-t border-(--line) pt-8 lg:grid-cols-[0.7fr_1.3fr]">
           <div>
             <p className="eyebrow">About the tool</p>
             <h2 className="section-title mt-2 !text-[clamp(1.8rem,4vw,2.6rem)]">
               What is the Japanese Name Generator?
             </h2>
           </div>
-          <div className="max-w-3xl space-y-3 text-sm leading-6 text-[#59645d] sm:text-base sm:leading-7">
+          <div className="max-w-3xl space-y-3 text-sm leading-6 text-(--muted-strong) sm:text-base sm:leading-7">
             <p>
               The Japanese Name Generator combines established first-name
               readings, documented kanji spellings, and source-backed surname
@@ -319,7 +319,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="border-y border-[#deddd5] bg-[#efeee8] py-16">
+      <section className="border-y border-(--line) bg-[#efeee8] py-16">
         <div className="container-page">
           <p className="eyebrow">Featured surname stories</p>
           <h2 className="section-title mt-2">Read beyond the literal translation</h2>
@@ -330,29 +330,29 @@ export default function HomePage() {
                 href={`/surname/${surname.slug}`}
                 key={surname.id}
               >
-                <div className="grid grid-cols-2 overflow-hidden rounded-xl border border-[#e3e2dc]">
-                  <div className="min-w-0 bg-[#faf9f5] p-3.5">
-                    <p className="text-[0.62rem] font-bold uppercase tracking-[0.08em] text-[#747d77]">
+                <div className="grid grid-cols-2 overflow-hidden rounded-xl border border-(--line-soft)">
+                  <div className="min-w-0 bg-(--paper-raised) p-3.5">
+                    <p className="text-[0.62rem] font-bold uppercase tracking-[0.08em] text-(--muted-soft)">
                       Romanized surname
                     </p>
                     <h3 className="mt-2 text-xl font-semibold leading-tight">
                       {surname.romaji}
                     </h3>
                   </div>
-                  <div className="min-w-0 border-l border-[#e3e2dc] p-3.5">
-                    <p className="text-[0.62rem] font-bold uppercase tracking-[0.08em] text-[#747d77]">
+                  <div className="min-w-0 border-l border-(--line-soft) p-3.5">
+                    <p className="text-[0.62rem] font-bold uppercase tracking-[0.08em] text-(--muted-soft)">
                       Japanese surname
                     </p>
                     <p className="japanese-display mt-2 text-3xl leading-tight">
                       {surname.kanji}
                     </p>
-                    <p className="japanese-display mt-1 text-xs text-[#647068]">
+                    <p className="japanese-display mt-1 text-xs text-(--muted)">
                       {surname.hiragana}
                     </p>
                   </div>
                 </div>
-                <p className="mt-4 text-sm font-medium text-[#a34837]">{surname.literalMeaning}</p>
-                <p className="mt-4 line-clamp-3 text-sm leading-6 text-[#647068]">{surname.summary}</p>
+                <p className="mt-4 text-sm font-medium text-(--clay)">{surname.literalMeaning}</p>
+                <p className="mt-4 line-clamp-3 text-sm leading-6 text-(--muted)">{surname.summary}</p>
               </Link>
             ))}
           </div>
@@ -365,7 +365,7 @@ export default function HomePage() {
             <p className="eyebrow">Guides</p>
             <h2 className="section-title mt-2">Start with a name guide</h2>
           </div>
-          <Link className="text-sm font-bold text-[#315c4b] underline underline-offset-4" href="/articles">
+          <Link className="text-sm font-bold text-(--moss) underline underline-offset-4" href="/articles">
             All guides →
           </Link>
         </div>
@@ -389,15 +389,15 @@ export default function HomePage() {
             ["Natural combinations", "The generator uses compatible records and rule-based naturalness labels instead of a fake precision score."],
           ].map(([title, text], index) => (
             <article className="border-l border-[#b9c4bc] pl-5" key={title}>
-              <span className="text-xs font-bold text-[#a34837]">0{index + 1}</span>
+              <span className="text-xs font-bold text-(--clay)">0{index + 1}</span>
               <h3 className="mt-2 font-semibold">{title}</h3>
-              <p className="mt-2 text-sm leading-6 text-[#647068]">{text}</p>
+              <p className="mt-2 text-sm leading-6 text-(--muted)">{text}</p>
             </article>
           ))}
         </div>
       </section>
 
-      <section className="border-y border-[#deddd5] bg-[#f7f5ef] py-16">
+      <section className="border-y border-(--line) bg-(--paper) py-16">
         <div className="container-page">
           <p className="eyebrow">Review the result</p>
           <h2 className="section-title mt-2">How to evaluate a generated Japanese name</h2>
@@ -417,9 +417,9 @@ export default function HomePage() {
               ],
             ].map(([title, text], index) => (
               <article className="surface p-6" key={title}>
-                <span className="text-xs font-bold text-[#a34837]">0{index + 1}</span>
+                <span className="text-xs font-bold text-(--clay)">0{index + 1}</span>
                 <h3 className="mt-3 text-lg font-semibold">{title}</h3>
-                <p className="mt-3 text-sm leading-6 text-[#647068]">{text}</p>
+                <p className="mt-3 text-sm leading-6 text-(--muted)">{text}</p>
               </article>
             ))}
           </div>
@@ -434,9 +434,9 @@ export default function HomePage() {
             <details className="surface group p-5" key={item.question}>
               <summary className="flex cursor-pointer items-center justify-between gap-4 font-semibold">
                 {item.question}
-                <span className="text-xl text-[#a34837] group-open:rotate-45" aria-hidden="true">+</span>
+                <span className="text-xl text-(--clay) group-open:rotate-45" aria-hidden="true">+</span>
               </summary>
-              <p className="mt-4 max-w-3xl text-sm leading-6 text-[#647068]">{item.answer}</p>
+              <p className="mt-4 max-w-3xl text-sm leading-6 text-(--muted)">{item.answer}</p>
             </details>
           ))}
         </div>

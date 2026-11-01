@@ -12,7 +12,7 @@ export default function NotFound() {
       <span className="seal mx-auto" aria-hidden="true">無</span>
       <p className="eyebrow mt-6">404 · Not found</p>
       <h1 className="section-title mt-3">This name record does not exist</h1>
-      <p className="mx-auto mt-4 max-w-lg leading-7 text-[#647068]">
+      <p className="mx-auto mt-4 max-w-lg leading-7 text-(--muted)">
         The slug may be invalid, or the record may not have been added to the
         structured dataset.
       </p>

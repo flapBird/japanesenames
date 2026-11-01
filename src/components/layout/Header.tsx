@@ -11,7 +11,7 @@ const navigation = [
 
 export function Header() {
   return (
-    <header className="border-b border-[#deddd5] bg-[#f7f5ef]/95">
+    <header className="border-b border-(--line) bg-(--paper)/95">
       <div className="container-page flex min-h-18 items-center justify-between gap-5">
         <Link
           className="flex items-center gap-3 font-semibold tracking-[-0.02em]"
@@ -23,7 +23,7 @@ export function Header() {
         <nav aria-label="Main navigation" className="hidden items-center gap-4 lg:flex">
           {navigation.map((item) => (
             <Link
-              className="text-sm font-medium text-[#536058] hover:text-[#244638]"
+              className="text-sm font-medium text-[#536058] hover:text-(--moss-dark)"
               href={item.href}
               key={item.href}
             >
@@ -40,14 +40,14 @@ export function Header() {
           </summary>
           <nav
             aria-label="Mobile navigation"
-            className="absolute right-0 top-12 z-30 grid min-w-52 gap-1 rounded-xl border border-[#deddd5] bg-[#fffefb] p-2 shadow-xl"
+            className="absolute right-0 top-12 z-30 grid min-w-52 gap-1 rounded-xl border border-(--line) bg-(--surface) p-2 shadow-xl"
           >
             {navigation.map((item) => (
-              <Link className="rounded-lg px-3 py-2 text-sm hover:bg-[#e7eee9]" href={item.href} key={item.href}>
+              <Link className="rounded-lg px-3 py-2 text-sm hover:bg-(--moss-soft)" href={item.href} key={item.href}>
                 {item.label}
               </Link>
             ))}
-            <Link className="rounded-lg px-3 py-2 text-sm hover:bg-[#e7eee9]" href="/favorites">
+            <Link className="rounded-lg px-3 py-2 text-sm hover:bg-(--moss-soft)" href="/favorites">
               Favorites
             </Link>
           </nav>

@@ -89,11 +89,11 @@ export function FavoritesList() {
       <div className="surface overflow-hidden text-center">
         <div className="grid min-h-64 place-items-center bg-[#eef2ee] px-6 py-12">
           <div>
-            <div className="mx-auto grid size-14 place-items-center rounded-full border border-[#cbd5ce] bg-[#fffefb] text-2xl text-[#a34837]">
+            <div className="mx-auto grid size-14 place-items-center rounded-full border border-[#cbd5ce] bg-(--surface) text-2xl text-(--clay)">
               ♡
             </div>
             <h2 className="mt-5 text-xl font-semibold">No favorites yet</h2>
-            <p className="mx-auto mt-2 max-w-md text-sm leading-6 text-[#647068]">
+            <p className="mx-auto mt-2 max-w-md text-sm leading-6 text-(--muted)">
               Use the heart beside any generated name, first name, or surname.
               Your collection stays in this browser.
             </p>
@@ -111,10 +111,10 @@ export function FavoritesList() {
       <div className="grid grid-cols-3 gap-2 sm:gap-3">
         {groupConfig.map((group) => (
           <div className="surface px-3 py-4 sm:px-5" key={group.kind}>
-            <p className="text-2xl font-semibold text-[#315c4b]">
+            <p className="text-2xl font-semibold text-(--moss)">
               {counts[group.kind]}
             </p>
-            <p className="mt-1 text-xs font-bold text-[#647068] sm:text-sm">
+            <p className="mt-1 text-xs font-bold text-(--muted) sm:text-sm">
               {group.title}
             </p>
           </div>
@@ -132,9 +132,9 @@ export function FavoritesList() {
                   <h2 className="section-title !text-2xl" id={`favorites-${group.kind}`}>
                     {group.title}
                   </h2>
-                  <p className="mt-1 text-sm text-[#647068]">{group.description}</p>
+                  <p className="mt-1 text-sm text-(--muted)">{group.description}</p>
                 </div>
-                <span className="text-sm font-semibold text-[#647068]">
+                <span className="text-sm font-semibold text-(--muted)">
                   {groupItems.length}
                 </span>
               </div>
@@ -144,7 +144,7 @@ export function FavoritesList() {
                   const display = displayParts(item);
                   return (
                     <article
-                      className="surface relative flex min-h-64 flex-col overflow-hidden p-5 before:absolute before:inset-y-0 before:left-0 before:w-1 before:bg-[#a34837]"
+                      className="surface relative flex min-h-64 flex-col overflow-hidden p-5 before:absolute before:inset-y-0 before:left-0 before:w-1 before:bg-(--clay)"
                       key={item.id}
                     >
                       <div className="flex items-start justify-between gap-4">
@@ -154,7 +154,7 @@ export function FavoritesList() {
                             {display.japanese}
                           </p>
                           <p className="mt-1 font-semibold">{display.romaji}</p>
-                          <p className="mt-1 text-sm text-[#647068]">{display.detail}</p>
+                          <p className="mt-1 text-sm text-(--muted)">{display.detail}</p>
                         </div>
                         <div className="flex shrink-0 items-center gap-2">
                           {item.pronunciation && (
@@ -181,13 +181,13 @@ export function FavoritesList() {
                         {formatSavedAt(item.savedAt)}
                       </p>
 
-                      <div className="mt-auto flex flex-wrap items-center gap-2 border-t border-[#e3e2dc] pt-4">
+                      <div className="mt-auto flex flex-wrap items-center gap-2 border-t border-(--line-soft) pt-4">
                         <CopyButton
                           label="Copy"
                           text={`${item.label} · ${item.sublabel}`}
                         />
                         <Link
-                          className="button-quiet !min-h-9 !px-2.5 !text-[#315c4b]"
+                          className="button-quiet !min-h-9 !px-2.5 !text-(--moss)"
                           href={item.href ?? "/#generator"}
                         >
                           {item.href ? "View details →" : "Open generator →"}

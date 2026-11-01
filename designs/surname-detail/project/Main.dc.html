@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Surname Detail — Desktop v2</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#315c4b;text-decoration:none}
+a:hover{color:#244638}
+</style>
+</helmet>
+
+<div style="background-color:#f7f5ef;background-image:linear-gradient(rgba(49,92,75,0.025) 1px,transparent 1px);background-size:100% 32px;font-family:Inter,'Noto Sans JP',-apple-system,'Hiragino Kaku Gothic ProN','Yu Gothic',sans-serif;color:#19241f;padding-bottom:56px;">
+
+  <!-- breadcrumb -->
+  <div style="width:min(1120px,100% - 48px);margin-inline:auto;padding-top:18px;">
+    <p style="margin:0;font-size:13px;color:#647068;">Home <span aria-hidden="true" style="margin:0 8px;color:#b9c4bc;">/</span> Japanese Last Names <span aria-hidden="true" style="margin:0 8px;color:#b9c4bc;">/</span> Satō</p>
+  </div>
+
+  <!-- ======================= Hero (adds Popularity row) ======================= -->
+  <div style="width:min(1120px,100% - 48px);margin-inline:auto;margin-top:16px;border-left:4px solid #6f927f;border-radius:0 1.25rem 1.25rem 0;background:#e8f0eb;padding:26px 28px;">
+    <div style="display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:24px;align-items:start;">
+      <div>
+        <p style="margin:0;font-size:0.72rem;font-weight:750;letter-spacing:0.14em;text-transform:uppercase;color:#315c4b;">Japanese surname</p>
+        <div style="margin-top:12px;display:grid;grid-template-columns:1fr 1fr;overflow:hidden;border-radius:0.8rem;border:1px solid #deddd5;background:#fffefb;">
+          <div style="padding:16px 18px;border-right:1px solid #deddd5;">
+            <p style="margin:0;font-size:0.62rem;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;color:#747d77;">Romanized surname</p>
+            <p style="margin:6px 0 0;font-size:2.4rem;font-weight:700;letter-spacing:-0.02em;line-height:1.1;">Satō</p>
+          </div>
+          <div style="padding:16px 18px;">
+            <p style="margin:0;font-size:0.62rem;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;color:#747d77;">Japanese surname</p>
+            <p style="margin:6px 0 0;font-family:'Noto Sans JP',sans-serif;font-size:2.5rem;font-weight:500;line-height:1.1;">佐藤</p>
+            <p style="margin:4px 0 0;font-family:'Noto Sans JP',sans-serif;font-size:0.85rem;color:#647068;">さとう · サトウ</p>
+          </div>
+        </div>
+        <div style="margin-top:14px;display:flex;flex-wrap:wrap;align-items:center;gap:18px;">
+          <span style="display:inline-flex;align-items:center;gap:7px;font-size:0.85rem;font-weight:600;color:#43504a;">
+            <svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#59645d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+            Copy
+          </span>
+          <span style="display:inline-flex;align-items:center;gap:7px;font-size:0.85rem;font-weight:600;color:#43504a;">
+            <svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#59645d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.5-1.5 3-3.2 3-5.2A4.8 4.8 0 0 0 17.2 4c-1.7 0-3.2.9-4.2 2.3C12 4.9 10.5 4 8.8 4A4.8 4.8 0 0 0 4 8.8c0 2 1.5 3.7 3 5.2l5 5z"/></svg>
+            Favorite
+          </span>
+          <span style="display:inline-flex;align-items:center;gap:7px;border:1px solid #315c4b;background:#315c4b;color:#fffefb;border-radius:999px;padding:11px 22px;font-size:0.88rem;font-weight:700;">
+            Generate with this surname
+          </span>
+        </div>
+      </div>
+      <div style="border:1px solid #d9ddd6;border-radius:0.9rem;background:#fffefb;padding:16px 18px;">
+        <div style="display:flex;justify-content:space-between;gap:12px;padding:5px 0;font-size:0.88rem;">
+          <span style="color:#647068;">Meaning</span>
+          <span style="font-weight:700;">Assistant + wisteria</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;gap:12px;padding:5px 0;border-top:1px solid #efeee8;font-size:0.88rem;">
+          <span style="color:#647068;">Popularity</span>
+          <span style="font-weight:700;">Very common</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;gap:12px;padding:5px 0;border-top:1px solid #efeee8;font-size:0.88rem;">
+          <span style="color:#647068;">Data status</span>
+          <span style="font-weight:700;">Partially Verified</span>
+        </div>
+        <p style="margin:10px 0 0;border-top:1px solid #efeee8;padding-top:10px;font-size:0.75rem;line-height:1.5;color:#747d77;">Roughly one person in 65 bears this surname in Japan.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================= Kanji breakdown (kept, tightened) ======================= -->
+  <div style="width:min(1120px,100% - 48px);margin-inline:auto;margin-top:44px;">
+    <p style="margin:0;font-size:0.72rem;font-weight:750;letter-spacing:0.14em;text-transform:uppercase;color:#a34837;">Kanji breakdown</p>
+    <h2 style="margin:8px 0 0;font-family:Georgia,'Yu Mincho','Noto Sans JP',serif;font-weight:700;font-size:1.9rem;letter-spacing:-0.02em;">See how the written form is built</h2>
+    <div style="margin-top:16px;border:1px solid #deddd5;border-radius:1rem;background:#fffefb;padding:22px 24px;">
+      <p style="margin:0;text-align:center;font-family:'Noto Sans JP',sans-serif;font-size:3rem;font-weight:500;line-height:1.2;">佐藤</p>
+      <div style="margin-top:16px;display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+        <div style="border:1px solid #e3e2dc;border-radius:0.8rem;background:#faf9f5;padding:12px 16px;text-align:center;">
+          <p style="margin:0;font-size:0.82rem;color:#59645d;"><strong style="font-family:'Noto Sans JP',sans-serif;font-size:1.05rem;">佐</strong> — assistant, help</p>
+        </div>
+        <div style="border:1px solid #e3e2dc;border-radius:0.8rem;background:#faf9f5;padding:12px 16px;text-align:center;">
+          <p style="margin:0;font-size:0.82rem;color:#59645d;"><strong style="font-family:'Noto Sans JP',sans-serif;font-size:1.05rem;">藤</strong> — wisteria</p>
+        </div>
+      </div>
+      <p style="margin:14px 0 0;text-align:center;font-size:0.82rem;color:#747d77;">Combined literal reading: <strong style="color:#59645d;">Assistant + wisteria</strong> — context, not an ancestry record.</p>
+    </div>
+  </div>
+
+  <!-- ======================= Distribution: compact empty state ======================= -->
+  <div style="width:min(1120px,100% - 48px);margin-inline:auto;margin-top:44px;">
+    <p style="margin:0;font-size:0.72rem;font-weight:750;letter-spacing:0.14em;text-transform:uppercase;color:#a34837;">Regional evidence</p>
+    <h2 style="margin:8px 0 0;font-family:Georgia,'Yu Mincho','Noto Sans JP',serif;font-weight:700;font-size:1.9rem;letter-spacing:-0.02em;">Distribution across Japan</h2>
+    <div style="margin-top:16px;display:flex;align-items:flex-start;gap:14px;border:1px solid #deddd5;border-radius:1rem;background:#fffefb;padding:16px 20px;">
+      <span aria-hidden="true" style="flex:none;display:grid;place-items:center;width:34px;height:34px;border-radius:999px;background:#f4e9e5;">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#a34837" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg>
+      </span>
+      <div>
+        <p style="margin:0;font-size:0.9rem;font-weight:600;">Reliable distribution data is not yet available for Satō.</p>
+        <p style="margin:4px 0 0;font-size:0.82rem;line-height:1.55;color:#647068;">A prefecture map appears here once source-reviewed data is added. Distribution is never inferred from the kanji alone.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================= Timeline (tightened notice) ======================= -->
+  <div style="width:min(1120px,100% - 48px);margin-inline:auto;margin-top:44px;">
+    <p style="margin:0;font-size:0.72rem;font-weight:750;letter-spacing:0.14em;text-transform:uppercase;color:#a34837;">Historical context</p>
+    <h2 style="margin:8px 0 0;font-family:Georgia,'Yu Mincho','Noto Sans JP',serif;font-weight:700;font-size:1.9rem;letter-spacing:-0.02em;">Japanese surname timeline</h2>
+    <p style="margin:10px 0 0;max-w-3xl;font-size:0.82rem;line-height:1.55;color:#747d77;">General context for Japanese surname systems — no Satō-specific dated event has completed source review yet.</p>
+    <div style="margin-top:18px;border:1px solid #deddd5;border-radius:1rem;background:#fffefb;padding:22px 24px;">
+      <ol style="margin:0;padding:0;list-style:none;">
+        <li style="position:relative;margin-left:18px;padding-bottom:22px;border-left:2px solid #deddd5;padding-left:22px;">
+          <span aria-hidden="true" style="position:absolute;left:-6px;top:2px;width:10px;height:10px;border-radius:999px;background:#a34837;"></span>
+          <p style="margin:0;font-size:0.68rem;font-weight:800;letter-spacing:0.12em;text-transform:uppercase;color:#747d77;">Ancient Japan</p>
+          <h3 style="margin:4px 0 0;font-size:1rem;font-weight:700;">Ancient clan names</h3>
+          <p style="margin:6px 0 0;font-size:0.85rem;line-height:1.6;color:#59645d;">Early name systems could signal clan affiliation, rank, or political relationship. They were not the same as every modern household sharing a surname.</p>
+        </li>
+        <li style="position:relative;margin-left:18px;padding-bottom:22px;border-left:2px solid #deddd5;padding-left:22px;">
+          <span aria-hidden="true" style="position:absolute;left:-6px;top:2px;width:10px;height:10px;border-radius:999px;background:#a34837;"></span>
+          <p style="margin:0;font-size:0.68rem;font-weight:800;letter-spacing:0.12em;text-transform:uppercase;color:#747d77;">Medieval period</p>
+          <h3 style="margin:4px 0 0;font-size:1rem;font-weight:700;">Family and place names</h3>
+          <p style="margin:6px 0 0;font-size:0.85rem;line-height:1.6;color:#59645d;">Warrior families and local lineages increasingly used names associated with estates, settlements, and geographic features.</p>
+        </li>
+        <li style="position:relative;margin-left:18px;padding-left:22px;">
+          <span aria-hidden="true" style="position:absolute;left:-6px;top:2px;width:10px;height:10px;border-radius:999px;background:#a34837;"></span>
+          <p style="margin:0;font-size:0.68rem;font-weight:800;letter-spacing:0.12em;text-transform:uppercase;color:#747d77;">1875</p>
+          <h3 style="margin:4px 0 0;font-size:1rem;font-weight:700;">Universal surname registration</h3>
+          <p style="margin:6px 0 0;font-size:0.85rem;line-height:1.6;color:#59645d;">A Meiji government proclamation required people to use a surname, helping establish the modern nationwide system.</p>
+        </li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- ======================= Pairings (kept) ======================= -->
+  <div style="width:min(1120px,100% - 48px);margin-inline:auto;margin-top:44px;">
+    <p style="margin:0;font-size:0.72rem;font-weight:750;letter-spacing:0.14em;text-transform:uppercase;color:#a34837;">Natural pairings</p>
+    <h2 style="margin:8px 0 0;font-family:Georgia,'Yu Mincho','Noto Sans JP',serif;font-weight:700;font-size:1.9rem;letter-spacing:-0.02em;">First names to pair with Satō</h2>
+    <div style="margin-top:16px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;">
+      <div style="border:1px solid #deddd5;border-radius:0.9rem;background:#fffefb;padding:14px 16px;">
+        <p style="margin:0;font-family:'Noto Sans JP',sans-serif;font-size:1.15rem;font-weight:700;">佐藤 明里</p>
+        <p style="margin:4px 0 0;font-size:0.8rem;color:#647068;">Satō Akari</p>
+      </div>
+      <div style="border:1px solid #deddd5;border-radius:0.9rem;background:#fffefb;padding:14px 16px;">
+        <p style="margin:0;font-family:'Noto Sans JP',sans-serif;font-size:1.15rem;font-weight:700;">佐藤 陽翔</p>
+        <p style="margin:4px 0 0;font-size:0.8rem;color:#647068;">Satō Haruto</p>
+      </div>
+      <div style="border:1px solid #deddd5;border-radius:0.9rem;background:#fffefb;padding:14px 16px;">
+        <p style="margin:0;font-family:'Noto Sans JP',sans-serif;font-size:1.15rem;font-weight:700;">佐藤 葵</p>
+        <p style="margin:4px 0 0;font-size:0.8rem;color:#647068;">Satō Aoi</p>
+      </div>
+      <div style="border:1px solid #deddd5;border-radius:0.9rem;background:#fffefb;padding:14px 16px;">
+        <p style="margin:0;font-family:'Noto Sans JP',sans-serif;font-size:1.15rem;font-weight:700;">佐藤 健二</p>
+        <p style="margin:4px 0 0;font-size:0.8rem;color:#647068;">Satō Kenji</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================= Related (kept) ======================= -->
+  <div style="width:min(1120px,100% - 48px);margin-inline:auto;margin-top:44px;">
+    <p style="margin:0;font-size:0.72rem;font-weight:750;letter-spacing:0.14em;text-transform:uppercase;color:#a34837;">Related surnames</p>
+    <h2 style="margin:8px 0 0;font-family:Georgia,'Yu Mincho','Noto Sans JP',serif;font-weight:700;font-size:1.9rem;letter-spacing:-0.02em;">Surnames that share a kanji with Satō</h2>
+    <div style="margin-top:16px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;">
+      <div style="border:1px solid #deddd5;border-radius:0.9rem;background:#fffefb;padding:14px 16px;">
+        <p style="margin:0;font-family:'Noto Sans JP',sans-serif;font-size:1.15rem;font-weight:700;">阿佐田</p>
+        <p style="margin:4px 0 0;font-size:0.8rem;color:#647068;">Asada</p>
+        <p style="margin:8px 0 0;font-size:0.7rem;font-weight:700;color:#315c4b;">Shares 佐 →</p>
+      </div>
+      <div style="border:1px solid #deddd5;border-radius:0.9rem;background:#fffefb;padding:14px 16px;">
+        <p style="margin:0;font-family:'Noto Sans JP',sans-serif;font-size:1.15rem;font-weight:700;">佐々木</p>
+        <p style="margin:4px 0 0;font-size:0.8rem;color:#647068;">Sasaki</p>
+        <p style="margin:8px 0 0;font-size:0.7rem;font-weight:700;color:#315c4b;">Shares 佐 →</p>
+      </div>
+      <div style="border:1px solid #deddd5;border-radius:0.9rem;background:#fffefb;padding:14px 16px;">
+        <p style="margin:0;font-family:'Noto Sans JP',sans-serif;font-size:1.15rem;font-weight:700;">佐久間</p>
+        <p style="margin:4px 0 0;font-size:0.8rem;color:#647068;">Sakuma</p>
+        <p style="margin:8px 0 0;font-size:0.7rem;font-weight:700;color:#315c4b;">Shares 佐 →</p>
+      </div>
+      <div style="border:1px solid #deddd5;border-radius:0.9rem;background:#fffefb;padding:14px 16px;">
+        <p style="margin:0;font-family:'Noto Sans JP',sans-serif;font-size:1.15rem;font-weight:700;">長藤</p>
+        <p style="margin:4px 0 0;font-size:0.8rem;color:#647068;">Chōfūji</p>
+        <p style="margin:8px 0 0;font-size:0.7rem;font-weight:700;color:#315c4b;">Shares 藤 →</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================= Sources (kept) ======================= -->
+  <div style="width:min(1120px,100% - 48px);margin-inline:auto;margin-top:44px;">
+    <p style="margin:0;font-size:0.72rem;font-weight:750;letter-spacing:0.14em;text-transform:uppercase;color:#a34837;">Sources</p>
+    <div style="margin-top:12px;border:1px solid #deddd5;border-radius:1rem;background:#fffefb;padding:16px 20px;">
+      <p style="margin:0;font-size:0.8rem;line-height:1.6;color:#59645d;">JMnedict dictionary entries · KANJIDIC2 character glosses · Editorial origin notes with source records. Data status reflects review coverage, not certainty.</p>
+    </div>
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":2520}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+</script>
+</body>
+</html>

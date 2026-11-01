@@ -1,0 +1,22 @@
+{
+  "v": 3,
+  "createdOnFiles": { "v": 1, "at": "2026-11-01T17:10:00Z" },
+  "title": "姓氏详情页精修 · Surname Detail Refinement",
+  "launch": { "view": "canvas" },
+  "pages": [],
+  "boards": {
+    "Main.dc.html": { "x": 0, "y": 0, "w": 1440, "h": 2520, "expand": "fill", "title": "Detail page v2 (Sato)" },
+    "Mobile.dc.html": { "x": 1520, "y": 0, "w": 390, "h": 844, "title": "Phone detail page" }
+  },
+  "order": ["Main.dc.html", "Mobile.dc.html"],
+  "notes": {
+    "canvas-title": {
+      "x": 0,
+      "y": -280,
+      "text": "姓氏详情页精修 · Surname Detail Refinement",
+      "kind": "title1",
+      "maxW": 1920
+    }
+  },
+  "designSystems": []
+}

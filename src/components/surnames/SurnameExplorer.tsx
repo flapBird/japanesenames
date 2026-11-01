@@ -14,12 +14,23 @@ import type { SurnameRecord } from "@/types/names";
 // detail URL for every source-backed database record.
 const PAGE_SIZE = BROWSE_PAGE_SIZE;
 
+// Lower sorts first: ranked surnames lead the default view, alphabetical as
+// the tiebreaker so the eight ranked names surface before 200+ unranked ones.
+const popularityOrder: Record<SurnameRecord["popularityLevel"], number> = {
+  very_common: 0,
+  common: 1,
+  uncommon: 2,
+  rare: 3,
+  unranked: 4,
+};
+
 export function SurnameExplorer({ surnames, initialPage = 1 }: { surnames: BrowseSurname[]; initialPage?: number }) {
   const [query, setQuery] = useState("");
   const [letter, setLetter] = useState("All");
   const [popularity, setPopularity] = useState("any");
   const [origin, setOrigin] = useState("any");
   const [region, setRegion] = useState("any");
+  const [sort, setSort] = useState("common");
   const [localPage, setLocalPage] = useState(1);
   const [randomId, setRandomId] = useState<string>();
 
@@ -49,8 +60,13 @@ export function SurnameExplorer({ surnames, initialPage = 1 }: { surnames: Brows
         if (region === "not_available" && surname.regions.length > 0) return false;
         return true;
       })
-      .sort((a, b) => Number(b.isIndexable) - Number(a.isIndexable) || a.romaji.localeCompare(b.romaji));
-  }, [letter, origin, popularity, query, region, surnames]);
+      .sort((a, b) =>
+        sort === "common"
+          ? popularityOrder[a.popularityLevel] - popularityOrder[b.popularityLevel] ||
+            a.romaji.localeCompare(b.romaji)
+          : Number(b.isIndexable) - Number(a.isIndexable) || a.romaji.localeCompare(b.romaji),
+      );
+  }, [letter, origin, popularity, query, region, sort, surnames]);
 
   const hasFilters = Boolean(query.trim()) || letter !== "All" || popularity !== "any" || origin !== "any" || region !== "any";
   const page = Math.min(hasFilters ? localPage : initialPage, Math.max(1, Math.ceil(filtered.length / PAGE_SIZE)));
@@ -60,7 +76,10 @@ export function SurnameExplorer({ surnames, initialPage = 1 }: { surnames: Brows
 
   return (
     <section aria-labelledby="surname-results">
-      <div className="surface p-5 sm:p-6">
+      <div
+        className="surface p-5 sm:p-6"
+        style={{ borderTop: "3px solid var(--page-accent, var(--moss))" }}
+      >
         <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-4">
           <label className="grid gap-1.5 text-xs font-bold lg:col-span-2">
             Search Japanese last names
@@ -78,6 +97,13 @@ export function SurnameExplorer({ surnames, initialPage = 1 }: { surnames: Brows
               type="search"
               value={query}
             />
+          </label>
+          <label className="grid gap-1.5 text-xs font-bold">
+            Sort
+            <select className="field" onChange={(event) => { setSort(event.target.value); setLocalPage(1); setRandomId(undefined); }} value={sort}>
+              <option value="common">Most common first</option>
+              <option value="alpha">A to Z</option>
+            </select>
           </label>
           <label className="grid gap-1.5 text-xs font-bold">
             Commonness
@@ -153,91 +179,62 @@ export function SurnameExplorer({ surnames, initialPage = 1 }: { surnames: Brows
           <div className="mt-4 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             {displayed.map((surname) => (
               <article className="surface flex flex-col p-5" key={surname.id}>
-                <div className="mb-3 flex items-center justify-between gap-3">
-                  <p className="text-[0.65rem] font-bold uppercase tracking-[0.09em] text-(--muted-soft)">
-                    Surname formats
-                  </p>
-                  <div className="flex shrink-0 items-center gap-2">
-                    <PronunciationButton
-                      label={surname.romaji}
-                      text={surname.hiragana}
-                    />
-                    <CopyButton
-                      compact
-                      eventName="copy_surname"
-                      label={`Copy ${surname.romaji}`}
-                      text={`${surname.kanji} — ${surname.romaji} — ${surname.hiragana}`}
-                    />
-                    <FavoriteButton
-                      compact
-                      item={{
-                        id: `surname:${surname.id}`,
-                        kind: "surname",
-                        label: `${surname.kanji} · ${surname.romaji}`,
-                        sublabel: surname.literalMeaning,
-                        pronunciation: surname.hiragana,
-                        href: surname.isIndexable ? `/surname/${surname.slug}` : "/japanese-last-names",
-                      }}
-                    />
-                  </div>
+                {/* Kanji spelling is the anchor; the romanized form becomes a
+                    secondary line and chips appear only when they carry
+                    information (ranked popularity, origin types). */}
+                <div className="flex items-center justify-end gap-2">
+                  <PronunciationButton
+                    label={surname.romaji}
+                    text={surname.hiragana}
+                  />
+                  <CopyButton
+                    compact
+                    eventName="copy_surname"
+                    label={`Copy ${surname.romaji}`}
+                    text={`${surname.kanji} — ${surname.romaji} — ${surname.hiragana}`}
+                  />
+                  <FavoriteButton
+                    compact
+                    item={{
+                      id: `surname:${surname.id}`,
+                      kind: "surname",
+                      label: `${surname.kanji} · ${surname.romaji}`,
+                      sublabel: surname.literalMeaning,
+                      pronunciation: surname.hiragana,
+                      href: surname.isIndexable ? `/surname/${surname.slug}` : "/japanese-last-names",
+                    }}
+                  />
                 </div>
-                <div className="grid grid-cols-2 overflow-hidden rounded-xl border border-(--line-soft)">
-                  <div className="min-w-0 bg-(--paper-raised) p-3.5">
-                    <p className="text-[0.62rem] font-bold uppercase tracking-[0.08em] text-(--muted-soft)">
-                      Romanized form
-                    </p>
-                    {surname.isIndexable ? (
-                      <Link
-                        className="mt-2 block text-xl font-semibold leading-tight tracking-[-0.02em]"
-                        href={`/surname/${surname.slug}`}
-                        title={`Read the ${surname.romaji} surname story`}
-                      >
-                        {surname.romaji}
-                      </Link>
-                    ) : (
-                      <p className="mt-2 text-xl font-semibold leading-tight tracking-[-0.02em]">
-                        {surname.romaji}
-                      </p>
-                    )}
-                  </div>
-                  <div className="min-w-0 border-l border-(--line-soft) p-3.5">
-                    <p className="text-[0.62rem] font-bold uppercase tracking-[0.08em] text-(--muted-soft)">
-                      Japanese form
-                    </p>
-                    {surname.isIndexable ? (
-                      <Link
-                        className="japanese-display mt-2 block text-3xl font-medium leading-tight"
-                        href={`/surname/${surname.slug}`}
-                        title={`Read the ${surname.romaji} surname story`}
-                      >
-                        {surname.kanji}
-                      </Link>
-                    ) : (
-                      <p className="japanese-display mt-2 text-3xl font-medium leading-tight">
-                        {surname.kanji}
-                      </p>
-                    )}
-                    <p className="japanese-display mt-1 text-sm text-(--muted)">
-                      {surname.hiragana}
-                    </p>
-                  </div>
-                </div>
-                <div className="mt-4">
-                  <p className="text-[0.68rem] font-bold uppercase tracking-[0.08em] text-(--muted-soft)">
-                    Meaning
-                  </p>
-                  <p className="mt-1 text-sm leading-6 text-[#536058]">
-                    {surname.literalMeaning}
-                  </p>
-                </div>
-                <div className="mt-4 flex flex-wrap gap-1.5">
-                  <span className={`chip ${surname.isIndexable ? "!border-(--sage) !bg-(--moss-soft) !text-(--moss)" : "!bg-[#efeeea] !text-[#68726b]"}`}>
-                    {surname.isIndexable ? "Origin story available" : "Source-backed record"}
+                <p className="japanese-display -mt-1 text-[1.9rem] font-bold leading-[1.25]">
+                  {surname.isIndexable ? (
+                    <Link
+                      href={`/surname/${surname.slug}`}
+                      title={`Read the ${surname.romaji} surname story`}
+                    >
+                      {surname.kanji}
+                    </Link>
+                  ) : (
+                    surname.kanji
+                  )}
+                </p>
+                <p className="mt-1 text-[0.88rem]">
+                  <strong className="font-bold tracking-[-0.01em]">{surname.romaji}</strong>{" "}
+                  <span className="japanese-display text-[0.8rem] text-(--muted)">
+                    · {surname.hiragana}
                   </span>
-                  <span className="chip capitalize">{surname.popularityLevel.replace("_", " ")}</span>
+                </p>
+                <p className="mt-2.5 text-[0.82rem] leading-relaxed text-(--muted-strong)">
+                  {surname.literalMeaning}
+                </p>
+                <div className="mb-5 mt-3 flex flex-wrap gap-1.5">
+                  {surname.popularityLevel !== "unranked" && (
+                    <span className="chip !border-(--sage) !bg-(--moss-soft) !text-(--moss) capitalize">
+                      {surname.popularityLevel.replace("_", " ")}
+                    </span>
+                  )}
                   {surname.originTypes.slice(0, 2).map((item) => <span className="chip capitalize" key={item}>{item}</span>)}
                 </div>
-                <div className="mt-5 flex gap-4 border-t border-(--line-soft) pt-4 text-xs font-bold text-(--moss)">
+                <div className="mt-auto flex flex-wrap gap-4 border-t border-(--line-soft) pt-4 text-xs font-bold text-(--moss)">
                   {surname.isIndexable && (
                     <Link href={`/surname/${surname.slug}`} onClick={() => trackEvent("open_surname", { id: surname.id })}>
                       View surname story →
